@@ -1,15 +1,22 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
-import { CreateDateColumn, Entity, Index, PrimaryColumn } from 'typeorm';
+import {
+	DeleteDateColumn,
+	UpdateDateColumn,
+	CreateDateColumn,
+	Index,
+	PrimaryColumn,
+} from 'typeorm';
 
 @Index('id', ['id'], { unique: true })
 export class CoreEntity {
-  @PrimaryColumn({ type: 'int', name: 'id' })
-  id: number;
+	@PrimaryColumn({ type: 'int', name: 'id' })
+	id: number;
 
-  @CreateDateColumn()
-  createdAt: Date;
+	@CreateDateColumn()
+	createdAt: Date;
 
-  @CreateDateColumn()
-  updatedAt: Date;
+	@UpdateDateColumn()
+	updatedAt: Date;
+
+	@DeleteDateColumn()
+	deletedAt: Date | null;
 }
