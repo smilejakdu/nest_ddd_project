@@ -1,8 +1,8 @@
 import { Column } from 'typeorm';
 import { IsString, IsNotEmpty } from 'class-validator';
-import { UserEntity } from 'src/user/infra/entity/User.entity';
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { CoreResponse } from 'src/shared/dto/CoreResponse';
+import { UserEntity } from 'src/user/infra/entity/User.entity';
 
 export class CreateUserDto {
 	@IsString()
