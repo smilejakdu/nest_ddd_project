@@ -1,6 +1,5 @@
 import { Column, Entity, Index } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 import { CoreEntity } from 'src/shared/entity/Core.entity';
 
 @Index('nickname', ['nickname'], { unique: true })
