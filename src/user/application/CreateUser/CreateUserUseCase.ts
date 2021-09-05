@@ -1,52 +1,51 @@
 import { Inject } from '@nestjs/common';
+import { UserNickname } from 'src/user/domain/UserNickname';
+import { UserPassword } from 'src/user/domain/UserPassword';
 
 import { IUseCase } from '../../../shared/core/IUseCase';
-import { UserName } from '../../domain/UserName';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
-import { UserEmail } from '../../domain/UserEmail';
 
 export class CreateUserUseCase
-  implements IUseCase<CreateUserRequest, CreateUserResponse> {
-  private DUPLICATE_EMAIL_ERROR_MESSAGE = 'Request email was duplicated.';
+	implements IUseCase<CreateUserRequest, CreateUserResponse>
+{
+	private DUPLICATE_NICK_NAME_ERROR_MESSAGE = 'Request email was duplicated.';
 
-  constructor(
-    @Inject('USER_REPOSITORY')
-    private readonly userRepository: IUserRepository,
-  ) {}
+	constructor(
+		@Inject('USER_REPOSITORY')
+		private readonly userRepository: IUserRepository,
+	) {}
 
-  async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
-    const requestEmail = request.email;
+	async execute(request: CreateUserRequest): Promise<CreateUserResponse> {
+		const requestNickname = request.nickname;
 
-    const userNameOrError = UserName.create(request.name);
-    const userEmailOrError = UserEmail.create(requestEmail);
-    const userPasswordOrError = UserEmail.create(request.password);
+		const userNicknameOrError = UserNickname.create(request.nickname);
+		const userPasswordOrError = UserPassword.create(request.password);
 
-    const foundUser = await this.userRepository.findByEmail(requestEmail);
+		const foundUser = await this.userRepository.findByNickname(requestNickname);
 
-    if (foundUser) {
-      return {
-        ok: false,
-        error: this.DUPLICATE_EMAIL_ERROR_MESSAGE,
-      };
-    }
+		if (foundUser) {
+			return {
+				ok: false,
+				error: this.DUPLICATE_NICK_NAME_ERROR_MESSAGE,
+			};
+		}
 
-    const user = User.createNew({
-      userName: userNameOrError.value,
-      userEmail: userEmailOrError.value,
-      userPassword: userPasswordOrError.value,
-    }).value;
+		const user = User.createNew({
+			userNickname: userNicknameOrError.value,
+			userPassword: userPasswordOrError.value,
+		}).value;
 
-    await this.userRepository.save(user);
+		console.log('createuser UseCase : ', user);
+		await this.userRepository.save(user);
 
-    return {
-      ok: true,
-      user: {
-        id: user.id.toValue().toString(),
-        email: user.email.value,
-        name: user.name.value,
-      },
-    };
-  }
+		return {
+			ok: true,
+			user: {
+				id: user.id.toValue().toString(),
+				nickname: user.nickname.value,
+			},
+		};
+	}
 }

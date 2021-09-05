@@ -5,13 +5,13 @@ import { UserNickname } from './UserNickname';
 import { UserPassword } from './UserPassword';
 
 interface UserProps {
-	UserNickname: UserNickname;
+	userNickname: UserNickname;
 	userPassword: UserPassword;
 	createdAt: Date;
 }
 
 export interface UserNewProps {
-	UserNickname: UserNickname;
+	userNickname: UserNickname;
 	userPassword: UserPassword;
 }
 
@@ -28,12 +28,8 @@ export class User extends AggregateRoot<UserProps> {
 		super(props, id);
 	}
 
-	get name(): UserName {
-		return this.props.userName;
-	}
-
-	get email(): UserEmail {
-		return this.props.userEmail;
+	get nickName(): UserNickname {
+		return this.props.userNickname;
 	}
 
 	get createdAt(): Date {
