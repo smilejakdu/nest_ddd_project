@@ -1,27 +1,22 @@
 import { Result } from '../../shared/core/Result';
-import { UserName } from './UserName';
 import { User } from './User';
-import { UserEmail } from './UserNickname';
+import { UserNickname } from './UserNickname';
 import { UserPassword } from './UserPassword';
 
 describe('User', () => {
-	const USER_NAME = '신영현';
-	const USER_EMAIL = 'dev.den.shin@gmail.com';
+	const USER_NICKNAME = 'ash';
 	const USER_PASSWORD = '123456';
 
 	let userOrError: Result<User>;
-	let userName: UserName;
-	let userEmail: UserEmail;
+	let userNickname: UserNickname;
 	let userPassword: UserPassword;
 
 	beforeEach(() => {
-		userName = UserName.create(USER_NAME).value;
-		userEmail = UserEmail.create(USER_EMAIL).value;
+		userNickname = UserNickname.create(USER_NICKNAME).value;
 		userPassword = UserPassword.create(USER_PASSWORD).value;
 
 		userOrError = User.createNew({
-			userName,
-			userEmail,
+			userNickname,
 			userPassword,
 		});
 	});
@@ -34,10 +29,8 @@ describe('User', () => {
 		const createdAt = userOrError.value.createdAt;
 		const now = new Date();
 
-		expect(userOrError.value.name).toEqual(userName);
-		expect(userOrError.value.name.value).toEqual(USER_NAME);
-		expect(userOrError.value.email).toEqual(userEmail);
-		expect(userOrError.value.email.value).toEqual(USER_EMAIL);
+		expect(userOrError.value.nickname).toEqual(userNickname);
+		expect(userOrError.value.nickname.value).toEqual(USER_NICKNAME);
 		expect(
 			`${createdAt.getFullYear()}-${createdAt.getMonth()}-${createdAt.getDate()}`,
 		).toEqual(`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`);

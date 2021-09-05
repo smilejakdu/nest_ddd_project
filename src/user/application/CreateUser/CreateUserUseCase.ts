@@ -37,10 +37,11 @@ export class CreateUserUseCase
 			userPassword: userPasswordOrError.value,
 		}).value;
 
-		console.log('createuser UseCase : ', user);
 		await this.userRepository.save(user);
 
 		return {
+			// 여기 return 은 어디로 가는걸까 ?? ==> controller
+			// CreateUser.dto.ts 규격이랑 맞아야함
 			ok: true,
 			user: {
 				id: user.id.toValue().toString(),

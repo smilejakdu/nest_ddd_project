@@ -1,11 +1,14 @@
+import { User } from 'src/user/domain/User';
+import { UserNickname } from 'src/user/domain/UserNickname';
+import { UserPassword } from 'src/user/domain/UserPassword';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
+import { UserEntity } from '../entity/User.entity';
 
 export class UserModelMapper {
 	static toDomain(entity: UserEntity): User {
 		return User.create(
 			{
-				userName: UserName.create(entity.name).value,
-				userEmail: UserEmail.create(entity.email).value,
+				userNickname: UserNickname.create(entity.nickname).value,
 				userPassword: UserPassword.create(entity.password).value,
 				createdAt: entity.createdAt,
 			},

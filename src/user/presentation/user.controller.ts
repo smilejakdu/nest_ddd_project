@@ -15,13 +15,22 @@ import {
 	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger';
-import { UsersService } from './users.service';
+import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
+import {
+	CreateUserRequest,
+	CreateUserResponse,
+} from '../application/CreateUser/dto/CreateUser.dto';
 
-@ApiInternalServerErrorResponse({
-	description: '서버 에러',
-})
+@ApiInternalServerErrorResponse({ description: '서버 에러' })
 @ApiTags('USER')
 @Controller('user')
 export class UsersController {
-	constructor(private usersService: UsersService) {}
+	constructor(private createUserUseCase: CreateUserUseCase) {}
+
+	@ApiOperation({ summary: '회원가입' })
+	@ApiOkResponse({ description: '성공', type: CreateUserResponse })
+	@Post()
+	async createBoard(@Body() createUserRequest: CreateUserRequest) {
+		return this.createUserUseCase.execute(createUserRequest);
+	}
 }

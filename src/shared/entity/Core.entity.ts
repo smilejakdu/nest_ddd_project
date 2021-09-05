@@ -1,3 +1,4 @@
+import { IsString } from 'class-validator';
 import {
 	DeleteDateColumn,
 	UpdateDateColumn,
@@ -8,8 +9,9 @@ import {
 
 @Index('id', ['id'], { unique: true })
 export class CoreEntity {
-	@PrimaryColumn({ type: 'int', name: 'id' })
-	id: number;
+	@IsString()
+	@PrimaryColumn()
+	id: string;
 
 	@CreateDateColumn()
 	createdAt: Date;

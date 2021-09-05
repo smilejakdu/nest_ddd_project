@@ -1,6 +1,8 @@
 import { Result } from '../../shared/core/Result';
+
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { UniqueEntityId } from '../../shared/domain/UniqueEntityId';
+
 import { UserNickname } from './UserNickname';
 import { UserPassword } from './UserPassword';
 
@@ -28,7 +30,7 @@ export class User extends AggregateRoot<UserProps> {
 		super(props, id);
 	}
 
-	get nickName(): UserNickname {
+	get nickname(): UserNickname {
 		return this.props.userNickname;
 	}
 

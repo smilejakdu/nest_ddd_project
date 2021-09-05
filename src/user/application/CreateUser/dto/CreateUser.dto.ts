@@ -1,19 +1,18 @@
-import { Column } from 'typeorm';
+import { Column, PrimaryColumn } from 'typeorm';
 import { IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { CoreResponse } from 'src/shared/dto/CoreResponse';
 import { UserEntity } from 'src/user/infra/entity/User.entity';
 
 export class CreateUserDto {
+	@PrimaryColumn()
 	@IsString()
-	@IsNotEmpty()
-	@ApiProperty({ example: 'ash', description: 'nickname' })
-	public nickname;
+	public id: string;
 
 	@IsString()
 	@IsNotEmpty()
-	@ApiProperty({ example: '123123123', description: '비밀번호' })
-	public password: string;
+	@ApiProperty({ example: 'ash', description: 'nickname' })
+	public nickname: string;
 }
 
 export class CreateUserRequest extends PickType(UserEntity, [
