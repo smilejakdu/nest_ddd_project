@@ -11,23 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import * as ormconfig from '../ormconfig';
 import { Connection } from 'typeorm';
+import { AppController } from './app.controller';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({
-			isGlobal: true,
-			envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.test',
-			ignoreEnvFile: process.env.NODE_ENV === 'prod',
-			validationSchema: Joi.object({
-				NODE_ENV: Joi.string().valid('prod', 'dev', 'test'),
-				DB_HOST: Joi.string().required(),
-				DB_PORT: Joi.string().required(),
-				DB_USERNAME: Joi.string().required(),
-				DB_PASSWORD: Joi.string().required(),
-				DB_NAME: Joi.string().required(),
-				PRIVATE_KEY: Joi.string().required(),
-			}),
-		}),
+		ConfigModule.forRoot({ isGlobal: true }),
 		TypeOrmModule.forRoot(ormconfig),
 		UserModule,
 	],
