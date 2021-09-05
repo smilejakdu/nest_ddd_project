@@ -8,7 +8,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class UserEntity extends CoreEntity {
 	@IsString()
 	@IsNotEmpty()
-	@MinLength(6)
+	@MinLength(1)
 	@ApiProperty({
 		example: 'nickname',
 		description: 'nickname',
