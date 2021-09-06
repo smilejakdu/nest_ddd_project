@@ -14,8 +14,6 @@ lerna-debug.log*
 # OS
 .DS_Store
 .env
-.eslintrc.js
-.prettierrc
 ormconfig.ts
 env
 # Tests
@@ -29,6 +27,8 @@ env
 .c9/
 *.launch
 .settings/
+.eslintrc.js
+.prettierrc
 *.sublime-workspace
 
 # IDE - VSCode
