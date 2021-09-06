@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { log } from 'console';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { UserPassword } from 'src/user/domain/UserPassword';
 
@@ -7,13 +6,13 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
-import bcrypt from 'bcrypt';
+import { log } from 'console';
+import * as bcrypt from 'bcrypt';
 
 export class CreateUserUseCase
 	implements IUseCase<CreateUserRequest, CreateUserResponse>
 {
-	private DUPLICATE_NICK_NAME_ERROR_MESSAGE =
-		'Request nickname was duplicated.';
+	private DUPLICATE_NICKNAME_ERROR_MESSAGE = 'Request nickname was duplicated.';
 
 	constructor(
 		@Inject('USER_REPOSITORY')
@@ -25,19 +24,22 @@ export class CreateUserUseCase
 
 		const userNicknameOrError = UserNickname.create(request.nickname);
 		const userPasswordOrError = UserPassword.create(request.password);
+		log('userPasswordOrError :', userPasswordOrError);
+		log('userPasswordOrError :', userPasswordOrError.value);
 
 		const foundUser = await this.userRepository.findByNickname(requestNickname);
 
 		if (foundUser) {
 			return {
 				ok: false,
-				error: this.DUPLICATE_NICK_NAME_ERROR_MESSAGE,
+				error: this.DUPLICATE_NICKNAME_ERROR_MESSAGE,
 			};
 		}
-		console.log('userNickname1 : ', userNicknameOrError);
-		console.log('userNickname2 : ', userNicknameOrError.value);
-		console.log('userPassword1 : ', userPasswordOrError);
-		console.log('userPassword2 : ', userPasswordOrError.value);
+		const {
+			props: { value },
+		} = userPasswordOrError.value;
+		const hashedPassword = await bcrypt.hash(value, 10);
+		userPasswordOrError.value.props.value = hashedPassword;
 
 		const user = User.createNew({
 			userNickname: userNicknameOrError.value,
