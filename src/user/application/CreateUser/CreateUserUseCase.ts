@@ -6,11 +6,13 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
+import bcrypt from 'bcrypt';
 
 export class CreateUserUseCase
 	implements IUseCase<CreateUserRequest, CreateUserResponse>
 {
-	private DUPLICATE_NICK_NAME_ERROR_MESSAGE = 'Request email was duplicated.';
+	private DUPLICATE_NICK_NAME_ERROR_MESSAGE =
+		'Request nickname was duplicated.';
 
 	constructor(
 		@Inject('USER_REPOSITORY')
@@ -31,6 +33,10 @@ export class CreateUserUseCase
 				error: this.DUPLICATE_NICK_NAME_ERROR_MESSAGE,
 			};
 		}
+		console.log('userNickname1 : ', userNicknameOrError);
+		console.log('userNickname2 : ', userNicknameOrError.value);
+		console.log('userPassword1 : ', userPasswordOrError);
+		console.log('userPassword2 : ', userPasswordOrError.value);
 
 		const user = User.createNew({
 			userNickname: userNicknameOrError.value,
@@ -40,8 +46,7 @@ export class CreateUserUseCase
 		await this.userRepository.save(user);
 
 		return {
-			// 여기 return 은 어디로 가는걸까 ?? ==> controller
-			// CreateUser.dto.ts 규격이랑 맞아야함
+			// 여기서 request 요청 데이터와 메세지가 전달된다.
 			ok: true,
 			user: {
 				id: user.id.toValue().toString(),

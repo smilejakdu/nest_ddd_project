@@ -2,6 +2,8 @@ import { Column, Entity, Index } from 'typeorm';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { CoreEntity } from 'src/shared/entity/Core.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import bcrypt from 'bcrypt';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @Index('nickname', ['nickname'], { unique: true })
 @Entity({ schema: 'ddd_watcha', name: 'users' })
