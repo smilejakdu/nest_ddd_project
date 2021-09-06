@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { log } from 'console';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { UserPassword } from 'src/user/domain/UserPassword';
 

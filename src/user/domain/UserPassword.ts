@@ -30,8 +30,18 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
 				`UserPasswordString should be longer than ${MIN_LENGTH}`,
 			);
 		}
+		const hashedPassword = String(
+			UserPassword.passwordStringBcrypt(userPasswordString),
+		) as string;
+		return Result.ok(new UserPassword({ value: hashedPassword }));
+	}
 
-		return Result.ok(new UserPassword({ value: userPasswordString }));
+	static async passwordStringBcrypt(
+		userPasswordString: string,
+	): Promise<string> {
+		const hashedPassword = await bcrypt.hash(userPasswordString, 12);
+		log('hashedPassword: ', hashedPassword);
+		return await hashedPassword;
 	}
 
 	get value(): string {
