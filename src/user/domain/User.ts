@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { Result } from '../../shared/core/Result';
 
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';

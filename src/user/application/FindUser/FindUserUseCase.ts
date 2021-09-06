@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
-import { log } from 'console';
 
 @Injectable()
 export class FindUserUseCase
@@ -26,10 +25,11 @@ export class FindUserUseCase
 				error: this.HAS_NOT_USER,
 			};
 		}
-		log('foundUser : ', foundUser);
+
 		return {
 			ok: true,
 			user: {
+				id: foundUser.id.toValue().toString(),
 				nickname: foundUser.nickname.value,
 			},
 		};

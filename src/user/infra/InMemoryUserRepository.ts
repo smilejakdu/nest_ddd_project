@@ -2,6 +2,7 @@ import { cloneDeep, find, findIndex } from 'lodash';
 
 import { IUserRepository } from './interface/IUserRepository';
 import { User } from '../domain/User';
+import { log } from 'console';
 
 export class InMemoryUserRepository implements IUserRepository {
 	private items: User[] = [];
@@ -13,8 +14,11 @@ export class InMemoryUserRepository implements IUserRepository {
 		return clonedUser;
 	}
 
-	async find(id: string): Promise<User> | undefined {
-		return find(this.items, item => item.id.toValue().toString() === id);
+	async find(nickname: string): Promise<User> | undefined {
+		return find(
+			this.items,
+			item => item.nickname.toValue().toString() === nickname,
+		);
 	}
 
 	async findByNickname(nickname: string): Promise<User> {
