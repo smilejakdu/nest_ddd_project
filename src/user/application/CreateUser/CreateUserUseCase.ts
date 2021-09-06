@@ -24,8 +24,6 @@ export class CreateUserUseCase
 
 		const userNicknameOrError = UserNickname.create(request.nickname);
 		const userPasswordOrError = UserPassword.create(request.password);
-		log('userPasswordOrError :', userPasswordOrError);
-		log('userPasswordOrError :', userPasswordOrError.value);
 
 		const foundUser = await this.userRepository.findByNickname(requestNickname);
 

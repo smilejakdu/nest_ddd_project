@@ -5,18 +5,14 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import { UserEntity } from 'src/user/infra/entity/User.entity';
 
 export class FindUserDto {
-	@PrimaryColumn()
-	@IsString()
-	id: string;
-
 	@IsString()
 	@IsNotEmpty()
 	@ApiProperty({ example: 'ash', description: 'nickname' })
-	@Column(() => String)
-	nickname: string;
+	@Column()
+	public nickname: string;
 }
 
-export class FindUserRequest extends PickType(UserEntity, ['id']) {}
+export class FindUserRequest extends PickType(UserEntity, ['nickname']) {}
 
 export class FindUserResponse extends CoreResponse {
 	@Column(() => FindUserDto)

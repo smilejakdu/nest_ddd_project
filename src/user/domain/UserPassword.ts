@@ -14,7 +14,6 @@ export class UserPassword extends ValueObject<UserPasswordProps> {
 	}
 
 	static create(userPasswordString: string): Result<UserPassword> {
-		log('userPasswordString :', userPasswordString);
 		const MIN_LENGTH = 6;
 
 		if (isEmpty(userPasswordString)) {

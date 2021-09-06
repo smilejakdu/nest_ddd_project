@@ -3,9 +3,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { log } from 'console';
 
 @Injectable()
-export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserResponse> {
+export class FindUserUseCase
+	implements IUseCase<FindUserRequest, FindUserResponse>
+{
 	private HAS_NOT_USER = 'Can`t found User.';
 
 	constructor(
@@ -14,8 +17,8 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 	) {}
 
 	async execute(request: FindUserRequest): Promise<FindUserResponse> {
-		const requestId = request.id;
-		const foundUser = await this.userRepository.find(requestId);
+		const requestNickname = request.nickname;
+		const foundUser = await this.userRepository.find(requestNickname);
 
 		if (!foundUser) {
 			return {
@@ -23,11 +26,10 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 				error: this.HAS_NOT_USER,
 			};
 		}
-
+		log('foundUser : ', foundUser);
 		return {
 			ok: true,
 			user: {
-				id: requestId,
 				nickname: foundUser.nickname.value,
 			},
 		};

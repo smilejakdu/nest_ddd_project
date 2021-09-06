@@ -5,5 +5,5 @@ export interface IUserRepository {
 
 	findByNickname(nickname: string): Promise<User> | undefined;
 
-	find(id: string): Promise<User> | undefined;
+	find(nickname: string): Promise<User> | undefined;
 }

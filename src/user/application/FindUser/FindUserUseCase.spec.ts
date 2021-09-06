@@ -7,7 +7,6 @@ import { UserPassword } from '../../domain/UserPassword';
 import { FindUserUseCase } from './FindUserUseCase';
 
 describe('FindUserUseCase', () => {
-	const REQUEST_ID = 'REQUEST';
 	const FOUND_NICKNAME = 'ash';
 	const HAS_NOT_USER = 'Can`t found User.';
 
@@ -33,18 +32,18 @@ describe('FindUserUseCase', () => {
 	});
 
 	it('잘 찾아지는지', async () => {
-		givenFoundUser(REQUEST_ID);
+		givenFoundUser(FOUND_NICKNAME);
 
-		const found = await uut.execute({ id: REQUEST_ID });
+		const found = await uut.execute({ nickname: FOUND_NICKNAME });
 
 		expect(found.ok).toBe(true);
 		expect(found.user.nickname).toBe(FOUND_NICKNAME);
 	});
 
 	it('없는 아이디의 경우', async () => {
-		givenFoundUser('NOT_EXIST_ID');
+		givenFoundUser('NOT_EXIST_NICKNAME');
 
-		const found = await uut.execute({ id: REQUEST_ID });
+		const found = await uut.execute({ nickname: FOUND_NICKNAME });
 
 		expect(found.ok).toBe(false);
 		expect(found.error).toBe(HAS_NOT_USER);
