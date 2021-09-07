@@ -1,15 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
+import { log } from 'console';
 import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
 import {
 	CreateUserRequest,
 	CreateUserResponse,
 } from '../application/CreateUser/dto/CreateUser.dto';
+import {
+	EditUserProfileRequest,
+	EditUserProfileResponse,
+} from '../application/EditUserProfile/dto/EditUserProfile.dto';
+import { EditUserProfileUseCase } from '../application/EditUserProfile/EditUserProfileUseCase';
 import {
 	FindUserRequest,
 	FindUserResponse,
@@ -29,6 +35,7 @@ export class UsersController {
 		private createUserUseCase: CreateUserUseCase,
 		private loginUserUseCase: LoginUserUseCase,
 		private findUserUseCase: FindUserUseCase,
+		private editUserProfileUseCase: EditUserProfileUseCase,
 	) {}
 
 	@ApiOperation({ summary: '회원가입' })
@@ -50,5 +57,12 @@ export class UsersController {
 	@Get('find_user')
 	async findUser(@Body() findUserRequest: FindUserRequest) {
 		return this.findUserUseCase.execute(findUserRequest);
+	}
+
+	@ApiOperation({ summary: '프로필 수정' })
+	@ApiOkResponse({ description: '성공', type: EditUserProfileResponse })
+	@Put('edit_user')
+	async editUser(@Body() editUserProfileRequest: EditUserProfileRequest) {
+		return this.editUserProfileUseCase.execute(editUserProfileRequest);
 	}
 }

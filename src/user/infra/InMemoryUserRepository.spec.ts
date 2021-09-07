@@ -1,8 +1,8 @@
 import { IUserRepository } from './interface/IUserRepository';
 import { User } from '../domain/User';
-import { UserName } from '../domain/UserName';
 import { InMemoryUserRepository } from './InMemoryUserRepository';
 import { UserPassword } from '../domain/UserPassword';
+import { UserNickname } from '../domain/UserNickname';
 
 describe('InMemoryUserRepository', () => {
 	const TEST_USER_NICKNAME = 'ash';
@@ -14,7 +14,7 @@ describe('InMemoryUserRepository', () => {
 
 	beforeAll(async () => {
 		uut = new InMemoryUserRepository();
-		const userNickname = UserName.create(TEST_USER_NICKNAME).value;
+		const userNickname = UserNickname.create(TEST_USER_NICKNAME).value;
 		const userPassword = UserPassword.create(TEST_PASSWORD).value;
 		createdUser = await User.createNew({ userNickname, userPassword }).value;
 	});

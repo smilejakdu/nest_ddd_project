@@ -1,10 +1,14 @@
-import { cloneDeep, find, findIndex } from 'lodash';
+import { cloneDeep, find } from 'lodash';
 
 import { IUserRepository } from './interface/IUserRepository';
 import { User } from '../domain/User';
 import { log } from 'console';
+import * as bcrypt from 'bcrypt';
 
 export class InMemoryUserRepository implements IUserRepository {
+	createPasswordHash(password: string): Promise<string> {
+		throw new Error('Method not implemented.');
+	}
 	private items: User[] = [];
 
 	async save(user: User): Promise<User> {
@@ -14,14 +18,26 @@ export class InMemoryUserRepository implements IUserRepository {
 		return clonedUser;
 	}
 
-	async find(nickname: string): Promise<User> | undefined {
-		return find(
-			this.items,
-			item => item.nickname.toValue().toString() === nickname,
-		);
+	async find(id: string): Promise<User> | undefined {
+		return find(this.items, item => item.id.toValue().toString() === id);
 	}
 
 	async findByNickname(nickname: string): Promise<User> {
 		return find(this.items, item => item.nickname.value === nickname);
+	}
+
+	async comparePassword(
+		beforePassword: string,
+		afterPassword: string,
+	): Promise<boolean> {
+		return await bcrypt.compare(beforePassword, afterPassword);
+	}
+
+	async editUser(
+		id: string,
+		nickname: string,
+		password: string,
+	): Promise<User> | undefined {
+		return;
 	}
 }

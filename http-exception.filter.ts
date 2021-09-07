@@ -1,4 +1,9 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import {
+	ExceptionFilter,
+	Catch,
+	ArgumentsHost,
+	HttpException,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { log } from 'console';
 
@@ -8,7 +13,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<Response>();
 		const status = exception.getStatus();
-		const err = exception.getResponse() as string | { error: string; statusCode: 400; message: string[] }; // class-validator
+		const err = exception.getResponse() as
+			| string
+			| { error: string; statusCode: 400; message: string[] }; // class-validator
 		log(status, err);
 
 		// let msg = '';

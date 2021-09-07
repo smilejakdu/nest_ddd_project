@@ -33,11 +33,11 @@ export class CreateUserUseCase
 				error: this.DUPLICATE_NICKNAME_ERROR_MESSAGE,
 			};
 		}
-		const {
-			props: { value },
-		} = userPasswordOrError.value;
-		const hashedPassword = await bcrypt.hash(value, 10);
-		userPasswordOrError.value.props.value = hashedPassword;
+
+		const passwordHash = await this.userRepository.createPasswordHash(
+			request.password,
+		);
+		userPasswordOrError.value.props.value = passwordHash;
 
 		const user = User.createNew({
 			userNickname: userNicknameOrError.value,

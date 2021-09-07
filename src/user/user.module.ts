@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
+import { EditUserProfileUseCase } from './application/EditUserProfile/EditUserProfileUseCase';
 import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
 import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
 
@@ -15,6 +16,7 @@ import { UsersController } from './presentation/user.controller';
 		CreateUserUseCase,
 		FindUserUseCase,
 		LoginUserUseCase,
+		EditUserProfileUseCase,
 		UsersController,
 		{
 			provide: 'USER_REPOSITORY',

@@ -5,13 +5,14 @@ import { User } from '../../domain/User';
 import { IUserRepository } from '../interface/IUserRepository';
 import { UserModelMapper } from '../dto/UserModelMapper';
 import { UserEntity } from '../entity/User.entity';
+import * as bcrypt from 'bcrypt';
+import { log } from 'console';
 
 export class MysqlUserRepository implements IUserRepository {
 	constructor(
 		@InjectRepository(UserEntity)
 		private readonly userRepository: Repository<UserEntity>,
 	) {}
-
 	async save(user: User): Promise<User> {
 		await this.userRepository.save(
 			this.userRepository.create({
@@ -25,13 +26,14 @@ export class MysqlUserRepository implements IUserRepository {
 		return user;
 	}
 
-	async find(nickname: string): Promise<User> | undefined {
-		// const foundUser = await this.userRepository.findOne(id, {
-		// 	select: ['id', 'nickname', 'password', 'createdAt'],
-		// });
+	async createPasswordHash(password: string): Promise<string> {
+		const hashedPassword = await bcrypt.hash(password, 12);
+		return hashedPassword;
+	}
 
+	async find(id: string): Promise<User> | undefined {
 		const foundUser = await this.userRepository.findOne({
-			where: { nickname },
+			where: { id },
 			select: ['id', 'nickname', 'password', 'createdAt'],
 		});
 		if (!foundUser) {
@@ -52,5 +54,24 @@ export class MysqlUserRepository implements IUserRepository {
 		}
 
 		return UserModelMapper.toDomain(foundUser);
+	}
+
+	async editUser(
+		id: string,
+		nickname: string,
+		password: string,
+	): Promise<User> | undefined {
+		const foundUser = await this.userRepository.findOne({
+			where: { id: id },
+		});
+		log('MysqlfoundUser : ', foundUser);
+		if (!foundUser) {
+			return undefined;
+		}
+		const result = await bcrypt.compare(password, foundUser.password);
+		if (result) {
+			foundUser.nickname = nickname;
+			return UserModelMapper.toDomain(foundUser);
+		}
 	}
 }

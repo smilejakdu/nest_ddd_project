@@ -47,7 +47,6 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		requestPassword: string,
 		user: User,
 	): Promise<boolean> {
-		log('패스워드 비교 : ', requestPassword, user.password.value);
 		return await bcrypt.compare(requestPassword, user.password.value);
 	}
 }
