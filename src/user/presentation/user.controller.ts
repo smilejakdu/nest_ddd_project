@@ -5,7 +5,6 @@ import {
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
-import { log } from 'console';
 import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
 import {
 	CreateUserRequest,

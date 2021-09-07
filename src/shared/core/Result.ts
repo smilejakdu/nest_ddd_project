@@ -1,3 +1,4 @@
+import { log } from 'console';
 export class Result<T> {
 	public isSuccess: boolean;
 	public isFailure: boolean;
@@ -47,6 +48,16 @@ export class Result<T> {
 	}
 
 	public static ok<U>(value?: U): Result<U> {
+		log('Result.ok :', value);
+		// Result.ok : User {
+		// 	_id: UniqueEntityId { value: '5cf0291d-c103-49f1-805f-6b607f6d574b' },
+		// 	props: {
+		// 		userNickname: UserNickname { props: [Object] },
+		// 		userPassword: UserPassword { props: [Object] },
+		// 		createdAt: 2021-09-07T13:15:21.368Z
+		// 	},
+		// 	_domainEvents: []
+		// }
 		return new Result<U>(true, undefined, value);
 	}
 

@@ -12,7 +12,13 @@ interface UserProps {
 	createdAt: Date;
 }
 
-export interface UserNewProps {
+// export interface UserNewProps {
+// 	userNickname: UserNickname;
+// 	userPassword: UserPassword;
+// }
+// export 필요없지않을까??
+
+interface UserNewProps {
 	userNickname: UserNickname;
 	userPassword: UserPassword;
 }

@@ -8,7 +8,6 @@ import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
-import { log } from 'console';
 
 export class EditUserProfileUseCase
 	implements IUseCase<EditUserProfileRequestDto, EditUserProfileResponse>
