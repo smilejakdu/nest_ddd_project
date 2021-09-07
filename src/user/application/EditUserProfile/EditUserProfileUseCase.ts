@@ -15,6 +15,7 @@ export class EditUserProfileUseCase
 {
 	private FAIL_UPDATE = 'Can`t modify profile.';
 	private HAS_NOT_USER = 'Can`t found User.';
+	private PASSWORD_NO_MACTH = 'check User Password';
 
 	constructor(
 		@Inject('USER_REPOSITORY')
@@ -24,26 +25,37 @@ export class EditUserProfileUseCase
 	async execute(
 		request: EditUserProfileRequestDto,
 	): Promise<EditUserProfileResponse> {
-		log('request :', request);
 		try {
 			const foundUser = await this.userRepository.find(request.id);
-			log('foundUser :', foundUser);
 			if (!foundUser) {
 				return {
 					ok: false,
 					error: this.HAS_NOT_USER,
 				};
 			}
+			const comparePassword = await this.userRepository.comparePassword(
+				foundUser.password.value,
+				request.password,
+			);
+			if (!comparePassword) {
+				return {
+					ok: false,
+					error: this.PASSWORD_NO_MACTH,
+				};
+			}
+
+			const createHashPassword = await this.userRepository.createPasswordHash(
+				request.password,
+			);
+			foundUser.nickname.props.value = request.nickname;
 			const user = User.create(
 				{
 					userNickname: foundUser.nickname,
-					userPassword: UserPassword.create(request.password).value,
+					userPassword: UserPassword.create(createHashPassword).value,
 					createdAt: foundUser.createdAt,
 				},
 				new UniqueEntityId(request.id),
 			).value;
-
-			log('EditUserProfileUseCase :', user);
 
 			await this.userRepository.save(user);
 

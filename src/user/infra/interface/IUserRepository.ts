@@ -7,11 +7,10 @@ export interface IUserRepository {
 
 	find(id: string): Promise<User> | undefined;
 
-	editUser(
-		id: string,
-		nickname: string,
-		password: string,
-	): Promise<User> | undefined;
-
 	createPasswordHash(password: string): Promise<string> | undefined;
+
+	comparePassword(
+		beforePassword: string,
+		afterPassword: string,
+	): Promise<boolean> | undefined;
 }

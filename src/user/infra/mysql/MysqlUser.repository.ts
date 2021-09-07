@@ -39,7 +39,7 @@ export class MysqlUserRepository implements IUserRepository {
 		if (!foundUser) {
 			return undefined;
 		}
-
+		log('MysqlUser.repositry.ts : ', foundUser);
 		return UserModelMapper.toDomain(foundUser);
 	}
 
@@ -52,26 +52,14 @@ export class MysqlUserRepository implements IUserRepository {
 		if (!foundUser) {
 			return undefined;
 		}
-
 		return UserModelMapper.toDomain(foundUser);
 	}
 
-	async editUser(
-		id: string,
-		nickname: string,
-		password: string,
-	): Promise<User> | undefined {
-		const foundUser = await this.userRepository.findOne({
-			where: { id: id },
-		});
-		log('MysqlfoundUser : ', foundUser);
-		if (!foundUser) {
-			return undefined;
-		}
-		const result = await bcrypt.compare(password, foundUser.password);
-		if (result) {
-			foundUser.nickname = nickname;
-			return UserModelMapper.toDomain(foundUser);
-		}
+	async comparePassword(
+		beforePassword: string,
+		afterPassword: string,
+	): Promise<boolean> {
+		const result = await bcrypt.compare(afterPassword, beforePassword);
+		return result;
 	}
 }

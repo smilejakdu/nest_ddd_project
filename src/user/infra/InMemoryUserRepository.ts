@@ -6,9 +6,6 @@ import { log } from 'console';
 import * as bcrypt from 'bcrypt';
 
 export class InMemoryUserRepository implements IUserRepository {
-	createPasswordHash(password: string): Promise<string> {
-		throw new Error('Method not implemented.');
-	}
 	private items: User[] = [];
 
 	async save(user: User): Promise<User> {
@@ -31,6 +28,10 @@ export class InMemoryUserRepository implements IUserRepository {
 		afterPassword: string,
 	): Promise<boolean> {
 		return await bcrypt.compare(beforePassword, afterPassword);
+	}
+
+	async createPasswordHash(password: string): Promise<string> {
+		return await bcrypt.hash(password, 10);
 	}
 
 	async editUser(
