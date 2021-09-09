@@ -10,28 +10,23 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserModule } from './user/user.module';
 import * as ormconfig from '../ormconfig';
-import { JwtMiddleware } from './jwt/JwtMiddleWare';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { JwtModule } from './jwt/jwt.module';
+import { BoardModule } from './board/board.module';
+import { LoggerMiddleware } from './shared/logger.middlewares';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({ isGlobal: true }),
 		TypeOrmModule.forRoot(ormconfig),
-		JwtModule.forRoot({
-			privateKey: process.env.PRIVATE_KEY,
-		}),
 		UserModule,
+		BoardModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
 })
 export class AppModule implements NestModule {
-	configure(consumer: MiddlewareConsumer): any {
-		consumer.apply(JwtMiddleware).forRoutes({
-			path: '/jwt_path',
-			method: RequestMethod.POST,
-		});
-	}
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
 }

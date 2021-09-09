@@ -1,10 +1,22 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	Put,
+	Req,
+	Res,
+	UseGuards,
+} from '@nestjs/common';
 import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
+import { log } from 'console';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/shared/decorator/user.decorator';
 import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
 import {
 	CreateUserRequest,
@@ -51,6 +63,14 @@ export class UsersController {
 		return this.loginUserUseCase.execute(loginUserRequest);
 	}
 
+	@ApiOperation({ summary: '로그아웃' })
+	@Post('logout')
+	async logOut(@Req() req, @Res() res) {
+		req.logout();
+		res.clearCookie('connect.sid', { httpOnly: true });
+		res.send('ok');
+	}
+
 	@ApiOperation({ summary: '회원찾기' })
 	@ApiOkResponse({ description: '성공', type: FindUserResponse })
 	@Get('find_user')
@@ -58,6 +78,7 @@ export class UsersController {
 		return this.findUserUseCase.execute(findUserRequest);
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@ApiOperation({ summary: '프로필 수정' })
 	@ApiOkResponse({ description: '성공', type: EditUserProfileResponse })
 	@Put('edit_user')

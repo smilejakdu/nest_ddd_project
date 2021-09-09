@@ -1,8 +1,8 @@
 import { Result } from 'src/shared/core/Result';
 import { AggregateRoot } from 'src/shared/domain/AggregateRoot';
 import { UniqueEntityId } from 'src/shared/domain/UniqueEntityId';
-import { BoardContent } from './BoardContent';
 import { BoardTitle } from './BoardTitle';
+import { BoardContent } from './BoardContent';
 
 interface BoardProps {
 	boardTitle: BoardTitle;

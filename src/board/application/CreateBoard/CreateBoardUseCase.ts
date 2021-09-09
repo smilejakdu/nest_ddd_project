@@ -1,19 +1,31 @@
+import { User } from './../../../user/domain/User';
 import { Inject } from '@nestjs/common';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { CreateBoardRequest, CreateBoardResponse } from './dto/CreateBoard.dto';
 import { IUserRepository } from 'src/user/infra/interface/IUserRepository';
+import { BoardTitle } from 'src/board/domain/BoardTitle';
+import { BoardContent } from 'src/board/domain/BoardContent';
+import { log } from 'console';
 
 export class CreateBoardUseCase
 	implements IUseCase<CreateBoardRequest, CreateBoardResponse>
 {
-	private DOES_NOT_USER = 'have not user id.';
 	constructor(
-		@Inject('USER_REPOSITORY')
+		@Inject('BOARD_REPOSITORY')
 		private readonly boardRepository: IUserRepository,
 	) {}
-	execute(
-		request?: CreateBoardRequest,
-	): CreateBoardResponse | Promise<CreateBoardResponse> {
-		throw new Error('Method not implemented.');
+
+	async execute(
+		request: CreateBoardRequest,
+		token?: string,
+	): Promise<CreateBoardResponse> {
+		const requestTitle = request.title;
+		const requestContent = request.content;
+
+		const userNicknameOrError = BoardTitle.create(request.title);
+		const userPasswordOrError = BoardContent.create(request.content);
+		log('createBoardUserCase request : ', request);
+		log('createBoardUserCase token : ', token);
+		return;
 	}
 }

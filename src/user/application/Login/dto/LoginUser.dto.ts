@@ -21,6 +21,6 @@ export class LoginRequest extends PickType(UserEntity, [
 ]) {}
 
 export class LoginResponse extends CoreResponse {
-	@Column(() => LoginUserDto)
+	@Column()
 	token?: string;
 }

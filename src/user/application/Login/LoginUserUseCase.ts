@@ -6,7 +6,7 @@ import { LoginRequest, LoginResponse } from './dto/LoginUser.dto';
 import { log } from 'console';
 import { User } from 'src/user/domain/User';
 import bcrypt from 'bcrypt';
-import { JwtService } from 'src/jwt/JwtService';
+import { JwtService } from '@nestjs/jwt';
 
 export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	constructor(
@@ -16,8 +16,10 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	) {}
 
 	async execute(request: LoginRequest): Promise<LoginResponse> {
+		log("LoginUser_request")
 		const requestNickname = request.nickname;
-		const foundUser = await this.userRepository.findByNickname(requestNickname);
+		const foundUser       = await this.userRepository.findByNickname(requestNickname);
+		log("LoginUser foundUser : " , foundUser);
 
 		if (isUndefined(foundUser)) {
 			return {
@@ -34,12 +36,11 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 			};
 		}
 
+    const payload = { nickname: foundUser.nickname.value, id:foundUser.id.toValue() };
+		log("payload : " , payload);
 		return {
-			ok: true,
-			token: this.jwtService.sign({
-				id: foundUser.id.toValue().toString(),
-				nickname: foundUser.nickname.value,
-			}),
+			ok      : true,
+			token   : this.jwtService.sign(payload),
 		};
 	}
 

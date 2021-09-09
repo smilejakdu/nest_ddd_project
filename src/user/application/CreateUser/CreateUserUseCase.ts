@@ -7,7 +7,6 @@ import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
 import { log } from 'console';
-import * as bcrypt from 'bcrypt';
 
 export class CreateUserUseCase
 	implements IUseCase<CreateUserRequest, CreateUserResponse>

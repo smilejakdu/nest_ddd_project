@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { log } from 'console';
 
 import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
 import { EditUserProfileUseCase } from './application/EditUserProfile/EditUserProfileUseCase';
@@ -9,17 +11,27 @@ import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
 import { UserEntity } from './infra/entity/User.entity';
 import { MysqlUserRepository } from './infra/mysql/MysqlUser.repository';
 import { UsersController } from './presentation/user.controller';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const JWT = process.env.JWT;
 
 @Module({
-	imports: [TypeOrmModule.forFeature([UserEntity])],
+	imports: [
+		TypeOrmModule.forFeature([UserEntity]),
+		JwtModule.register({
+			secret     : JWT,
+			signOptions: { expiresIn: '60s' },
+		}),
+	],
 	providers: [
 		CreateUserUseCase,
 		FindUserUseCase,
 		LoginUserUseCase,
 		EditUserProfileUseCase,
 		UsersController,
-		{
-			provide: 'USER_REPOSITORY',
+		{ // 만약에 생성자에서 @Inject 로 사용하고 싶을때
+			provide : 'USER_REPOSITORY',
 			useClass: MysqlUserRepository,
 		},
 	],
