@@ -12,10 +12,12 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
 	ApiOperation,
+	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger';
 import { log } from 'console';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
 import {
@@ -71,11 +73,13 @@ export class UsersController {
 		res.send('ok');
 	}
 
-	@ApiOperation({ summary: '회원찾기' })
+	@ApiResponse({ status: 500, description: '서버 에러' })
+	@UseGuards(JwtAuthGuard)
 	@ApiOkResponse({ description: '성공', type: FindUserResponse })
-	@Get('find_user')
-	async findUser(@Body() findUserRequest: FindUserRequest) {
-		return this.findUserUseCase.execute(findUserRequest);
+	@Get('profile')
+	async findUser(@User() user) {
+		log('findUser', user);
+		return user || false;
 	}
 
 	@UseGuards(JwtAuthGuard)

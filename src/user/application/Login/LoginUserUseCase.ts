@@ -16,10 +16,8 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	) {}
 
 	async execute(request: LoginRequest): Promise<LoginResponse> {
-		log("LoginUser_request")
 		const requestNickname = request.nickname;
-		const foundUser       = await this.userRepository.findByNickname(requestNickname);
-		log("LoginUser foundUser : " , foundUser);
+		const foundUser = await this.userRepository.findByNickname(requestNickname);
 
 		if (isUndefined(foundUser)) {
 			return {
@@ -29,18 +27,19 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		}
 
 		if (!(await LoginUserUseCase.checkPassword(request.password, foundUser))) {
-			log('foundUser : ', foundUser);
 			return {
 				ok: false,
 				error: 'Password is Wrong',
 			};
 		}
 
-    const payload = { nickname: foundUser.nickname.value, id:foundUser.id.toValue() };
-		log("payload : " , payload);
+		const payload = {
+			nickname: foundUser.nickname.value,
+			id: foundUser.id.toValue(),
+		};
 		return {
-			ok      : true,
-			token   : this.jwtService.sign(payload),
+			ok: true,
+			token: this.jwtService.sign(payload),
 		};
 	}
 

@@ -48,7 +48,6 @@ export class Result<T> {
 	}
 
 	public static ok<U>(value?: U): Result<U> {
-		log('Result.ok :', value);
 		// Result.ok : User {
 		// 	_id: UniqueEntityId { value: '5cf0291d-c103-49f1-805f-6b607f6d574b' },
 		// 	props: {

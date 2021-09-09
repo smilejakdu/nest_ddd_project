@@ -3,11 +3,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
-import { log } from 'console';
 
 @Injectable()
-export class FindUserUseCase
-	implements IUseCase<FindUserRequest, FindUserResponse>
+export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserResponse>
 {
 	private HAS_NOT_USER = 'Can`t found User.';
 
@@ -26,6 +24,7 @@ export class FindUserUseCase
 				error: this.HAS_NOT_USER,
 			};
 		}
+
 		return {
 			ok: true,
 			user: {

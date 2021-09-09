@@ -12,15 +12,17 @@ import { UserEntity } from './infra/entity/User.entity';
 import { MysqlUserRepository } from './infra/mysql/MysqlUser.repository';
 import { UsersController } from './presentation/user.controller';
 import dotenv from 'dotenv';
+import { AuthModule } from 'src/auth/auth.module';
 
 dotenv.config();
 const JWT = process.env.JWT;
-
+log('process.env.JWT :', process.env.JWT);
 @Module({
 	imports: [
+		AuthModule,
 		TypeOrmModule.forFeature([UserEntity]),
 		JwtModule.register({
-			secret     : JWT,
+			secret: 'jwt',
 			signOptions: { expiresIn: '60s' },
 		}),
 	],
@@ -30,8 +32,9 @@ const JWT = process.env.JWT;
 		LoginUserUseCase,
 		EditUserProfileUseCase,
 		UsersController,
-		{ // 만약에 생성자에서 @Inject 로 사용하고 싶을때
-			provide : 'USER_REPOSITORY',
+		{
+			// 만약에 생성자에서 @Inject 로 사용하고 싶을때
+			provide: 'USER_REPOSITORY',
 			useClass: MysqlUserRepository,
 		},
 	],
