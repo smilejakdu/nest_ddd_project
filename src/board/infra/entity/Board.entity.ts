@@ -32,11 +32,12 @@ export class BoardEntity extends CoreEntity {
 		example: 'userId',
 		description: 'userId',
 	})
-	@Column('varchar', { name: 'userId', length: 200 })
-	userId: string;
+	@Column('varchar', { name: 'UserId', length: 200 })
+	UserId: string;
 
+	@IsString()
+	@IsNotEmpty()
 	@ManyToOne(() => UserEntity, user => user.UserToBoards, {
-		onDelete: 'SET NULL',
 		onUpdate: 'CASCADE',
 	})
 	@JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])

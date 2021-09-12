@@ -12,7 +12,7 @@ export class BoardModelMapper {
 			{
 				boardTitle: BoardTitle.create(entity.title).value,
 				boardContent: BoardContent.create(entity.content).value,
-				userId: JwtAuthrization.create(entity.userId).value,
+				userId: JwtAuthrization.create(entity.UserId).value,
 				createdAt: entity.createdAt,
 			},
 			new UniqueEntityId(entity.id),

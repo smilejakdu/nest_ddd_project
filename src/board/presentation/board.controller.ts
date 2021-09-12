@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
 import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
@@ -16,8 +16,10 @@ import {
 import {
 	EditBoardRequest,
 	EditBoardResponse,
-} from '../application/EditBoard/dto/EditUserProfile.dto';
+} from '../application/EditBoard/dto/EditBoard.dto';
 import { EditBoardUseCase } from '../application/EditBoard/EditBoardUseCase';
+import { FindBoardResponse } from '../application/FindBoard/dto/FindBoard.dto';
+import { FindBoardUseCase } from '../application/FindBoard/FindBoardUseCase';
 
 @ApiInternalServerErrorResponse({ description: '서버 에러' })
 @ApiTags('BOARD')
@@ -25,7 +27,8 @@ import { EditBoardUseCase } from '../application/EditBoard/EditBoardUseCase';
 export class BoardsController {
 	constructor(
 		private createBoardUseCase: CreateBoardUseCase,
-		private editBoardUseCase: EditBoardUseCase,
+		private editBoardUseCase: EditBoardUseCase, // private findBoardUseCase: FindBoardUseCase,
+		private findBoardUseCase: FindBoardUseCase,
 	) {}
 
 	@ApiOperation({ summary: '게시판 작성' })
@@ -44,6 +47,22 @@ export class BoardsController {
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
 	async updateBoard(@User() user, @Body() editBoardRequest: EditBoardRequest) {
+		return this.editBoardUseCase.execute(editBoardRequest, user.id);
+	}
+
+	@ApiOperation({ summary: '게시판 가져오기' })
+	@ApiOkResponse({ description: '성공', type: FindBoardResponse })
+	@Get('find_board')
+	async FindBoard() {
+		log('123123');
+		return this.findBoardUseCase.execute();
+	}
+
+	@ApiOperation({ summary: '내 게시판 가져오기' })
+	@ApiOkResponse({ description: '성공', type: EditBoardResponse })
+	@UseGuards(JwtAuthGuard)
+	@Get('find_myboard')
+	async myBoardFind(@User() user, @Body() editBoardRequest: EditBoardRequest) {
 		return this.editBoardUseCase.execute(editBoardRequest, user.id);
 	}
 }

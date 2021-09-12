@@ -2,11 +2,7 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { Inject } from '@nestjs/common';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
-import {
-	EditBoardRequestDto,
-	EditBoardResponse,
-} from './dto/EditUserProfile.dto';
-import { IUserRepository } from 'src/user/infra/interface/IUserRepository';
+import { EditBoardRequestDto, EditBoardResponse } from './dto/EditBoard.dto';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
@@ -20,7 +16,7 @@ export class EditBoardUseCase
 	private HAS_NOT_BOARD = 'Can`t found board.';
 
 	constructor(
-		@Inject('UBOARD_REPOSITORY')
+		@Inject('UPDATE_REPOSITORY')
 		private boardRepository: IBoardRepository,
 	) {}
 
@@ -31,7 +27,6 @@ export class EditBoardUseCase
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
-		log('edit request :', request);
 		const foundBoard = await this.boardRepository.findByBoardId(request.id);
 		if (!foundBoard) {
 			return {

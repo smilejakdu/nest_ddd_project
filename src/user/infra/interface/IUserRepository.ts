@@ -9,5 +9,8 @@ export interface IUserRepository {
 
 	createPasswordHash(password: string): Promise<string> | undefined;
 
-	comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> | undefined;
+	comparePassword(
+		beforePassword: string,
+		afterPassword: string,
+	): Promise<boolean> | undefined;
 }

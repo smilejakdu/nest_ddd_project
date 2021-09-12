@@ -5,7 +5,9 @@ import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 
 @Injectable()
-export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserResponse> {
+export class FindUserUseCase
+	implements IUseCase<FindUserRequest, FindUserResponse>
+{
 	private HAS_NOT_USER = 'Can`t found User.';
 
 	constructor(
