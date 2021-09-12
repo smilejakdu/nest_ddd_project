@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { log } from 'console';
 
@@ -15,14 +15,14 @@ import dotenv from 'dotenv';
 import { AuthModule } from 'src/auth/auth.module';
 
 dotenv.config();
-const JWT = process.env.JWT;
-log('process.env.JWT :', process.env.JWT);
+const JWT = process.env.JWT as string;
+
 @Module({
 	imports: [
 		AuthModule,
 		TypeOrmModule.forFeature([UserEntity]),
 		JwtModule.register({
-			secret: 'jwt',
+			secret: JWT,
 			signOptions: { expiresIn: '60s' },
 		}),
 	],

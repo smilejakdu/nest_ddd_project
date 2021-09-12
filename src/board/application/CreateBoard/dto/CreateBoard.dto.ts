@@ -20,12 +20,9 @@ export class CreateBoardDto {
 	public content: string;
 }
 
-export class CreateBoardRequest extends PickType(BoardEntity, [
-	'title',
-	'content',
-]) {}
+export class CreateBoardRequest extends PickType(BoardEntity, ['title', 'content']) {}
 
 export class CreateBoardResponse extends CoreResponse {
-	@Column(() => CreateBoardDto)
+	@Column()
 	board?: CreateBoardDto;
 }

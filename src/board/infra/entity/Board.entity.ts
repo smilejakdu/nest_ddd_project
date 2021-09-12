@@ -24,4 +24,13 @@ export class BoardEntity extends CoreEntity {
 	})
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
+
+	@IsString()
+	@IsNotEmpty()
+	@ApiProperty({
+		example: 'userId',
+		description: 'userId',
+	})
+	@Column('varchar', { name: 'userId', length: 200 })
+	userId: string;
 }

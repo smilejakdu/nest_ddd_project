@@ -8,9 +8,7 @@ import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
 import { log } from 'console';
 
-export class CreateUserUseCase
-	implements IUseCase<CreateUserRequest, CreateUserResponse>
-{
+export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUserResponse> {
 	private DUPLICATE_NICKNAME_ERROR_MESSAGE = 'Request nickname was duplicated.';
 
 	constructor(
@@ -33,9 +31,7 @@ export class CreateUserUseCase
 			};
 		}
 
-		const passwordHash = await this.userRepository.createPasswordHash(
-			request.password,
-		);
+		const passwordHash = await this.userRepository.createPasswordHash(request.password);
 		userPasswordOrError.value.props.value = passwordHash;
 
 		const user = User.createNew({

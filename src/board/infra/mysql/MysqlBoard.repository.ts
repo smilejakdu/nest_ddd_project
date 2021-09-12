@@ -16,6 +16,7 @@ export class MysqlBoardRepository implements IBoardRepository {
 			this.boardRepository.create({
 				id: board.id.toValue().toString(),
 				title: board.title.value,
+				userId: board.userId.value,
 				content: board.content.value,
 				createdAt: board.createdAt,
 			}),

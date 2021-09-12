@@ -7,15 +7,18 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 import { UserEntity } from 'src/user/infra/entity/User.entity';
-import { UserModule } from 'src/user/user.module';
-import { jwtConstants } from './constants';
+import dotenv from 'dotenv';
+import { log } from 'console';
+
+dotenv.config();
+const JWT = process.env.JWT;
 
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([UserEntity]),
 		PassportModule,
 		JwtModule.register({
-			secret: 'jwt',
+			secret: JWT,
 			signOptions: { expiresIn: '1d' },
 		}),
 	],

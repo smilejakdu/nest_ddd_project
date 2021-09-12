@@ -1,11 +1,5 @@
 import { IsString } from 'class-validator';
-import {
-	DeleteDateColumn,
-	UpdateDateColumn,
-	CreateDateColumn,
-	Index,
-	PrimaryColumn,
-} from 'typeorm';
+import { DeleteDateColumn, UpdateDateColumn, CreateDateColumn, Index, PrimaryColumn } from 'typeorm';
 
 @Index('id', ['id'], { unique: true })
 export class CoreEntity {
