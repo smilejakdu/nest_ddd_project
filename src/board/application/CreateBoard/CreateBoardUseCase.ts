@@ -17,7 +17,6 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardRequest, CreateBo
 	) {}
 
 	async execute(request: CreateBoardRequest, userId: string): Promise<CreateBoardResponse> {
-		log('userId : ', userId);
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
