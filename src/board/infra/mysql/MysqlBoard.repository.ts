@@ -4,6 +4,7 @@ import { Board } from 'src/board/domain/Board';
 import { Repository } from 'typeorm';
 import { BoardEntity } from '../entity/Board.entity';
 import { IBoardRepository } from '../interface/IBoardRepository';
+import { BoardModelMapper } from '../dto/BoardModelMapper';
 
 export class MysqlBoardRepository implements IBoardRepository {
 	constructor(
@@ -25,13 +26,27 @@ export class MysqlBoardRepository implements IBoardRepository {
 		return board;
 	}
 
-	async findByTitle(title: string): Promise<Board> {
-		log('board repository title : ', title);
-		throw new Error('Method not implemented.');
+	async findByBoardId(id: string): Promise<Board> {
+		log('board repository id : ', id);
+		const foundBoardId = await this.boardRepository.findOne({
+			where: { id: id },
+			select: ['id', 'title', 'content', 'createdAt', 'userId'],
+		});
+		if (!foundBoardId) {
+			return undefined;
+		}
+		return BoardModelMapper.toDomain(foundBoardId);
 	}
 
-	myBoard(userId: string): Promise<string> {
-		log('board repository content : ', userId);
-		throw new Error('Method not implemented.');
+	async myBoard(userId: string): Promise<Board> | undefined {
+		const foundUsertoBoards = await this.boardRepository.find({
+			where: { userId: userId },
+			select: ['id', 'title', 'content', 'createdAt', 'userId'],
+		});
+
+		if (!foundUsertoBoards) {
+			return undefined;
+		}
+		return BoardModelMapper.toDomain(foundUsertoBoards);
 	}
 }

@@ -53,7 +53,10 @@ export class MysqlUserRepository implements IUserRepository {
 		return UserModelMapper.toDomain(foundUser);
 	}
 
-	async comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> {
+	async comparePassword(
+		beforePassword: string,
+		afterPassword: string,
+	): Promise<boolean> {
 		const result = await bcrypt.compare(afterPassword, beforePassword);
 		return result;
 	}

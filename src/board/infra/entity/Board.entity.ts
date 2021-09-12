@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 import { CoreEntity } from 'src/shared/entity/Core.entity';
-import { Column, Entity } from 'typeorm';
+import { UserEntity } from 'src/user/infra/entity/User.entity';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity({ schema: 'ddd_watcha', name: 'boards' })
 export class BoardEntity extends CoreEntity {
@@ -33,4 +34,11 @@ export class BoardEntity extends CoreEntity {
 	})
 	@Column('varchar', { name: 'userId', length: 200 })
 	userId: string;
+
+	@ManyToOne(() => UserEntity, user => user.UserToBoards, {
+		onDelete: 'SET NULL',
+		onUpdate: 'CASCADE',
+	})
+	@JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])
+	User: UserEntity;
 }

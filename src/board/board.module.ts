@@ -15,6 +15,10 @@ import { BoardsController } from './presentation/board.controller';
 			provide: 'BOARD_REPOSITORY',
 			useClass: MysqlBoardRepository,
 		},
+		{
+			provide: 'USER_REPOSITORY',
+			useClass: MysqlUserRepository,
+		},
 	],
 	exports: [TypeOrmModule],
 	controllers: [BoardsController],
