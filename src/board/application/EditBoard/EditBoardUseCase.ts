@@ -11,6 +11,7 @@ import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
+import { log } from 'console';
 
 export class EditBoardUseCase
 	implements IUseCase<EditBoardRequestDto, EditBoardResponse>
@@ -21,8 +22,6 @@ export class EditBoardUseCase
 	constructor(
 		@Inject('UBOARD_REPOSITORY')
 		private boardRepository: IBoardRepository,
-		@Inject('USER_REPOSITORY')
-		private userRepository: IUserRepository,
 	) {}
 
 	async execute(
@@ -32,6 +31,7 @@ export class EditBoardUseCase
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
+		log('edit request :', request);
 		const foundBoard = await this.boardRepository.findByBoardId(request.id);
 		if (!foundBoard) {
 			return {
@@ -50,12 +50,12 @@ export class EditBoardUseCase
 					boardTitle: boardTitleOrError.value,
 					boardContent: boardContentOrError.value,
 					userId: jwtAuthrizationOrError.value,
-					createdAt: 
-				}).value,
+					createdAt: foundBoard.createdAt,
+				},
 				new UniqueEntityId(request.id),
 			).value;
 
-			await this.boardRepository.save(user);
+			await this.boardRepository.save(board);
 
 			return {
 				ok: true,

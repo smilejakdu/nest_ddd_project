@@ -1,4 +1,5 @@
 import { log } from 'console';
+import { isEmpty } from 'lodash';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from 'src/board/domain/Board';
 import { Repository } from 'typeorm';
@@ -44,9 +45,10 @@ export class MysqlBoardRepository implements IBoardRepository {
 			select: ['id', 'title', 'content', 'createdAt', 'userId'],
 		});
 
-		if (!foundUsertoBoards) {
+		if (isEmpty(foundUsertoBoards)) {
 			return undefined;
 		}
-		return BoardModelMapper.toDomain(foundUsertoBoards);
+
+		return;
 	}
 }

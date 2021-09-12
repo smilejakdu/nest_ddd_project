@@ -5,5 +5,5 @@ export interface IBoardRepository {
 
 	findByBoardId(id: string): Promise<Board> | undefined;
 
-	myBoard(userId: string): Promise<string> | undefined;
+	myBoard(userId: string): Promise<Board> | undefined;
 }
