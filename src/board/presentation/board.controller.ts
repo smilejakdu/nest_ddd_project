@@ -50,6 +50,15 @@ export class BoardsController {
 		return this.editBoardUseCase.execute(editBoardRequest, user.id);
 	}
 
+	@ApiOperation({ summary: '게시판 삭제' })
+	@ApiOkResponse({ description: '성공', type: EditBoardResponse })
+	@UseGuards(JwtAuthGuard)
+	@Put('update')
+	async deleteBoard(@User() user, @Body() editBoardRequest: EditBoardRequest) {
+		return;
+		// return this.editBoardUseCase.execute(editBoardRequest, user.id);
+	}
+
 	@ApiOperation({ summary: '게시판 가져오기' })
 	@ApiOkResponse({ description: '성공', type: FindBoardResponse })
 	@Get('find_board')

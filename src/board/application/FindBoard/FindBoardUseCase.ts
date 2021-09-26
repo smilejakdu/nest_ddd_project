@@ -16,9 +16,7 @@ export class FindBoardUseCase
 		private readonly boardRepository: IBoardRepository,
 	) {}
 	async execute(): Promise<FindBoardResponse> {
-		log('222222');
 		const foundBoards = await this.boardRepository.findBoard();
-		log('333333');
 		if (isEmpty(foundBoards)) {
 			return {
 				ok: false,
