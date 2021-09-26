@@ -1,11 +1,13 @@
 import { Result } from '../../shared/core/Result';
-import { UserPassword } from './UserPassword';
+import {
+	UserPassword,
+	USER_PASSWORD_EMPTY,
+	USER_PASSWORD_NULL_OR_UNDEFINED,
+	USER_PASSWORD_MIN_LENGTH,
+} from './UserPassword';
 
 describe('UserPassword', () => {
 	const PASSWORD = '123456';
-	const USER_PASSWORD_EMPTY_ERROR_MESSAGE =
-		'UserPasswordString should not be empty.';
-	const MIN_LENGTH = 6;
 
 	let userPasswordOrError: Result<UserPassword>;
 
@@ -19,9 +21,7 @@ describe('UserPassword', () => {
 		userPasswordOrError = UserPassword.create('');
 
 		expect(userPasswordOrError.isSuccess).toBe(false);
-		expect(userPasswordOrError.errorValue()).toEqual(
-			USER_PASSWORD_EMPTY_ERROR_MESSAGE,
-		);
+		expect(userPasswordOrError.errorValue()).toEqual(USER_PASSWORD_EMPTY);
 	});
 
 	it('UserPassword String 은 null 이나 undefined 일 수 없습니다', () => {
@@ -30,11 +30,12 @@ describe('UserPassword', () => {
 
 		expect(userPasswordOrError.isSuccess).toBe(false);
 		expect(userPasswordOrErrorOfUndefined.isSuccess).toBe(false);
+
 		expect(userPasswordOrError.errorValue()).toEqual(
-			USER_PASSWORD_EMPTY_ERROR_MESSAGE,
+			USER_PASSWORD_NULL_OR_UNDEFINED,
 		);
 		expect(userPasswordOrErrorOfUndefined.errorValue()).toEqual(
-			USER_PASSWORD_EMPTY_ERROR_MESSAGE,
+			USER_PASSWORD_NULL_OR_UNDEFINED,
 		);
 	});
 
@@ -42,8 +43,6 @@ describe('UserPassword', () => {
 		userPasswordOrError = UserPassword.create('12345');
 
 		expect(userPasswordOrError.isSuccess).toBe(false);
-		expect(userPasswordOrError.errorValue()).toEqual(
-			'UserPasswordString should be longer than ' + MIN_LENGTH,
-		);
+		expect(userPasswordOrError.errorValue()).toEqual(USER_PASSWORD_MIN_LENGTH);
 	});
 });
