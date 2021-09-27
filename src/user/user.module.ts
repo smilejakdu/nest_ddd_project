@@ -9,7 +9,7 @@ import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
 import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
 
 import { UserEntity } from './infra/entity/User.entity';
-import { MysqlUserRepository } from './infra/mysql/MysqlUser.repository';
+import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
 import { UsersController } from './presentation/user.controller';
 import dotenv from 'dotenv';
 import { AuthModule } from 'src/auth/auth.module';
@@ -23,7 +23,7 @@ const JWT = process.env.JWT as string;
 		TypeOrmModule.forFeature([UserEntity]),
 		JwtModule.register({
 			secret: JWT,
-			signOptions: { expiresIn: '60s' },
+			signOptions: { expiresIn: '6000s' },
 		}),
 	],
 	providers: [

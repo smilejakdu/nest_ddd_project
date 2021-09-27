@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MysqlUserRepository } from 'src/user/infra/mysql/MysqlUser.repository';
+import { MysqlUserRepository } from 'src/user/infra/mysql/MysqlUserRepository';
 import { CreateBoardUseCase } from './application/CreateBoard/CreateBoardUseCase';
 import { EditBoardUseCase } from './application/EditBoard/EditBoardUseCase';
 import { FindBoardUseCase } from './application/FindBoard/FindBoardUseCase';
 import { BoardEntity } from './infra/entity/Board.entity';
-import { MysqlBoardRepository } from './infra/mysql/MysqlBoard.repository';
+import { MysqlBoardRepository } from './infra/mysql/MysqlBoardRepository';
 import { BoardsController } from './presentation/board.controller';
 
 @Module({

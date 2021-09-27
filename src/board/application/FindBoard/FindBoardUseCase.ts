@@ -3,7 +3,6 @@ import { log } from 'console';
 import { isEmpty } from 'lodash';
 import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { IUserRepository } from 'src/user/infra/interface/IUserRepository';
 import { FindBoardRequest, FindBoardResponse } from './dto/FindBoard.dto';
 
 export class FindBoardUseCase

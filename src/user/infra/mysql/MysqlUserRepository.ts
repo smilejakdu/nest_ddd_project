@@ -6,6 +6,7 @@ import { IUserRepository } from '../interface/IUserRepository';
 import { UserModelMapper } from '../dto/UserModelMapper';
 import { UserEntity } from '../entity/User.entity';
 import * as bcrypt from 'bcrypt';
+import { log } from 'console';
 
 export class MysqlUserRepository implements IUserRepository {
 	constructor(
@@ -46,7 +47,7 @@ export class MysqlUserRepository implements IUserRepository {
 			{ nickname },
 			{ select: ['id', 'nickname', 'password', 'createdAt'] },
 		);
-
+		log('foundUser: ', foundUser);
 		if (!foundUser) {
 			return undefined;
 		}

@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { log } from 'console';
 
 @Injectable()
 export class FindUserUseCase
@@ -18,7 +19,6 @@ export class FindUserUseCase
 	async execute(request: FindUserRequest): Promise<FindUserResponse> {
 		const requestNickname = request.nickname;
 		const foundUser = await this.userRepository.findByNickname(requestNickname);
-
 		if (!foundUser) {
 			return {
 				ok: false,

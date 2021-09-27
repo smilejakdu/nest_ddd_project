@@ -2,16 +2,14 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { Inject } from '@nestjs/common';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
-import { EditBoardRequestDto, EditBoardResponse } from './dto/EditBoard.dto';
+import { EditBoardRequest, EditBoardResponse } from './dto/EditBoard.dto';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 import { log } from 'console';
 
-export class EditBoardUseCase
-	implements IUseCase<EditBoardRequestDto, EditBoardResponse>
-{
+export class EditBoardUseCase implements IUseCase<EditBoardRequest, EditBoardResponse> {
 	private FAIL_UPDATE = 'Can`t modify board.';
 	private HAS_NOT_BOARD = 'Can`t found board.';
 
@@ -20,10 +18,7 @@ export class EditBoardUseCase
 		private boardRepository: IBoardRepository,
 	) {}
 
-	async execute(
-		request: EditBoardRequestDto,
-		userId: string,
-	): Promise<EditBoardResponse> {
+	async execute(request: EditBoardRequest, userId: string): Promise<EditBoardResponse> {
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
