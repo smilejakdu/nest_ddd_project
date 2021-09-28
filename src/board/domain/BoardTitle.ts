@@ -7,8 +7,8 @@ interface BoardTitleProps {
 	value: string;
 }
 
-export const BOARD_TITLE_SHOULD_NOT_EMPTY = 'board title should be not empty.';
-export const BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED = 'board title should be not null or defined.';
+export const BOARD_TITLE_SHOULD_NOT_EMPTY = 'BoardTitle should be not empty.';
+export const BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED = 'BoardTitle should be not null or defined.';
 
 export class BoardTitle extends ValueObject<BoardTitleProps> {
 	static create(boardTitleString: string): Result<BoardTitle> {

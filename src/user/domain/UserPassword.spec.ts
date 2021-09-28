@@ -31,12 +31,8 @@ describe('UserPassword', () => {
 		expect(userPasswordOrError.isSuccess).toBe(false);
 		expect(userPasswordOrErrorOfUndefined.isSuccess).toBe(false);
 
-		expect(userPasswordOrError.errorValue()).toEqual(
-			USER_PASSWORD_NULL_OR_UNDEFINED,
-		);
-		expect(userPasswordOrErrorOfUndefined.errorValue()).toEqual(
-			USER_PASSWORD_NULL_OR_UNDEFINED,
-		);
+		expect(userPasswordOrError.errorValue()).toEqual(USER_PASSWORD_NULL_OR_UNDEFINED);
+		expect(userPasswordOrErrorOfUndefined.errorValue()).toEqual(USER_PASSWORD_NULL_OR_UNDEFINED);
 	});
 
 	it('UserPassword String 은 최소길이를 넘기지 않을 경우엔 생성이 불가합니다.', () => {

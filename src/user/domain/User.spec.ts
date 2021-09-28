@@ -31,9 +31,9 @@ describe('User', () => {
 
 		expect(userOrError.value.nickname).toEqual(userNickname);
 		expect(userOrError.value.nickname.value).toEqual(USER_NICKNAME);
-		expect(
-			`${createdAt.getFullYear()}-${createdAt.getMonth()}-${createdAt.getDate()}`,
-		).toEqual(`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`);
+		expect(`${createdAt.getFullYear()}-${createdAt.getMonth()}-${createdAt.getDate()}`).toEqual(
+			`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`,
+		);
 		expect(userOrError.value.password).toEqual(userPassword);
 		expect(userOrError.value.password.value).toEqual(USER_PASSWORD);
 	});
