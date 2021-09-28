@@ -1,18 +1,19 @@
 import { Result } from '../../shared/core/Result';
-import { UserNickname } from './UserNickname';
+import {
+	USER_NICKNAME_EMPTY_ERROR_MESSAGE,
+	USER_NICKNAME_NOT_NULL_OR_UNDEFINED,
+	UserNickname,
+} from './UserNickname';
 
 describe('UserNickname', () => {
 	const USER_NICKNAME = 'ash';
-	const USER_NICKNAME_EMPTY_ERROR_MESSAGE =
-		'userNicknameString should not be empty.';
-
 	let userNicknameOrError: Result<UserNickname>;
 
 	beforeAll(() => {
 		userNicknameOrError = UserNickname.create(USER_NICKNAME);
 	});
 
-	it('it creates 생성되는지 확인', () => {
+	it('creates 생성되는지 확인', () => {
 		expect(userNicknameOrError.isSuccess).toBe(true);
 	});
 
@@ -20,9 +21,7 @@ describe('UserNickname', () => {
 		userNicknameOrError = UserNickname.create('');
 
 		expect(userNicknameOrError.isSuccess).toBe(false);
-		expect(userNicknameOrError.errorValue()).toEqual(
-			USER_NICKNAME_EMPTY_ERROR_MESSAGE,
-		);
+		expect(userNicknameOrError.errorValue()).toEqual(USER_NICKNAME_EMPTY_ERROR_MESSAGE);
 	});
 
 	it('UserNickname String 은 null 이나 undefined 일 수 없습니다', () => {
@@ -32,11 +31,9 @@ describe('UserNickname', () => {
 		expect(userNicknameOrError.isSuccess).toBe(false);
 		expect(userNicknameOrErrorOfUndefined.isSuccess).toBe(false);
 
-		expect(userNicknameOrError.errorValue()).toEqual(
-			USER_NICKNAME_EMPTY_ERROR_MESSAGE,
-		);
+		expect(userNicknameOrError.errorValue()).toEqual(USER_NICKNAME_NOT_NULL_OR_UNDEFINED);
 		expect(userNicknameOrErrorOfUndefined.errorValue()).toEqual(
-			USER_NICKNAME_EMPTY_ERROR_MESSAGE,
+			USER_NICKNAME_NOT_NULL_OR_UNDEFINED,
 		);
 	});
 });

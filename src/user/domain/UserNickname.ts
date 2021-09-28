@@ -7,14 +7,17 @@ interface UserNicknameProps {
 	value: string;
 }
 
+export const USER_NICKNAME_EMPTY_ERROR_MESSAGE = 'userNicknameString should not be empty.';
+export const USER_NICKNAME_NOT_NULL_OR_UNDEFINED = 'userNicknameString is not null or undefined.';
+
 export class UserNickname extends ValueObject<UserNicknameProps> {
 	static create(userNicknameString: string): Result<UserNickname> {
 		if (isEmpty(userNicknameString)) {
-			return Result.fail('userNicknameString should not be empty.');
+			return Result.fail(USER_NICKNAME_EMPTY_ERROR_MESSAGE);
 		}
 
 		if (isNil(userNicknameString)) {
-			return Result.fail('userNicknameString is not null or undefined.');
+			return Result.fail(USER_NICKNAME_NOT_NULL_OR_UNDEFINED);
 		}
 
 		return Result.ok(new UserNickname({ value: userNicknameString }));
