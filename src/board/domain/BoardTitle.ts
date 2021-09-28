@@ -1,14 +1,23 @@
+import { isEmpty, isNil } from 'lodash';
+
 import { Result } from 'src/shared/core/Result';
 import { ValueObject } from '../../shared/dto/ValueObject';
-import { isEmpty } from 'lodash';
 
 interface BoardTitleProps {
 	value: string;
 }
+
+export const BOARD_TITLE_SHOULD_NOT_EMPTY = 'board title should be not empty.';
+export const BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED = 'board title should be not null or defined.';
+
 export class BoardTitle extends ValueObject<BoardTitleProps> {
 	static create(boardTitleString: string): Result<BoardTitle> {
 		if (isEmpty(boardTitleString)) {
-			return Result.fail('board title should not be empty.');
+			return Result.fail(BOARD_TITLE_SHOULD_NOT_EMPTY);
+		}
+
+		if (isNil(boardTitleString)) {
+			return Result.fail(BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED);
 		}
 
 		return Result.ok(new BoardTitle({ value: boardTitleString }));
