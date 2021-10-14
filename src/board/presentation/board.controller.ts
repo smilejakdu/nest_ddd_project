@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
 import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
@@ -13,10 +13,12 @@ import {
 	CreateBoardRequest,
 	CreateBoardResponse,
 } from '../application/CreateBoard/dto/CreateBoard.dto';
+import { DeleteBoardUseCase } from '../application/DeleteBoard/DeleteBoardUseCase';
 import {
-	EditBoardRequest,
-	EditBoardResponse,
-} from '../application/EditBoard/dto/EditBoard.dto';
+	DeleteBoardRequest,
+	DeleteBoardResponse,
+} from '../application/DeleteBoard/dto/DeleteBoard.dto';
+import { EditBoardRequest, EditBoardResponse } from '../application/EditBoard/dto/EditBoard.dto';
 import { EditBoardUseCase } from '../application/EditBoard/EditBoardUseCase';
 import { FindBoardResponse } from '../application/FindBoard/dto/FindBoard.dto';
 import { FindBoardUseCase } from '../application/FindBoard/FindBoardUseCase';
@@ -29,16 +31,14 @@ export class BoardsController {
 		private createBoardUseCase: CreateBoardUseCase,
 		private editBoardUseCase: EditBoardUseCase, // private findBoardUseCase: FindBoardUseCase,
 		private findBoardUseCase: FindBoardUseCase,
+		private deleteBoardUseCase: DeleteBoardUseCase,
 	) {}
 
 	@ApiOperation({ summary: '게시판 작성' })
 	@ApiOkResponse({ description: '성공', type: CreateBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
-	async createBoard(
-		@User() user,
-		@Body() createBoardRequest: CreateBoardRequest,
-	) {
+	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardRequest) {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
 	}
 
@@ -51,19 +51,17 @@ export class BoardsController {
 	}
 
 	@ApiOperation({ summary: '게시판 삭제' })
-	@ApiOkResponse({ description: '성공', type: EditBoardResponse })
+	@ApiOkResponse({ description: '성공', type: DeleteBoardResponse })
 	@UseGuards(JwtAuthGuard)
-	@Put('update')
-	async deleteBoard(@User() user, @Body() editBoardRequest: EditBoardRequest) {
-		return;
-		// return this.editBoardUseCase.execute(editBoardRequest, user.id);
+	@Delete('delete')
+	async deleteBoard(@User() user, @Body() deleteBoardRequest: DeleteBoardRequest) {
+		return this.deleteBoardUseCase.execute(deleteBoardRequest, user.id);
 	}
 
 	@ApiOperation({ summary: '게시판 가져오기' })
 	@ApiOkResponse({ description: '성공', type: FindBoardResponse })
 	@Get('find_board')
 	async FindBoard() {
-		log('123123');
 		return this.findBoardUseCase.execute();
 	}
 

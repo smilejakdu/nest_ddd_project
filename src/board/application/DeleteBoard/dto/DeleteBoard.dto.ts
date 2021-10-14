@@ -8,5 +8,5 @@ export class DeleteBoardRequest extends PickType(BoardEntity, ['id']) {}
 
 export class DeleteBoardResponse extends CoreResponse {
 	@Column()
-	id: number;
+	id?: number;
 }

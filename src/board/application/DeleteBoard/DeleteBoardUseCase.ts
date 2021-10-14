@@ -4,6 +4,7 @@ import { IUseCase } from 'src/shared/core/IUseCase';
 import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
 import { DeleteBoardRequest, DeleteBoardResponse } from './dto/DeleteBoard.dto';
 import { ReturningStatementNotSupportedError } from 'typeorm';
+import { log } from 'console';
 
 export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBoardResponse> {
 	constructor(
@@ -11,7 +12,14 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 		private readonly boardRepository: IBoardRepository,
 	) {}
 
-	async execute(request: DeleteBoardRequest, userId?: string): Promise<DeleteBoardResponse> {
+	async execute(boardId: DeleteBoardRequest, userId: any): Promise<DeleteBoardResponse> {
+		log(boardId);
+		const findBoard = await this.boardRepository.findByBoardId(boardId.id);
+		if (!findBoard) {
+			return {
+				code: 'DOES_NOT_BOARD',
+			};
+		}
 		return;
 	}
 }
