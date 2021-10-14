@@ -19,7 +19,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardRequest, CreateBo
 		try {
 			const requestTitle = request.title;
 			const requestContent = request.content;
-
+			console.log(userId);
 			const boardTitleOrError = BoardTitle.create(requestTitle);
 			const boardContentOrError = BoardContent.create(requestContent);
 			const jwtAuthrizationOrError = JwtAuthrization.create(userId);

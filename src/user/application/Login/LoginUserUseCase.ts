@@ -43,10 +43,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		};
 	}
 
-	private static async checkPassword(
-		requestPassword: string,
-		user: User,
-	): Promise<boolean> {
+	private static async checkPassword(requestPassword: string, user: User): Promise<boolean> {
 		return await bcrypt.compare(requestPassword, user.password.value);
 	}
 }

@@ -1,8 +1,5 @@
 import { IUseCase } from '../../../shared/core/IUseCase';
-import {
-	EditUserProfileRequestDto,
-	EditUserProfileResponse,
-} from './dto/EditUserProfile.dto';
+import { EditUserProfileRequestDto, EditUserProfileResponse } from './dto/EditUserProfile.dto';
 import { Inject } from '@nestjs/common';
 import { IUserRepository } from '../../infra/interface/IUserRepository';
 import { User } from '../../domain/User';
@@ -21,9 +18,7 @@ export class EditUserProfileUseCase
 		private userRepository: IUserRepository,
 	) {}
 
-	async execute(
-		request: EditUserProfileRequestDto,
-	): Promise<EditUserProfileResponse> {
+	async execute(request: EditUserProfileRequestDto): Promise<EditUserProfileResponse> {
 		try {
 			const foundUser = await this.userRepository.find(request.id);
 			if (!foundUser) {
@@ -43,9 +38,7 @@ export class EditUserProfileUseCase
 				};
 			}
 
-			const createHashPassword = await this.userRepository.createPasswordHash(
-				request.password,
-			);
+			const createHashPassword = await this.userRepository.createPasswordHash(request.password);
 			foundUser.nickname.props.value = request.nickname;
 			const user = User.create(
 				{
