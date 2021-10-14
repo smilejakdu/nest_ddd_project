@@ -17,7 +17,8 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 		const findBoard = await this.boardRepository.findByBoardId(boardId.id);
 		if (!findBoard) {
 			return {
-				code: 'DOES_NOT_BOARD',
+				ok: false,
+				error: 'does_not_board',
 			};
 		}
 		return;
