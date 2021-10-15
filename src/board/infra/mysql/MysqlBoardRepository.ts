@@ -60,4 +60,8 @@ export class MysqlBoardRepository implements IBoardRepository {
 
 		return foundBoards;
 	}
+
+	async deleteBoard(boardId: number): Promise<number> {
+		return;
+	}
 }

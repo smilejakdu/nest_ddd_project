@@ -13,14 +13,16 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 	) {}
 
 	async execute(boardId: DeleteBoardRequest, userId: any): Promise<DeleteBoardResponse> {
-		log(boardId);
 		const findBoard = await this.boardRepository.findByBoardId(boardId.id);
+
 		if (!findBoard) {
 			return {
 				ok: false,
 				error: 'does_not_board',
 			};
 		}
+
+		const deleteResponse = await this.boardRepository.deleteBoard(findBoard.id);
 		return;
 	}
 }

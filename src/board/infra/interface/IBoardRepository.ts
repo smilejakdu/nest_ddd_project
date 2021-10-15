@@ -9,4 +9,6 @@ export interface IBoardRepository {
 	myBoard(userId: string): Promise<BoardEntity[]> | undefined;
 
 	findBoard(): Promise<BoardEntity[]> | undefined;
+
+	deleteBoard(boardId: number): Promise<number> | undefined;
 }
