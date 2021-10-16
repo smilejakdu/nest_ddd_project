@@ -1,30 +1,28 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MysqlUserRepository } from 'src/user/infra/mysql/MysqlUserRepository';
+// UseCase
 import { CreateBoardUseCase } from './application/CreateBoard/CreateBoardUseCase';
-import { EditBoardUseCase } from './application/EditBoard/EditBoardUseCase';
+import { DeleteBoardUseCase } from './application/DeleteBoard/DeleteBoardUseCase';
+import { UpdateBoardUseCase } from './application/UpdateBoard/UpdateBoardUseCase';
 import { FindBoardUseCase } from './application/FindBoard/FindBoardUseCase';
+// Entity
 import { BoardEntity } from './infra/entity/Board.entity';
+// Repository
 import { MysqlBoardRepository } from './infra/mysql/MysqlBoardRepository';
+import { BOARD_REPOSITORY } from './infra/IBoardRepository';
+// Controller
 import { BoardsController } from './presentation/board.controller';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([BoardEntity])],
 	providers: [
 		CreateBoardUseCase,
-		EditBoardUseCase,
+		UpdateBoardUseCase,
 		BoardsController,
 		FindBoardUseCase,
+		DeleteBoardUseCase,
 		{
-			provide: 'BOARD_REPOSITORY',
-			useClass: MysqlBoardRepository,
-		},
-		{
-			provide: 'UPDATE_REPOSITORY',
-			useClass: MysqlBoardRepository,
-		},
-		{
-			provide: 'FIND_REPOSITORY',
+			provide: BOARD_REPOSITORY,
 			useClass: MysqlBoardRepository,
 		},
 	],

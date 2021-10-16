@@ -1,6 +1,6 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 
-import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserNickname } from '../../domain/UserNickname';
 import { UserPassword } from '../../domain/UserPassword';

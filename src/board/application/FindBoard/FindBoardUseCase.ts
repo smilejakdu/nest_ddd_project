@@ -1,17 +1,15 @@
 import { Inject } from '@nestjs/common';
 import { log } from 'console';
 import { isEmpty } from 'lodash';
-import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
+import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { FindBoardRequest, FindBoardResponse } from './dto/FindBoard.dto';
 
-export class FindBoardUseCase
-	implements IUseCase<FindBoardRequest, FindBoardResponse>
-{
+export class FindBoardUseCase implements IUseCase<FindBoardRequest, FindBoardResponse> {
 	private FAIL_FIND = 'Can`t find board.';
 
 	constructor(
-		@Inject('FIND_REPOSITORY')
+		@Inject('BOARD_REPOSITORY')
 		private readonly boardRepository: IBoardRepository,
 	) {}
 	async execute(): Promise<FindBoardResponse> {

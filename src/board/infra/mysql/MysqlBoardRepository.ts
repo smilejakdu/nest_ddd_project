@@ -1,10 +1,9 @@
-import { log } from 'console';
 import { isEmpty } from 'lodash';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from 'src/board/domain/Board';
 import { Repository } from 'typeorm';
 import { BoardEntity } from '../entity/Board.entity';
-import { IBoardRepository } from '../interface/IBoardRepository';
+import { IBoardRepository } from '../IBoardRepository';
 import { BoardModelMapper } from '../dto/BoardModelMapper';
 
 export class MysqlBoardRepository implements IBoardRepository {
@@ -28,7 +27,6 @@ export class MysqlBoardRepository implements IBoardRepository {
 	}
 
 	async findByBoardId(id: string): Promise<Board> {
-		log('board repository id : ', id);
 		const foundBoardId = await this.boardRepository.findOne({
 			where: { id: id },
 			select: ['id', 'title', 'content', 'createdAt', 'UserId'],
@@ -61,7 +59,7 @@ export class MysqlBoardRepository implements IBoardRepository {
 		return foundBoards;
 	}
 
-	async deleteBoard(boardId: number): Promise<number> {
-		return;
+	async deleteBoard(boardId: string): Promise<void> {
+		await this.boardRepository.delete(boardId);
 	}
 }

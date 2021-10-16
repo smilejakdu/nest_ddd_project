@@ -4,7 +4,7 @@ import { UserPassword } from 'src/user/domain/UserPassword';
 
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { User } from '../../domain/User';
-import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { IUserRepository } from '../../infra/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
 import { log } from 'console';
 

@@ -1,18 +1,21 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { log } from 'console';
-
-import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
-import { EditUserProfileUseCase } from './application/EditUserProfile/EditUserProfileUseCase';
-import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
-import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
-
-import { UserEntity } from './infra/entity/User.entity';
-import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
-import { UsersController } from './presentation/user.controller';
 import dotenv from 'dotenv';
 import { AuthModule } from 'src/auth/auth.module';
+
+// UseCase
+import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
+import { UpdateUserProfileUseCase } from './application/UpdateUserProfile/UpdateUserProfileUseCase';
+import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
+import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
+// Entity
+import { UserEntity } from './infra/entity/User.entity';
+// Repository
+import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
+// Controller
+import { UsersController } from './presentation/user.controller';
+import { USER_REPOSITORY } from './infra/IUserRepository';
 
 dotenv.config();
 const JWT = process.env.JWT as string;
@@ -30,11 +33,10 @@ const JWT = process.env.JWT as string;
 		CreateUserUseCase,
 		FindUserUseCase,
 		LoginUserUseCase,
-		EditUserProfileUseCase,
+		UpdateUserProfileUseCase,
 		UsersController,
 		{
-			// 만약에 생성자에서 @Inject 로 사용하고 싶을때
-			provide: 'USER_REPOSITORY',
+			provide: USER_REPOSITORY,
 			useClass: MysqlUserRepository,
 		},
 	],

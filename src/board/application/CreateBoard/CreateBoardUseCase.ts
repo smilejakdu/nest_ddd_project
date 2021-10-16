@@ -2,7 +2,7 @@ import { JwtAuthrization } from './../../../shared/domain/JwtEntityId';
 import { Inject } from '@nestjs/common';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { CreateBoardRequest, CreateBoardResponse } from './dto/CreateBoard.dto';
-import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
+import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';

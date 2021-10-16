@@ -1,10 +1,8 @@
 import { Inject } from '@nestjs/common';
 
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { IBoardRepository } from 'src/board/infra/interface/IBoardRepository';
+import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { DeleteBoardRequest, DeleteBoardResponse } from './dto/DeleteBoard.dto';
-import { ReturningStatementNotSupportedError } from 'typeorm';
-import { log } from 'console';
 
 export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBoardResponse> {
 	constructor(
@@ -12,8 +10,8 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 		private readonly boardRepository: IBoardRepository,
 	) {}
 
-	async execute(boardId: DeleteBoardRequest, userId: any): Promise<DeleteBoardResponse> {
-		const findBoard = await this.boardRepository.findByBoardId(boardId.id);
+	async execute(boardId): Promise<DeleteBoardResponse> {
+		const findBoard = await this.boardRepository.findByBoardId(boardId);
 
 		if (!findBoard) {
 			return {
@@ -22,7 +20,10 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 			};
 		}
 
-		const deleteResponse = await this.boardRepository.deleteBoard(findBoard.id);
-		return;
+		await this.boardRepository.deleteBoard(boardId);
+
+		return {
+			ok: true,
+		};
 	}
 }

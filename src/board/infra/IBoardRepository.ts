@@ -1,5 +1,7 @@
 import { Board } from 'src/board/domain/Board';
-import { BoardEntity } from '../entity/Board.entity';
+import { BoardEntity } from './entity/Board.entity';
+
+export const BOARD_REPOSITORY = 'BOARD_REPOSITORY';
 
 export interface IBoardRepository {
 	save(board: Board): Promise<Board>;
@@ -10,5 +12,5 @@ export interface IBoardRepository {
 
 	findBoard(): Promise<BoardEntity[]> | undefined;
 
-	deleteBoard(boardId: number): Promise<number> | undefined;
+	deleteBoard(boardId: string): Promise<void> | undefined;
 }

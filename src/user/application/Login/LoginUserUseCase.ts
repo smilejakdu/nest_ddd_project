@@ -1,9 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { isUndefined } from 'lodash';
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { IUserRepository } from 'src/user/infra/interface/IUserRepository';
+import { IUserRepository } from 'src/user/infra/IUserRepository';
 import { LoginRequest, LoginResponse } from './dto/LoginUser.dto';
-import { log } from 'console';
 import { User } from 'src/user/domain/User';
 import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';

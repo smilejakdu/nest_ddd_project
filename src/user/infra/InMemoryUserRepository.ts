@@ -1,6 +1,6 @@
 import { cloneDeep, find } from 'lodash';
 
-import { IUserRepository } from './interface/IUserRepository';
+import { IUserRepository } from './IUserRepository';
 import { User } from '../domain/User';
 import { log } from 'console';
 import * as bcrypt from 'bcrypt';
@@ -23,10 +23,7 @@ export class InMemoryUserRepository implements IUserRepository {
 		return find(this.items, item => item.nickname.value === nickname);
 	}
 
-	async comparePassword(
-		beforePassword: string,
-		afterPassword: string,
-	): Promise<boolean> {
+	async comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> {
 		return await bcrypt.compare(beforePassword, afterPassword);
 	}
 
@@ -34,11 +31,7 @@ export class InMemoryUserRepository implements IUserRepository {
 		return await bcrypt.hash(password, 10);
 	}
 
-	async editUser(
-		id: string,
-		nickname: string,
-		password: string,
-	): Promise<User> | undefined {
+	async editUser(id: string, nickname: string, password: string): Promise<User> | undefined {
 		return;
 	}
 }

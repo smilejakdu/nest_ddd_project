@@ -1,13 +1,16 @@
 import { IUseCase } from '../../../shared/core/IUseCase';
-import { EditUserProfileRequestDto, EditUserProfileResponse } from './dto/EditUserProfile.dto';
+import {
+	UpdateUserProfileRequestDto,
+	UpdateUserProfileResponse,
+} from './dto/UpdateUserProfile.dto';
 import { Inject } from '@nestjs/common';
-import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
-export class EditUserProfileUseCase
-	implements IUseCase<EditUserProfileRequestDto, EditUserProfileResponse>
+export class UpdateUserProfileUseCase
+	implements IUseCase<UpdateUserProfileRequestDto, UpdateUserProfileResponse>
 {
 	private FAIL_UPDATE = 'Can`t modify profile.';
 	private HAS_NOT_USER = 'Can`t found User.';
@@ -18,7 +21,7 @@ export class EditUserProfileUseCase
 		private userRepository: IUserRepository,
 	) {}
 
-	async execute(request: EditUserProfileRequestDto): Promise<EditUserProfileResponse> {
+	async execute(request: UpdateUserProfileRequestDto): Promise<UpdateUserProfileResponse> {
 		try {
 			const foundUser = await this.userRepository.find(request.id);
 			if (!foundUser) {

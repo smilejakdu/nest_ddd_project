@@ -1,4 +1,6 @@
-import { User } from '../../domain/User';
+import { User } from '../domain/User';
+
+export const USER_REPOSITORY = 'USER_REPOSITORY';
 
 export interface IUserRepository {
 	save(user: User): Promise<User>;
@@ -9,8 +11,5 @@ export interface IUserRepository {
 
 	createPasswordHash(password: string): Promise<string> | undefined;
 
-	comparePassword(
-		beforePassword: string,
-		afterPassword: string,
-	): Promise<boolean> | undefined;
+	comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> | undefined;
 }

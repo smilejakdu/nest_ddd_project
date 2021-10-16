@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '../../domain/User';
-import { IUserRepository } from '../interface/IUserRepository';
+import { IUserRepository } from '../IUserRepository';
 import { UserModelMapper } from '../dto/UserModelMapper';
 import { UserEntity } from '../entity/User.entity';
 import * as bcrypt from 'bcrypt';
@@ -54,10 +54,7 @@ export class MysqlUserRepository implements IUserRepository {
 		return UserModelMapper.toDomain(foundUser);
 	}
 
-	async comparePassword(
-		beforePassword: string,
-		afterPassword: string,
-	): Promise<boolean> {
+	async comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> {
 		const result = await bcrypt.compare(afterPassword, beforePassword);
 		return result;
 	}

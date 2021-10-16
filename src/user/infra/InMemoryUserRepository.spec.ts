@@ -1,4 +1,4 @@
-import { IUserRepository } from './interface/IUserRepository';
+import { IUserRepository } from './IUserRepository';
 import { User } from '../domain/User';
 import { InMemoryUserRepository } from './InMemoryUserRepository';
 import { UserPassword } from '../domain/UserPassword';

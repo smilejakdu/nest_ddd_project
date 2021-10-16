@@ -1,13 +1,4 @@
-import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	Put,
-	Req,
-	Res,
-	UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import {
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
@@ -24,16 +15,13 @@ import {
 	CreateUserResponse,
 } from '../application/CreateUser/dto/CreateUser.dto';
 import {
-	EditUserProfileRequest,
-	EditUserProfileResponse,
-} from '../application/EditUserProfile/dto/EditUserProfile.dto';
-import { EditUserProfileUseCase } from '../application/EditUserProfile/EditUserProfileUseCase';
+	UpdateUserProfileRequest,
+	UpdateUserProfileResponse,
+} from '../application/UpdateUserProfile/dto/UpdateUserProfile.dto';
+import { UpdateUserProfileUseCase } from '../application/UpdateUserProfile/UpdateUserProfileUseCase';
 import { FindUserResponse } from '../application/FindUser/dto/FindUser.dto';
 import { FindUserUseCase } from '../application/FindUser/FindUserUseCase';
-import {
-	LoginRequest,
-	LoginResponse,
-} from '../application/Login/dto/LoginUser.dto';
+import { LoginRequest, LoginResponse } from '../application/Login/dto/LoginUser.dto';
 import { LoginUserUseCase } from '../application/Login/LoginUserUseCase';
 
 @ApiInternalServerErrorResponse({ description: '서버 에러' })
@@ -44,7 +32,7 @@ export class UsersController {
 		private createUserUseCase: CreateUserUseCase,
 		private loginUserUseCase: LoginUserUseCase,
 		private findUserUseCase: FindUserUseCase,
-		private editUserProfileUseCase: EditUserProfileUseCase,
+		private updateUserProfileUseCase: UpdateUserProfileUseCase,
 	) {}
 
 	@ApiOperation({ summary: '회원가입' })
@@ -81,9 +69,9 @@ export class UsersController {
 
 	@UseGuards(JwtAuthGuard)
 	@ApiOperation({ summary: '프로필 수정' })
-	@ApiOkResponse({ description: '성공', type: EditUserProfileResponse })
+	@ApiOkResponse({ description: '성공', type: UpdateUserProfileResponse })
 	@Put('edit_user')
-	async editUser(@Body() editUserProfileRequest: EditUserProfileRequest) {
-		return this.editUserProfileUseCase.execute(editUserProfileRequest);
+	async editUser(@Body() updateUserProfileRequest: UpdateUserProfileRequest) {
+		return this.updateUserProfileUseCase.execute(updateUserProfileRequest);
 	}
 }

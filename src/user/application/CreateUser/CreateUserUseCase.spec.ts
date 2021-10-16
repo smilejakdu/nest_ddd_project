@@ -1,7 +1,7 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 
 import { CreateUserUseCase } from './CreateUserUseCase';
-import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserNickname } from '../../domain/UserNickname';
 import { UserPassword } from '../../domain/UserPassword';
@@ -26,10 +26,7 @@ describe('CreateUserUseCase', () => {
 		});
 	}
 
-	function givenFoundUserThatJoinedNaverMail(
-		nickname: string,
-		password: string,
-	) {
+	function givenFoundUserThatJoinedNaverMail(nickname: string, password: string) {
 		userRepository.findByNickname.calledWith('ash').mockResolvedValue(
 			User.createNew({
 				userNickname: UserNickname.create(nickname).value,

@@ -1,23 +1,23 @@
 import { mock, MockProxy } from 'jest-mock-extended';
 
-import { IUserRepository } from '../../infra/interface/IUserRepository';
+import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
-import { EditUserProfileUseCase } from './EditUserProfileUseCase';
+import { UpdateUserProfileUseCase } from './UpdateUserProfileUseCase';
 import { UserNickname } from 'src/user/domain/UserNickname';
 
-describe('EditUserProfileUseCase', () => {
+describe('UpdateUserProfileUseCase', () => {
 	const USER_ID = 'ID1';
 	const MODIFY_NICKNAME = 'MODIFIED';
 	const MODIFY_PWD = 'MODIFY_PWD';
 	const FAIL_UPDATE = 'Can`t modify profile.';
 
-	let uut: EditUserProfileUseCase;
+	let uut: UpdateUserProfileUseCase;
 	let userRepository: MockProxy<IUserRepository>;
 
 	beforeEach(() => {
 		userRepository = mock<IUserRepository>();
-		uut = new EditUserProfileUseCase(userRepository);
+		uut = new UpdateUserProfileUseCase(userRepository);
 	});
 
 	function givenFoundUserThatJoinedNaverMail() {
@@ -36,33 +36,33 @@ describe('EditUserProfileUseCase', () => {
 	it('변경이 잘 되는지', async () => {
 		givenFoundUserThatJoinedNaverMail();
 
-		const editUserProfileResponse = await uut.execute({
+		const updateUserProfileResponse = await uut.execute({
 			id: USER_ID,
 			nickname: MODIFY_NICKNAME,
 			password: MODIFY_PWD,
 		});
 
-		expect(editUserProfileResponse.ok).toBe(true);
+		expect(updateUserProfileResponse.ok).toBe(true);
 	});
 
 	it('유저이름, 패스워드 규칙 잘 이뤄지는지', async () => {
 		givenFoundUserThatJoinedNaverMail();
 
-		const editUserProfileResponseOfPasswordTest = await uut.execute({
+		const updateUserProfileResponseOfPasswordTest = await uut.execute({
 			id: USER_ID,
 			nickname: MODIFY_NICKNAME,
 			password: '1',
 		});
 
-		const editUserProfileResponseOfName = await uut.execute({
+		const updateUserProfileResponseOfName = await uut.execute({
 			id: USER_ID,
 			nickname: '',
 			password: MODIFY_PWD,
 		});
 
-		expect(editUserProfileResponseOfPasswordTest.ok).toBe(false);
-		expect(editUserProfileResponseOfName.ok).toBe(false);
-		expect(editUserProfileResponseOfPasswordTest.error).toBe(FAIL_UPDATE);
-		expect(editUserProfileResponseOfName.error).toBe(FAIL_UPDATE);
+		expect(updateUserProfileResponseOfPasswordTest.ok).toBe(false);
+		expect(updateUserProfileResponseOfName.ok).toBe(false);
+		expect(updateUserProfileResponseOfPasswordTest.error).toBe(FAIL_UPDATE);
+		expect(updateUserProfileResponseOfName.error).toBe(FAIL_UPDATE);
 	});
 });

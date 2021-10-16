@@ -2,8 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
-import { IUserRepository } from '../../infra/interface/IUserRepository';
-import { log } from 'console';
+import { IUserRepository } from '../../infra/IUserRepository';
 
 @Injectable()
 export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserResponse> {

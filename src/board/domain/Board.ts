@@ -21,12 +21,10 @@ interface BoardNewProps {
 
 export class Board extends AggregateRoot<BoardProps> {
 	static create(props: BoardProps, id?: UniqueEntityId): Result<Board> {
-		log('create boards : ', props);
 		return Result.ok(new Board(props, id));
 	}
 
 	static createNew(props: BoardNewProps): Result<Board> {
-		log('createNew boards : ', props);
 		return Board.create({ ...props, createdAt: new Date() });
 	}
 
