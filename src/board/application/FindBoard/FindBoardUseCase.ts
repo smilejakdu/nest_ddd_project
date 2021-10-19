@@ -1,6 +1,6 @@
-import { Inject } from '@nestjs/common';
-import { log } from 'console';
 import { isEmpty } from 'lodash';
+import { Inject } from '@nestjs/common';
+
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { FindBoardRequest, FindBoardResponse } from './dto/FindBoard.dto';

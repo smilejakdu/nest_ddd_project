@@ -3,7 +3,6 @@ import { AggregateRoot } from 'src/shared/domain/AggregateRoot';
 import { UniqueEntityId } from 'src/shared/domain/UniqueEntityId';
 import { BoardTitle } from './BoardTitle';
 import { BoardContent } from './BoardContent';
-import { log } from 'console';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 
 interface BoardProps {

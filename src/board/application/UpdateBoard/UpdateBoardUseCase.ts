@@ -1,6 +1,8 @@
-import { IUseCase } from '../../../shared/core/IUseCase';
 import { Inject } from '@nestjs/common';
+
+import { IUseCase } from '../../../shared/core/IUseCase';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
+
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoard.dto';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
