@@ -15,10 +15,7 @@ export class CreateUserDto {
 	public nickname: string;
 }
 
-export class CreateUserRequest extends PickType(UserEntity, [
-	'nickname',
-	'password',
-]) {}
+export class CreateUserRequest extends PickType(UserEntity, ['nickname', 'password']) {}
 
 export class CreateUserResponse extends CoreResponse {
 	@Column(() => CreateUserDto)
