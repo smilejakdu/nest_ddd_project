@@ -34,6 +34,11 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardRequest, CreateBo
 
 			return {
 				ok: true,
+				board: {
+					id: board.id.toValue(),
+					title: board.title.props.value,
+					content: board.content.props.value,
+				},
 			};
 		} catch (error) {
 			return {
