@@ -6,6 +6,7 @@ import { IUseCase } from 'src/shared/core/IUseCase';
 import { IUserRepository } from 'src/user/infra/IUserRepository';
 import { LoginRequest, LoginResponse } from './dto/LoginUser.dto';
 import { User } from 'src/user/domain/User';
+import { log } from 'console';
 
 export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	constructor(
@@ -25,7 +26,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 			};
 		}
 
-		if (this.userRepository.checkUserPassword(request.password, String(foundUser.password))) {
+		if (!this.userRepository.checkUserPassword(request.password, foundUser.password)) {
 			return {
 				ok: false,
 				error: 'Password is Wrong',
@@ -33,11 +34,13 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		}
 
 		const payload = {
-			nickname: foundUser.nickname,
 			id: foundUser.id,
+			nickname: foundUser.nickname,
 		};
+
 		return {
 			ok: true,
+			user: payload,
 			token: this.jwtService.sign(payload),
 		};
 	}

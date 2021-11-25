@@ -47,7 +47,7 @@ export class MysqlUserRepository implements IUserRepository {
 	async findUserByNickname(nickname: string): Promise<UserEntity> | undefined {
 		const foundUser = await this.userRepository
 			.createQueryBuilder('user')
-			.select(['user.id , user.nickname', 'user.createdAt'])
+			.select(['user.id', 'user.nickname', 'user.createdAt'])
 			.where('user.nickname =:nickname', { nickname })
 			.getOne();
 

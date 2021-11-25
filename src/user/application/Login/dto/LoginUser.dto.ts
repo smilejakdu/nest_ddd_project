@@ -15,12 +15,10 @@ export class LoginUserDto {
 	public nickname: string;
 }
 
-export class LoginRequest extends PickType(UserEntity, [
-	'nickname',
-	'password',
-]) {}
+export class LoginRequest extends PickType(UserEntity, ['nickname', 'password']) {}
 
 export class LoginResponse extends CoreResponse {
 	@Column()
+	user?: LoginUserDto;
 	token?: string;
 }

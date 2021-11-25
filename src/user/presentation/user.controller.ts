@@ -1,19 +1,10 @@
 import { Body, Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
-import {
-	ApiInternalServerErrorResponse,
-	ApiOkResponse,
-	ApiOperation,
-	ApiResponse,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { log } from 'console';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
-import {
-	CreateUserRequest,
-	CreateUserResponse,
-} from '../application/CreateUser/dto/CreateUser.dto';
+import { CreateUserRequest, CreateUserResponse } from '../application/CreateUser/dto/CreateUser.dto';
 import {
 	UpdateUserProfileRequest,
 	UpdateUserProfileResponse,
@@ -35,21 +26,21 @@ export class UsersController {
 		private updateUserProfileUseCase: UpdateUserProfileUseCase,
 	) {}
 
-	@ApiOperation({ summary: '회원가입' })
-	@ApiOkResponse({ description: '성공', type: CreateUserResponse })
+	@ApiOperation({ summary: 'signup' })
+	@ApiOkResponse({ description: 'success', type: CreateUserResponse })
 	@Post('signup')
 	async createUser(@Body() createUserRequest: CreateUserRequest) {
 		return this.createUserUseCase.execute(createUserRequest);
 	}
 
-	@ApiOperation({ summary: '로그인' })
-	@ApiOkResponse({ description: '성공', type: LoginResponse })
+	@ApiOperation({ summary: 'login' })
+	@ApiOkResponse({ description: 'success', type: LoginResponse })
 	@Post('login')
 	async loginUser(@Body() loginUserRequest: LoginRequest) {
 		return this.loginUserUseCase.execute(loginUserRequest);
 	}
 
-	@ApiOperation({ summary: '로그아웃' })
+	@ApiOperation({ summary: 'logout' })
 	@Post('logout')
 	async logOut(@Req() req, @Res() res) {
 		req.logout();
@@ -57,19 +48,17 @@ export class UsersController {
 		res.send('ok');
 	}
 
-	@ApiResponse({ status: 500, description: '서버 에러' })
+	@ApiResponse({ status: 500, description: 'server error' })
 	@UseGuards(JwtAuthGuard)
-	@ApiOkResponse({ description: '성공', type: FindUserResponse })
+	@ApiOkResponse({ description: 'success', type: FindUserResponse })
 	@Get('profile')
 	async findUser(@User() user) {
-		log('findUser', user);
 		return this.findUserUseCase.execute(user);
-		return user || false;
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@ApiOperation({ summary: '프로필 수정' })
-	@ApiOkResponse({ description: '성공', type: UpdateUserProfileResponse })
+	@ApiOperation({ summary: 'profile modify' })
+	@ApiOkResponse({ description: 'success', type: UpdateUserProfileResponse })
 	@Put('edit_user')
 	async editUser(@Body() updateUserProfileRequest: UpdateUserProfileRequest) {
 		return this.updateUserProfileUseCase.execute(updateUserProfileRequest);

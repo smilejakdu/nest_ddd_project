@@ -3,7 +3,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import dotenv from 'dotenv';
 import { AuthModule } from 'src/auth/auth.module';
-
 // UseCase
 import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
 import { UpdateUserProfileUseCase } from './application/UpdateUserProfile/UpdateUserProfileUseCase';
@@ -13,9 +12,9 @@ import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
 import { UserEntity } from './infra/entity/User.entity';
 // Repository
 import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
+import { USER_REPOSITORY } from './infra/IUserRepository';
 // Controller
 import { UsersController } from './presentation/user.controller';
-import { USER_REPOSITORY } from './infra/IUserRepository';
 
 dotenv.config();
 const JWT = process.env.JWT as string;
