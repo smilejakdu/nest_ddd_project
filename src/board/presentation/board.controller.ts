@@ -49,7 +49,7 @@ export class BoardsController {
 	@ApiOperation({ summary: 'get board' })
 	@ApiOkResponse({ description: 'success', type: FindBoardResponse })
 	@Get('find_board')
-	async FindBoard() {
+	async findBoard() {
 		return this.findBoardUseCase.execute();
 	}
 

@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
 
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
@@ -12,9 +12,11 @@ export class FindBoardUseCase implements IUseCase<FindBoardRequest, FindBoardRes
 		@Inject('BOARD_REPOSITORY')
 		private readonly boardRepository: IBoardRepository,
 	) {}
+
 	async execute(): Promise<FindBoardResponse> {
 		const foundBoards = await this.boardRepository.findBoard();
-		if (isEmpty(foundBoards)) {
+
+		if (isNil(foundBoards)) {
 			return {
 				ok: false,
 				error: this.FAIL_FIND,
