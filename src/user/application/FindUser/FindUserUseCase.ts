@@ -15,7 +15,7 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 
 	async execute(request: FindUserRequest): Promise<FindUserResponse> {
 		const requestNickname = request.nickname;
-		const foundUser = await this.userRepository.findByNickname(requestNickname);
+		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
 		if (!foundUser) {
 			return {
 				ok: false,
@@ -26,8 +26,8 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 		return {
 			ok: true,
 			user: {
-				id: foundUser.id.toValue().toString(),
-				nickname: foundUser.nickname.value,
+				id: foundUser.id.toString(),
+				nickname: foundUser.nickname.toString(),
 			},
 		};
 	}

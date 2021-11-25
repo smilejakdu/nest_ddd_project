@@ -11,12 +11,7 @@ import { BoardModule } from './board/board.module';
 import { LoggerMiddleware } from './shared/logger.middlewares';
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({ isGlobal: true }),
-		TypeOrmModule.forRoot(ormconfig),
-		UserModule,
-		BoardModule,
-	],
+	imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRoot(ormconfig), UserModule, BoardModule],
 	controllers: [AppController],
 	providers: [AppService],
 })

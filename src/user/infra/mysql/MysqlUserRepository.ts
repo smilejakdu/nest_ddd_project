@@ -33,7 +33,7 @@ export class MysqlUserRepository implements IUserRepository {
 		return hashedPassword;
 	}
 
-	async find(id: string): Promise<User> | undefined {
+	async findUserById(id: string): Promise<User> | undefined {
 		const foundUser = await this.userRepository.findOne({
 			where: { id },
 			select: ['id', 'nickname', 'password', 'createdAt'],
@@ -44,23 +44,22 @@ export class MysqlUserRepository implements IUserRepository {
 		return UserModelMapper.toDomain(foundUser);
 	}
 
-	async findByNicknameOrId(nickname: string, id: string): Promise<UserEntity> | undefined {
+	async findUserByNickname(nickname: string): Promise<UserEntity> | undefined {
 		const foundUser = await this.userRepository
 			.createQueryBuilder('user')
-			.select(['user.id , user.nickname', 'user.createdAt']);
+			.select(['user.id , user.nickname', 'user.createdAt'])
+			.where('user.nickname =:nickname', { nickname })
+			.getOne();
 
-		if (isNil(nickname) && isNil(id)) {
-			foundUser.getMany();
-			return foundUser.execute();
-		}
-
-		if (nickname) foundUser.andWhere('user.nickname := nickname', { nickname });
-		if (id) foundUser.andWhere('user.id :=id', { id });
-		return foundUser.execute();
+		return foundUser;
 	}
 
 	async comparePassword(beforePassword: string, afterPassword: string): Promise<boolean> {
 		const result = await bcrypt.compare(afterPassword, beforePassword);
 		return result;
+	}
+
+	async checkUserPassword(password: string, foundUserPassword: string): Promise<boolean> | undefined {
+		return await bcrypt.compare(password, foundUserPassword);
 	}
 }

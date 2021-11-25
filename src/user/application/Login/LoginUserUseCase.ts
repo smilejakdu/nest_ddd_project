@@ -1,11 +1,11 @@
+import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
-import { isUndefined } from 'lodash';
+import { JwtService } from '@nestjs/jwt';
+
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IUserRepository } from 'src/user/infra/IUserRepository';
 import { LoginRequest, LoginResponse } from './dto/LoginUser.dto';
 import { User } from 'src/user/domain/User';
-import bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 
 export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	constructor(
@@ -16,16 +16,16 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 
 	async execute(request: LoginRequest): Promise<LoginResponse> {
 		const requestNickname = request.nickname;
-		const foundUser = await this.userRepository.findByNickname(requestNickname);
+		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
 
-		if (isUndefined(foundUser)) {
+		if (isNil(foundUser)) {
 			return {
 				ok: false,
 				error: `Can not found nickname : ${requestNickname}`,
 			};
 		}
 
-		if (!(await LoginUserUseCase.checkPassword(request.password, foundUser))) {
+		if (this.userRepository.checkUserPassword(request.password, String(foundUser.password))) {
 			return {
 				ok: false,
 				error: 'Password is Wrong',
@@ -33,16 +33,12 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		}
 
 		const payload = {
-			nickname: foundUser.nickname.value,
-			id: foundUser.id.toValue(),
+			nickname: foundUser.nickname,
+			id: foundUser.id,
 		};
 		return {
 			ok: true,
 			token: this.jwtService.sign(payload),
 		};
-	}
-
-	private static async checkPassword(requestPassword: string, user: User): Promise<boolean> {
-		return await bcrypt.compare(requestPassword, user.password.value);
 	}
 }

@@ -1,3 +1,4 @@
+import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { UserPassword } from 'src/user/domain/UserPassword';
@@ -21,9 +22,9 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 		const userNicknameOrError = UserNickname.create(request.nickname);
 		const userPasswordOrError = UserPassword.create(request.password);
 
-		const foundUser = await this.userRepository.findByNickname(requestNickname);
+		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
 
-		if (foundUser) {
+		if (!isNil(foundUser)) {
 			return {
 				ok: false,
 				error: this.DUPLICATE_NICKNAME_ERROR_MESSAGE,
