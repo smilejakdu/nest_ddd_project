@@ -48,8 +48,8 @@ export class UsersController {
 		res.send('ok');
 	}
 
-	@ApiResponse({ status: 500, description: 'server error' })
 	@UseGuards(JwtAuthGuard)
+	@ApiResponse({ status: 500, description: 'server error' })
 	@ApiOkResponse({ description: 'success', type: FindUserResponse })
 	@Get('profile')
 	async findUser(@User() user) {
@@ -57,6 +57,7 @@ export class UsersController {
 	}
 
 	@UseGuards(JwtAuthGuard)
+	@ApiResponse({ status: 500, description: 'server error' })
 	@ApiOperation({ summary: 'profile modify' })
 	@ApiOkResponse({ description: 'success', type: UpdateUserProfileResponse })
 	@Put('edit_user')

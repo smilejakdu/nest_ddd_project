@@ -34,13 +34,13 @@ export class MysqlUserRepository implements IUserRepository {
 	}
 
 	async findUserById(id: string): Promise<User> | undefined {
-		const foundUser = await this.userRepository.findOne({
-			where: { id },
-			select: ['id', 'nickname', 'password', 'createdAt'],
-		});
-		if (!foundUser) {
-			return undefined;
-		}
+		const foundUser = await this.userRepository
+			.createQueryBuilder('user')
+			.select(['user.id', 'user.nickname', 'user.password', 'user.createdAt'])
+			.where('user.id =:id', { id })
+			.getOne();
+		log(foundUser);
+		if (isNil(foundUser)) return undefined;
 		return UserModelMapper.toDomain(foundUser);
 	}
 

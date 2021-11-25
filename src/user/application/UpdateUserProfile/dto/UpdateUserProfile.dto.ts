@@ -1,17 +1,24 @@
+import { Column, PrimaryColumn } from 'typeorm';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
+
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';
-import { PickType } from '@nestjs/swagger';
-import { UserEntity } from 'src/user/infra/entity/User.entity';
+import { UserEntity } from '../../../infra/entity/User.entity';
 
-export class UpdateUserProfileRequestDto extends PickType(UserEntity, [
-	'id',
-	'nickname',
-	'password',
-]) {}
+export class UpdateUserProfileResponseDto {
+	@PrimaryColumn()
+	@IsString()
+	public id: string;
 
-export class UpdateUserProfileRequest extends PickType(UserEntity, [
-	'id',
-	'nickname',
-	'password',
-]) {}
+	@IsString()
+	@IsNotEmpty()
+	@ApiProperty({ example: 'ash', description: 'nickname' })
+	public nickname: string;
+}
 
-export class UpdateUserProfileResponse extends CoreResponse {}
+export class UpdateUserProfileRequest extends PickType(UserEntity, ['id', 'nickname', 'password']) {}
+
+export class UpdateUserProfileResponse extends CoreResponse {
+	@Column()
+	user?: UpdateUserProfileResponseDto;
+}
