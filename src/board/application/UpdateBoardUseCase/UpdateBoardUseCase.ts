@@ -47,9 +47,13 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 			).value;
 
 			await this.boardRepository.save(board);
-
 			return {
 				ok: true,
+				board: {
+					id: board.props.userId.value,
+					title: board.title.props.value,
+					content: board.content.props.value,
+				},
 			};
 		} catch (error) {
 			return {

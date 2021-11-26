@@ -27,7 +27,7 @@ export class BoardsController {
 		private deleteBoardUseCase: DeleteBoardUseCase,
 	) {}
 
-	@ApiOperation({ summary: 'board create' })
+	@ApiOperation({ summary: 'create board' })
 	@ApiOkResponse({ description: 'success', type: CreateBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
@@ -35,7 +35,7 @@ export class BoardsController {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
 	}
 
-	@ApiOperation({ summary: 'board modify' })
+	@ApiOperation({ summary: 'update board' })
 	@ApiOkResponse({ description: 'success', type: UpdateBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Put('update')

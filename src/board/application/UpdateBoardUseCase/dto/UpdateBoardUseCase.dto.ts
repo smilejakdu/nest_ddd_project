@@ -4,4 +4,10 @@ import { BoardEntity } from 'src/board/infra/entity/Board.entity';
 
 export class UpdateBoardRequest extends PickType(BoardEntity, ['id', 'title', 'content']) {}
 
-export class UpdateBoardResponse extends CoreResponse {}
+export class UpdateBoardResponse extends CoreResponse {
+	board?: {
+		id: string;
+		title: string;
+		content: string;
+	};
+}
