@@ -17,7 +17,7 @@ export class MysqlBoardRepository implements IBoardRepository {
 			this.boardRepository.create({
 				id: board.id.toValue().toString(),
 				title: board.title.value,
-				UserId: board.userId.value,
+				userId: board.userId.value,
 				content: board.content.value,
 				createdAt: board.createdAt,
 			}),
@@ -29,7 +29,7 @@ export class MysqlBoardRepository implements IBoardRepository {
 	async findByBoardId(id: string): Promise<Board> {
 		const foundBoardId = await this.boardRepository.findOne({
 			where: { id: id },
-			select: ['id', 'title', 'content', 'createdAt', 'UserId'],
+			select: ['id', 'title', 'content', 'createdAt', 'userId'],
 		});
 		if (!foundBoardId) {
 			return undefined;
@@ -38,15 +38,16 @@ export class MysqlBoardRepository implements IBoardRepository {
 	}
 
 	async myBoard(userId: string): Promise<BoardEntity[]> {
-		const foundUsertoBoards = await this.boardRepository.find({
-			where: { UserId: userId },
-			select: ['id', 'title', 'content', 'UserId'],
-		});
+		const foundMyBoard = await this.boardRepository
+			.createQueryBuilder('board')
+			.where('board.userId =:userId', { userId })
+			.execute();
 
-		if (isEmpty(foundUsertoBoards)) {
+		if (isEmpty(foundMyBoard)) {
 			throw new Error('나의 게시물이 없습니다.');
 		}
-		return foundUsertoBoards;
+
+		return foundMyBoard;
 	}
 
 	async findBoard(): Promise<BoardEntity[]> {

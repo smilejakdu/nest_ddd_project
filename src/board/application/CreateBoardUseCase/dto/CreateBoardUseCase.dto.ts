@@ -1,5 +1,5 @@
-import { CoreResponse } from './../../../../shared/dto/CoreResponse';
-import { BoardEntity } from './../../../infra/entity/Board.entity';
+import { CoreResponse } from '../../../../shared/dto/CoreResponse';
+import { BoardEntity } from '../../../infra/entity/Board.entity';
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { PrimaryColumn, Column } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';

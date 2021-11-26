@@ -4,7 +4,7 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
-import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoard.dto';
+import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoardUseCase.dto';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';

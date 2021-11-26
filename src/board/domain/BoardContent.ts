@@ -8,8 +8,7 @@ interface BoardContentProps {
 }
 
 export const BOARD_CONTENT_SHOULD_NOT_BE_EMPTY = 'BoardContent should not be empty.';
-export const BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED =
-	'BoardContent should not be null or undefined.';
+export const BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED = 'BoardContent should not be null or undefined.';
 
 export class BoardContent extends ValueObject<BoardContentProps> {
 	static create(boardContentString: string): Result<BoardContent> {

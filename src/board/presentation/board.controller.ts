@@ -1,15 +1,19 @@
-import { Body, Controller, Delete, Get, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
-import { CreateBoardUseCase } from '../application/CreateBoard/CreateBoardUseCase';
-import { CreateBoardRequest, CreateBoardResponse } from '../application/CreateBoard/dto/CreateBoard.dto';
-import { DeleteBoardUseCase } from '../application/DeleteBoard/DeleteBoardUseCase';
-import { DeleteBoardRequest, DeleteBoardResponse } from '../application/DeleteBoard/dto/DeleteBoard.dto';
-import { UpdateBoardRequest, UpdateBoardResponse } from '../application/UpdateBoard/dto/UpdateBoard.dto';
-import { UpdateBoardUseCase } from '../application/UpdateBoard/UpdateBoardUseCase';
-import { FindBoardResponse } from '../application/FindBoard/dto/FindBoard.dto';
-import { FindBoardUseCase } from '../application/FindBoard/FindBoardUseCase';
+// Request , Response
+import { CreateBoardRequest, CreateBoardResponse } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
+import { DeleteBoardRequest, DeleteBoardResponse } from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
+import { UpdateBoardRequest, UpdateBoardResponse } from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
+import { FindBoardResponse } from '../application/FindBoardUseCase/dto/FindBoardUseCase.dto';
+// UseCase
+import { UpdateBoardUseCase } from '../application/UpdateBoardUseCase/UpdateBoardUseCase';
+import { FindBoardUseCase } from '../application/FindBoardUseCase/FindBoardUseCase';
+import { CreateBoardUseCase } from '../application/CreateBoardUseCase/CreateBoardUseCase';
+import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoardUseCase';
+import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
+import { log } from 'console';
 
 @ApiInternalServerErrorResponse({ description: 'server error' })
 @ApiTags('BOARD')
@@ -19,6 +23,7 @@ export class BoardsController {
 		private createBoardUseCase: CreateBoardUseCase,
 		private updateBoardUseCase: UpdateBoardUseCase,
 		private findBoardUseCase: FindBoardUseCase,
+		private findMyBoardUseCase: FindMyBoardUseCase,
 		private deleteBoardUseCase: DeleteBoardUseCase,
 	) {}
 
@@ -54,10 +59,11 @@ export class BoardsController {
 	}
 
 	@ApiOperation({ summary: 'get my board' })
-	@ApiOkResponse({ description: 'success', type: UpdateBoardResponse })
+	@ApiOkResponse({ description: 'success', type: FindBoardResponse })
 	@UseGuards(JwtAuthGuard)
-	@Get('find_myboard')
-	async myBoardFind(@User() user, @Body() updateBoardRequest: UpdateBoardRequest) {
-		return this.updateBoardUseCase.execute(updateBoardRequest, user.id);
+	@Get('myboard')
+	async myBoardFind(@User() user) {
+		log(user);
+		return this.findMyBoardUseCase.execute(user.id);
 	}
 }

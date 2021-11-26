@@ -1,7 +1,7 @@
-import { JwtAuthrization } from './../../../shared/domain/JwtEntityId';
+import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 import { Inject } from '@nestjs/common';
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { CreateBoardRequest, CreateBoardResponse } from './dto/CreateBoard.dto';
+import { CreateBoardRequest, CreateBoardResponse } from './dto/CreateBoardUseCase.dto';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';

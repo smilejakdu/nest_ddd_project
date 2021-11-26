@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // UseCase
-import { CreateBoardUseCase } from './application/CreateBoard/CreateBoardUseCase';
-import { DeleteBoardUseCase } from './application/DeleteBoard/DeleteBoardUseCase';
-import { UpdateBoardUseCase } from './application/UpdateBoard/UpdateBoardUseCase';
-import { FindBoardUseCase } from './application/FindBoard/FindBoardUseCase';
+import { CreateBoardUseCase } from './application/CreateBoardUseCase/CreateBoardUseCase';
+import { DeleteBoardUseCase } from './application/DeleteBoardUseCase/DeleteBoardUseCase';
+import { UpdateBoardUseCase } from './application/UpdateBoardUseCase/UpdateBoardUseCase';
+import { FindBoardUseCase } from './application/FindBoardUseCase/FindBoardUseCase';
+import { FindMyBoardUseCase } from './application/FindMyBoardUseCase/FindMyBoardUseCase';
 // Entity
 import { BoardEntity } from './infra/entity/Board.entity';
 // Repository
@@ -20,6 +21,7 @@ import { BoardsController } from './presentation/board.controller';
 		UpdateBoardUseCase,
 		BoardsController,
 		FindBoardUseCase,
+		FindMyBoardUseCase,
 		DeleteBoardUseCase,
 		{
 			provide: BOARD_REPOSITORY,

@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
-import { DeleteBoardRequest, DeleteBoardResponse } from './dto/DeleteBoard.dto';
+import { DeleteBoardRequest, DeleteBoardResponse } from './dto/DeleteBoardUseCase.dto';
 
 export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBoardResponse> {
 	constructor(

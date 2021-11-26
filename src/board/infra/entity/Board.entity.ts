@@ -33,7 +33,7 @@ export class BoardEntity extends CoreEntity {
 		description: 'userId',
 	})
 	@Column('varchar', { name: 'UserId', length: 200 })
-	UserId: string;
+	userId: string;
 
 	@IsString()
 	@IsNotEmpty()
