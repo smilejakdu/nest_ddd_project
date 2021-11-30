@@ -1,8 +1,10 @@
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, MinLength } from 'class-validator';
-import { CoreEntity } from 'src/shared/entity/Core.entity';
-import { UserEntity } from 'src/user/infra/entity/User.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+// Entity
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
+import { UserEntity } from 'src/user/infra/entity/UserEntity';
+import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 
 @Entity({ schema: 'ddd_watcha', name: 'boards' })
 export class BoardEntity extends CoreEntity {
@@ -42,4 +44,7 @@ export class BoardEntity extends CoreEntity {
 	})
 	@JoinColumn([{ name: 'UserId', referencedColumnName: 'id' }])
 	User: UserEntity;
+
+	@OneToMany(() => CommentEntity, comments => comments.Board)
+	BoardToComments: CommentEntity[];
 }

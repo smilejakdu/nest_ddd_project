@@ -2,7 +2,7 @@ import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Column, PrimaryColumn } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { UserEntity } from 'src/user/infra/entity/User.entity';
+import { UserEntity } from 'src/user/infra/entity/UserEntity';
 
 export class FindUserDto {
 	@PrimaryColumn()

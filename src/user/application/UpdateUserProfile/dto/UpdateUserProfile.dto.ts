@@ -3,7 +3,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';
-import { UserEntity } from '../../../infra/entity/User.entity';
+import { UserEntity } from '../../../infra/entity/UserEntity';
 
 export class UpdateUserProfileResponseDto {
 	@PrimaryColumn()
@@ -16,7 +16,11 @@ export class UpdateUserProfileResponseDto {
 	public nickname: string;
 }
 
-export class UpdateUserProfileRequest extends PickType(UserEntity, ['id', 'nickname', 'password']) {}
+export class UpdateUserProfileRequest extends PickType(UserEntity, [
+	'id',
+	'nickname',
+	'password',
+]) {}
 
 export class UpdateUserProfileResponse extends CoreResponse {
 	@Column()

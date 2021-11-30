@@ -1,8 +1,8 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { CoreEntity } from 'src/shared/entity/Core.entity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 import { ApiProperty } from '@nestjs/swagger';
-import { BoardEntity } from 'src/board/infra/entity/Board.entity';
+import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 
 @Index('nickname', ['nickname'], { unique: true })
 @Entity({ schema: 'ddd_watcha', name: 'users' })

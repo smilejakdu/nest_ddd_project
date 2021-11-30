@@ -9,7 +9,7 @@ import { UpdateUserProfileUseCase } from './application/UpdateUserProfile/Update
 import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
 import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
 // Entity
-import { UserEntity } from './infra/entity/User.entity';
+import { UserEntity } from './infra/entity/UserEntity';
 // Repository
 import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
 import { USER_REPOSITORY } from './infra/IUserRepository';

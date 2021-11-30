@@ -1,5 +1,5 @@
 import { Board } from 'src/board/domain/Board';
-import { BoardEntity } from './entity/Board.entity';
+import { BoardEntity } from './entity/BoardEntity';
 
 export const BOARD_REPOSITORY = 'BOARD_REPOSITORY';
 

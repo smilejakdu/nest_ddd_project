@@ -7,7 +7,7 @@ import { UpdateBoardUseCase } from './application/UpdateBoardUseCase/UpdateBoard
 import { FindBoardUseCase } from './application/FindBoardUseCase/FindBoardUseCase';
 import { FindMyBoardUseCase } from './application/FindMyBoardUseCase/FindMyBoardUseCase';
 // Entity
-import { BoardEntity } from './infra/entity/Board.entity';
+import { BoardEntity } from './infra/entity/BoardEntity';
 // Repository
 import { MysqlBoardRepository } from './infra/mysql/MysqlBoardRepository';
 import { BOARD_REPOSITORY } from './infra/IBoardRepository';

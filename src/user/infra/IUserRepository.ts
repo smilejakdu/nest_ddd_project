@@ -1,5 +1,5 @@
 import { User } from '../domain/User';
-import { UserEntity } from './entity/User.entity';
+import { UserEntity } from './entity/UserEntity';
 
 export const USER_REPOSITORY = 'USER_REPOSITORY';
 

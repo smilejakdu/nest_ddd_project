@@ -1,6 +1,6 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { UserEntity } from 'src/user/infra/entity/User.entity';
+import { UserEntity } from 'src/user/infra/entity/UserEntity';
 import { Column, PrimaryColumn } from 'typeorm';
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 

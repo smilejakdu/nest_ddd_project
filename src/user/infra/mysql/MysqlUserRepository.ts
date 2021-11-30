@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../IUserRepository';
 import { UserModelMapper } from '../dto/UserModelMapper';
-import { UserEntity } from '../entity/User.entity';
+import { UserEntity } from '../entity/UserEntity';
 import { log } from 'console';
 
 export class MysqlUserRepository implements IUserRepository {
@@ -59,7 +59,10 @@ export class MysqlUserRepository implements IUserRepository {
 		return result;
 	}
 
-	async checkUserPassword(password: string, foundUserPassword: string): Promise<boolean> | undefined {
+	async checkUserPassword(
+		password: string,
+		foundUserPassword: string,
+	): Promise<boolean> | undefined {
 		return await bcrypt.compare(password, foundUserPassword);
 	}
 }
