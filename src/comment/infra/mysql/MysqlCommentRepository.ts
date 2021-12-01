@@ -21,6 +21,7 @@ export class MysqlCommentRepository implements ICommentRepository {
 			this.commentRepository.create({
 				id: comment.id.toValue().toString(),
 				userId: comment.userId.value,
+				boardId: comment.boardId,
 				content: comment.content.value,
 				createdAt: comment.createdAt,
 			}),

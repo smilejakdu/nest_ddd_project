@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { CoreEntity } from 'src/shared/entity/CoreEntity';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, ManyToOne } from 'typeorm';
 import { BoardEntity } from '../../../board/infra/entity/BoardEntity';
 
 export class CommentEntity extends CoreEntity {
@@ -24,6 +24,14 @@ export class CommentEntity extends CoreEntity {
 	})
 	@Column('varchar', { name: 'UserId', length: 200 })
 	userId: string;
+
+	@IsString()
+	@ApiProperty({
+		example: 'boardId',
+		description: 'boardId',
+	})
+	@Column('varchar', { name: 'BoardId', length: 200 })
+	boardId: string;
 
 	@IsString()
 	@IsNotEmpty()

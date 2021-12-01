@@ -12,10 +12,6 @@ export const USER_NICKNAME_NOT_NULL_OR_UNDEFINED = 'userNicknameString is not nu
 
 export class UserNickname extends ValueObject<UserNicknameProps> {
 	static create(userNicknameString: string): Result<UserNickname> {
-		if (isEmpty(userNicknameString)) {
-			return Result.fail(USER_NICKNAME_EMPTY_ERROR_MESSAGE);
-		}
-
 		if (isNil(userNicknameString)) {
 			return Result.fail(USER_NICKNAME_NOT_NULL_OR_UNDEFINED);
 		}

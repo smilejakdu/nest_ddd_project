@@ -7,12 +7,14 @@ import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 interface CommentProps {
 	commentContent: CommentContent;
 	userId: JwtAuthrization;
+	boardId: string;
 	createdAt: Date;
 }
 
 interface CommentNewProps {
 	commentContent: CommentContent;
 	userId: JwtAuthrization;
+	boardId: string;
 }
 
 export class Comment extends AggregateRoot<CommentProps> {
@@ -30,6 +32,10 @@ export class Comment extends AggregateRoot<CommentProps> {
 
 	get userId(): JwtAuthrization {
 		return this.props.userId;
+	}
+
+	get boardId(): string {
+		return this.props.boardId;
 	}
 
 	get createdAt(): Date {
