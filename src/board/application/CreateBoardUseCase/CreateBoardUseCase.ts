@@ -1,13 +1,18 @@
 import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 import { Inject } from '@nestjs/common';
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { CreateBoardRequest, CreateBoardResponse } from './dto/CreateBoardUseCase.dto';
+import {
+	CreateBoardUseCaseRequest,
+	CreateBoardUseCaseResponse,
+} from './dto/CreateBoardUseCase.dto';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
 
-export class CreateBoardUseCase implements IUseCase<CreateBoardRequest, CreateBoardResponse> {
+export class CreateBoardUseCase
+	implements IUseCase<CreateBoardUseCaseRequest, CreateBoardUseCaseResponse>
+{
 	private FAIL_CREATE = 'Can`t create board.';
 
 	constructor(
@@ -15,7 +20,10 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardRequest, CreateBo
 		private readonly boardRepository: IBoardRepository,
 	) {}
 
-	async execute(request: CreateBoardRequest, userId: string): Promise<CreateBoardResponse> {
+	async execute(
+		request: CreateBoardUseCaseRequest,
+		userId: string,
+	): Promise<CreateBoardUseCaseResponse> {
 		try {
 			const requestTitle = request.title;
 			const requestContent = request.content;

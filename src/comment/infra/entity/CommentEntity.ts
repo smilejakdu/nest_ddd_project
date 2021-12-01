@@ -2,13 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { CoreEntity } from 'src/shared/entity/CoreEntity';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
-import { BaseEntity, Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BoardEntity } from '../../../board/infra/entity/BoardEntity';
 
 export class CommentEntity extends CoreEntity {
-	@PrimaryGeneratedColumn({ type: 'int' })
-	comment_idx: number;
-
 	@IsString()
 	@IsNotEmpty()
 	@MinLength(1)

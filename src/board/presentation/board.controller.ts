@@ -1,11 +1,25 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+	ApiInternalServerErrorResponse,
+	ApiOkResponse,
+	ApiOperation,
+	ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 // Request , Response
-import { CreateBoardRequest, CreateBoardResponse } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
-import { DeleteBoardRequest, DeleteBoardResponse } from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
-import { UpdateBoardRequest, UpdateBoardResponse } from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
+import {
+	CreateBoardUseCaseRequest,
+	CreateBoardUseCaseResponse,
+} from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
+import {
+	DeleteBoardRequest,
+	DeleteBoardResponse,
+} from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
+import {
+	UpdateBoardRequest,
+	UpdateBoardResponse,
+} from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
 import { FindBoardResponse } from '../application/FindBoardUseCase/dto/FindBoardUseCase.dto';
 // UseCase
 import { UpdateBoardUseCase } from '../application/UpdateBoardUseCase/UpdateBoardUseCase';
@@ -28,10 +42,10 @@ export class BoardsController {
 	) {}
 
 	@ApiOperation({ summary: 'create board' })
-	@ApiOkResponse({ description: 'success', type: CreateBoardResponse })
+	@ApiOkResponse({ description: 'success', type: CreateBoardUseCaseResponse })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
-	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardRequest) {
+	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardUseCaseRequest) {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
 	}
 

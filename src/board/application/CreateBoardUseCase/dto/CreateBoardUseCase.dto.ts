@@ -4,7 +4,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { PrimaryColumn, Column } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateBoardDto {
+export class CreateBoardResponseDto {
 	@PrimaryColumn()
 	@IsString()
 	public id: string;
@@ -20,9 +20,9 @@ export class CreateBoardDto {
 	public content: string;
 }
 
-export class CreateBoardRequest extends PickType(BoardEntity, ['title', 'content']) {}
+export class CreateBoardUseCaseRequest extends PickType(BoardEntity, ['title', 'content']) {}
 
-export class CreateBoardResponse extends CoreResponse {
+export class CreateBoardUseCaseResponse extends CoreResponse {
 	@Column()
-	board?: CreateBoardDto;
+	board?: CreateBoardResponseDto;
 }
