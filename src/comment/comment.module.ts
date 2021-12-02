@@ -6,6 +6,8 @@ import { UpdateCommentUseCase } from './application/UpdateCommentUseCase/UpdateC
 import { DeleteCommentUseCase } from './application/DeleteCommentUseCase/DeleteCommentUseCase';
 // Entity
 import { CommentEntity } from './infra/entity/CommentEntity';
+import { UserEntity } from 'src/user/infra/entity/UserEntity';
+import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 // Repository
 import { MysqlCommentRepository } from './infra/mysql/MysqlCommentRepository';
 import { COMMENT_REPOSITORY } from './infra/ICommentRepository';
@@ -13,12 +15,12 @@ import { COMMENT_REPOSITORY } from './infra/ICommentRepository';
 import { CommentController } from './presentation/comment.controller';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([CommentEntity])],
+	imports: [TypeOrmModule.forFeature([UserEntity, BoardEntity, CommentEntity])],
 	providers: [
 		CreateCommentUseCase,
 		UpdateCommentUseCase,
 		DeleteCommentUseCase,
-		// BoardsController,
+		CommentController,
 		{
 			provide: COMMENT_REPOSITORY,
 			useClass: MysqlCommentRepository,

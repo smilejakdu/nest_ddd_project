@@ -13,6 +13,7 @@ export class CommentModelMapper {
 			{
 				commentContent: CommentContent.create(entity.content).value,
 				userId: JwtAuthrization.create(entity.userId).value,
+				boardId: entity.boardId,
 				createdAt: entity.createdAt,
 			},
 			new UniqueEntityId(entity.id),

@@ -13,9 +13,11 @@ import { MysqlBoardRepository } from './infra/mysql/MysqlBoardRepository';
 import { BOARD_REPOSITORY } from './infra/IBoardRepository';
 // Controller
 import { BoardsController } from './presentation/board.controller';
+import { UserEntity } from '../user/infra/entity/UserEntity';
+import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([BoardEntity])],
+	imports: [TypeOrmModule.forFeature([BoardEntity, UserEntity, CommentEntity])],
 	providers: [
 		CreateBoardUseCase,
 		UpdateBoardUseCase,

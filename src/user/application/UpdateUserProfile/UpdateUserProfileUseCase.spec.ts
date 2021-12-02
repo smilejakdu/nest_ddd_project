@@ -21,7 +21,7 @@ describe('UpdateUserProfileUseCase', () => {
 	});
 
 	function givenFoundUserThatJoinedNaverMail() {
-		userRepository.find.calledWith(USER_ID).mockResolvedValue(
+		userRepository.findUserById.calledWith(USER_ID).mockResolvedValue(
 			User.createNew({
 				userNickname: UserNickname.create('ash').value,
 				userPassword: UserPassword.create('original_pwd').value,

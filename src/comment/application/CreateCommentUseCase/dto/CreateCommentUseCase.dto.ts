@@ -16,7 +16,7 @@ export class CreateCommentResponseDto {
 	public content: string;
 }
 
-export class CreateCommentUseCaseRequest extends PickType(CommentEntity, ['content']) {}
+export class CreateCommentUseCaseRequest extends PickType(CommentEntity, ['content', 'boardId']) {}
 
 export class CreateCommentUseCaseResponse extends CoreResponse {
 	@Column()

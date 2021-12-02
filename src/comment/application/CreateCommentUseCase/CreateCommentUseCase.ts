@@ -26,6 +26,7 @@ export class CreateCommentUseCase
 	): Promise<CreateCommentUseCaseResponse> {
 		try {
 			const requestContent = request.content;
+			const boardId = request.boardId;
 
 			const commentContentOrError = CommentContent.create(requestContent);
 			const jwtAuthrizationOrError = JwtAuthrization.create(userId);
@@ -33,6 +34,7 @@ export class CreateCommentUseCase
 			const comment = Comment.createNew({
 				commentContent: commentContentOrError.value,
 				userId: jwtAuthrizationOrError.value,
+				boardId: boardId,
 			}).value;
 
 			await this.commentRepository.save(comment);

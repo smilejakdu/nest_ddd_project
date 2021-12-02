@@ -1,4 +1,4 @@
-import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
+import { JwtAuthrization } from '../../shared/domain/JwtEntityId';
 import { Board } from './Board';
 import { BoardContent } from './BoardContent';
 import { BoardTitle } from './BoardTitle';

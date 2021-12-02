@@ -12,7 +12,7 @@ describe('LoginUseCase', () => {
 	let userRepository: MockProxy<IUserRepository>;
 	let jwtService: JwtService;
 
-	const TEST_NICKNAME = 'ash';
+	const TEST_NICKNAME = 'ash123';
 	const TEST_PASSWORD = '12345678';
 	const TEST_PASSWORD_HASHED = '$2b$10$IJ0LdlcFUuehDmfT.Ke2sO3cEYAWsAXH1CC9CfNnzGUJ5Y5f8iB22';
 
@@ -37,12 +37,12 @@ describe('LoginUseCase', () => {
 
 	it('nickname 과 password 가 모두 일치 해 정상적으로 로그인 되는지', async () => {
 		// givenFoundUserThatJoinedNaverMail();
-		const login = await uut.execute({
+		const loginUserUseCaseResponse = await uut.execute({
 			nickname: TEST_NICKNAME,
 			password: TEST_PASSWORD,
 		});
 
-		expect(login.ok).toBe(true);
+		expect(loginUserUseCaseResponse.ok).toBe(true);
 	});
 
 	it('nickname 이 잘못 된 경우 로그인 되지 않는지', async () => {
@@ -55,14 +55,14 @@ describe('LoginUseCase', () => {
 		});
 
 		expect(login.ok).toBe(false);
-		expect(login.error).toBe(`Can not found user of nickname : ${WRONG_NICKNAME}`);
+		expect(login.error).toBe(`Can not found nickname : ${WRONG_NICKNAME}`);
 	});
 
 	it('password 가 잘못 된 경우 로그인 되지 않는지', async () => {
 		// givenFoundUserThatJoinedNaverMail();
 		const login = await uut.execute({
 			nickname: TEST_NICKNAME,
-			password: 'wrongPwd',
+			password: '1',
 		});
 
 		expect(login.ok).toBe(false);

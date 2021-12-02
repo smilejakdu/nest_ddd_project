@@ -7,6 +7,7 @@ describe('Board', () => {
 		const comment = Comment.createNew({
 			commentContent: CommentContent.create('comment_content').value,
 			userId: JwtAuthrization.create('string').value,
+			boardId: '13',
 		});
 		expect(comment.isSuccess).toBeTruthy();
 	});

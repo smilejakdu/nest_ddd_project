@@ -39,11 +39,13 @@ export class UpdateCommentUseCase
 		try {
 			const commentContentOrError = CommentContent.create(requestContent);
 			const jwtAuthrizationOrError = JwtAuthrization.create(userId);
+			const boardId = request.boardId;
 
 			const comment = Comment.create(
 				{
 					commentContent: commentContentOrError.value,
 					userId: jwtAuthrizationOrError.value,
+					boardId: boardId,
 					createdAt: foundComment.createdAt,
 				},
 				new UniqueEntityId(request.id),
