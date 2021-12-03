@@ -24,11 +24,11 @@ export class UpdateCommentUseCase
 
 	async execute(
 		request: UpdateCommentUseCaseRequest,
-		userId: string,
+		userId: number,
 	): Promise<UpdateCommentUseCaseResponse> {
 		const requestContent = request.content;
 
-		const foundComment = await this.commentRepository.findMyComment(request.id);
+		const foundComment = await this.commentRepository.findMyComment(request.comment_idx);
 		if (!foundComment) {
 			return {
 				ok: false,
@@ -48,14 +48,14 @@ export class UpdateCommentUseCase
 					boardId: boardId,
 					createdAt: foundComment.createdAt,
 				},
-				new UniqueEntityId(request.id),
+				request.comment_idx,
 			).value;
 
 			await this.commentRepository.save(comment);
 			return {
 				ok: true,
 				comment: {
-					id: comment.props.userId.value,
+					comment_idx: comment.id,
 					content: comment.content.props.value,
 				},
 			};

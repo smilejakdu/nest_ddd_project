@@ -18,7 +18,7 @@ export class MysqlUserRepository implements IUserRepository {
 	async save(user: User): Promise<User> {
 		await this.userRepository.save(
 			this.userRepository.create({
-				id: user.id.toValue().toString(),
+				user_idx: user.id,
 				nickname: user.nickname.value,
 				password: user.password.value,
 				createdAt: user.createdAt,
@@ -33,11 +33,11 @@ export class MysqlUserRepository implements IUserRepository {
 		return hashedPassword;
 	}
 
-	async findUserById(id: string): Promise<User> | undefined {
+	async findUserById(user_idx: number): Promise<User> | undefined {
 		const foundUser = await this.userRepository
 			.createQueryBuilder('user')
 			.select(['user.id', 'user.nickname', 'user.password', 'user.createdAt'])
-			.where('user.id =:id', { id })
+			.where('user.id =:user_idx', { user_idx })
 			.getOne();
 		log(foundUser);
 		if (isNil(foundUser)) return undefined;

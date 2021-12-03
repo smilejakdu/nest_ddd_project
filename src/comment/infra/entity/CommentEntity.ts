@@ -1,32 +1,51 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
-import { Column, JoinColumn, ManyToOne } from 'typeorm';
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm';
 // Entity
-import { CoreEntity } from 'src/shared/entity/CoreEntity';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
 import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 
-export class CommentEntity extends CoreEntity {
+@Index('comment_idx', ['comment_idx'], { unique: true })
+@Entity({ name: 'comments' })
+export class CommentEntity {
+	@PrimaryGeneratedColumn()
+	comment_idx: number;
+
+	@IsString()
+	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
-	@Column('varchar', { name: 'userId', length: 200 })
-	userId: string;
+	@Column({ type: 'int' })
+	userId: number;
 
-	@Column('varchar', { name: 'boardId', length: 200 })
-	boardId: string;
+	@Column({ type: 'int' })
+	boardId: number;
 
 	@ManyToOne(() => UserEntity, user => user.Comments, {
-		onDelete: 'SET NULL',
 		onUpdate: 'CASCADE',
 	})
-	@JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
+	@JoinColumn([{ name: 'userId', referencedColumnName: 'user_idx' }])
 	User: UserEntity;
 
 	@ManyToOne(() => BoardEntity, board => board.Comments, {
-		onDelete: 'SET NULL',
 		onUpdate: 'CASCADE',
 	})
-	@JoinColumn([{ name: 'boardId', referencedColumnName: 'id' }])
+	@JoinColumn([{ name: 'boardId', referencedColumnName: 'board_idx' }])
 	Board: BoardEntity;
+
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	updatedAt: Date;
 }

@@ -19,7 +19,7 @@ export class MysqlCommentRepository implements ICommentRepository {
 	async save(comment: Comment): Promise<Comment> {
 		await this.commentRepository.save(
 			this.commentRepository.create({
-				id: comment.id.toValue().toString(),
+				comment_idx: comment.id,
 				userId: comment.userId.value,
 				boardId: comment.boardId,
 				content: comment.content.value,
@@ -39,16 +39,16 @@ export class MysqlCommentRepository implements ICommentRepository {
 		return foundMyComment;
 	}
 
-	async findMyComment(commentId: string): Promise<Comment> {
+	async findMyComment(commentId: number): Promise<Comment> {
 		const foundMyComment = await this.commentRepository
 			.createQueryBuilder('comment')
 			.where('comment.id =:id', { commentId })
-			.execute();
+			.getOne();
 
 		return CommentModelMapper.toDomain(foundMyComment);
 	}
 
-	async deleteComment(commentId: string): Promise<boolean> {
+	async deleteComment(commentId: number): Promise<boolean> {
 		await this.commentRepository
 			.createQueryBuilder('comment')
 			.delete()

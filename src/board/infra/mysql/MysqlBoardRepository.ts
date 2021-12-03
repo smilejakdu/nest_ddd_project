@@ -15,7 +15,7 @@ export class MysqlBoardRepository implements IBoardRepository {
 	async save(board: Board): Promise<Board> {
 		await this.boardRepository.save(
 			this.boardRepository.create({
-				id: board.id.toValue().toString(),
+				board_idx: board.id,
 				title: board.title.value,
 				userId: board.userId.value,
 				content: board.content.value,
@@ -26,20 +26,23 @@ export class MysqlBoardRepository implements IBoardRepository {
 		return board;
 	}
 
-	async findByBoardId(id: string): Promise<Board> {
-		const foundBoardId = await this.boardRepository.findOne({
-			where: { id: id },
-			select: ['id', 'title', 'content', 'createdAt', 'userId'],
-		});
-		if (!foundBoardId) {
+	async findByBoardId(baord_idx: number): Promise<Board> {
+		const foundBoard = await this.boardRepository
+			.createQueryBuilder('board')
+			.leftJoinAndSelect('board.Comments', 'comments')
+			.where('board.baord_idx =:baord_idx', { baord_idx })
+			.getOne();
+
+		if (!foundBoard) {
 			return undefined;
 		}
-		return BoardModelMapper.toDomain(foundBoardId);
+		return BoardModelMapper.toDomain(foundBoard);
 	}
 
 	async myBoard(userId: string): Promise<BoardEntity[]> {
 		const foundMyBoard = await this.boardRepository
 			.createQueryBuilder('board')
+			.leftJoinAndSelect('board.Comments', 'comments')
 			.where('board.userId =:userId', { userId })
 			.execute();
 

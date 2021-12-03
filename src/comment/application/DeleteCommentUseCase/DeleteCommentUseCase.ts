@@ -19,7 +19,7 @@ export class DeleteCommentUseCase
 	) {}
 
 	async execute(request: DeleteCommentUseCaseRequest): Promise<DeleteCommentUseCaseResponse> {
-		const foundComment = await this.commentRepository.findMyComment(request.id);
+		const foundComment = await this.commentRepository.findMyComment(request.comment_idx);
 
 		if (isNil(foundComment)) {
 			return {
@@ -28,7 +28,7 @@ export class DeleteCommentUseCase
 			};
 		}
 
-		await this.commentRepository.deleteComment(foundComment.id.toValue());
+		await this.commentRepository.deleteComment(foundComment.id);
 
 		return {
 			ok: true,

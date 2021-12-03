@@ -12,7 +12,7 @@ export class UserModelMapper {
 				userPassword: UserPassword.create(entity.password).value,
 				createdAt: entity.createdAt,
 			},
-			new UniqueEntityId(entity.id),
+			entity.user_idx,
 		).value;
 	}
 }

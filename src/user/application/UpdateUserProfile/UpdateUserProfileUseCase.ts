@@ -9,7 +9,9 @@ import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { log } from 'console';
 
-export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse> {
+export class UpdateUserProfileUseCase
+	implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse>
+{
 	private FAIL_UPDATE = 'Can`t modify profile.';
 	private HAS_NOT_USER = 'Can`t found User.';
 	private PASSWORD_NO_MACTH = 'check User Password';
@@ -20,7 +22,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 	) {}
 
 	async execute(request: UpdateUserProfileRequest): Promise<UpdateUserProfileResponse> {
-		const foundUser = await this.userRepository.findUserById(request.id);
+		const foundUser = await this.userRepository.findUserById(request.user_idx);
 		log('UpdateUserProfileUseCase:', foundUser);
 		if (isNil(foundUser)) {
 			return {
@@ -29,7 +31,10 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 			};
 		}
 
-		const comparePassword = await this.userRepository.comparePassword(foundUser.password.props.value, request.password);
+		const comparePassword = await this.userRepository.comparePassword(
+			foundUser.password.props.value,
+			request.password,
+		);
 		if (!comparePassword) {
 			return {
 				ok: false,
@@ -44,7 +49,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 				userPassword: UserPassword.create(createHashPassword).value,
 				createdAt: foundUser.createdAt,
 			},
-			new UniqueEntityId(request.id),
+			foundUser.id,
 		).value;
 
 		await this.userRepository.save(user);
@@ -52,7 +57,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 		return {
 			ok: true,
 			user: {
-				id: request.id,
+				user_idx: request.user_idx,
 				nickname: request.nickname,
 			},
 		};

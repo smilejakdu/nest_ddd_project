@@ -8,7 +8,7 @@ export interface ICommentRepository {
 
 	findMyComments(userId: string): Promise<CommentEntity[]> | undefined;
 
-	findMyComment(commentId: string): Promise<Comment> | undefined;
+	findMyComment(commentId: number): Promise<Comment> | undefined;
 
-	deleteComment(commentId: string): Promise<boolean> | undefined;
+	deleteComment(commentId: number): Promise<boolean> | undefined;
 }

@@ -6,7 +6,7 @@ export const BOARD_REPOSITORY = 'BOARD_REPOSITORY';
 export interface IBoardRepository {
 	save(board: Board): Promise<Board>;
 
-	findByBoardId(id: string): Promise<Board> | undefined;
+	findByBoardId(id: number): Promise<Board> | undefined;
 
 	myBoard(userId: string): Promise<BoardEntity[]> | undefined;
 

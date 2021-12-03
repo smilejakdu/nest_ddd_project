@@ -16,7 +16,7 @@ export class CommentModelMapper {
 				boardId: entity.boardId,
 				createdAt: entity.createdAt,
 			},
-			new UniqueEntityId(entity.id),
+			entity.comment_idx,
 		).value;
 	}
 }

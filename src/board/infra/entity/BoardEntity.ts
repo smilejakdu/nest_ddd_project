@@ -1,29 +1,51 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+	Column,
+	CreateDateColumn,
+	Entity,
+	Index,
+	JoinColumn,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 // Entity
-import { CoreEntity } from '../../../shared/entity/CoreEntity';
 import { UserEntity } from '../../../user/infra/entity/UserEntity';
-import { CommentEntity } from '../../../comment/infra/entity/CommentEntity';
+import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 
-@Entity({ schema: 'ddd_watcha', name: 'boards' })
-export class BoardEntity extends CoreEntity {
+@Index('board_idx', ['board_idx'], { unique: true })
+@Entity({ name: 'boards' })
+export class BoardEntity {
+	@PrimaryGeneratedColumn()
+	board_idx: number;
+
+	@IsString()
+	@IsNotEmpty()
 	@Column('varchar', { name: 'title', length: 200 })
 	title: string;
 
+	@IsString()
+	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
-	@Column('varchar', { name: 'userId', length: 200 })
-	userId: string;
+	@Column({ type: 'int' })
+	userId: number;
 
 	@OneToMany(() => CommentEntity, comments => comments.Board)
 	Comments: CommentEntity[];
 
 	@ManyToOne(() => UserEntity, user => user.Boards, {
-		onDelete: 'SET NULL',
 		onUpdate: 'CASCADE',
 	})
-	@JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
+	@JoinColumn([{ name: 'userId', referencedColumnName: 'user_idx' }])
 	User: UserEntity;
+
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	updatedAt: Date;
 }

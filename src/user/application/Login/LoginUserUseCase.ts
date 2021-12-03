@@ -34,7 +34,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		}
 
 		const payload = {
-			id: foundUser.id,
+			user_idx: foundUser.user_idx,
 			nickname: foundUser.nickname,
 		};
 

@@ -18,16 +18,16 @@ export interface UserNewProps {
 }
 
 export class User extends AggregateRoot<UserProps> {
-	static create(props: UserProps, id?: UniqueEntityId): Result<User> {
+	private constructor(props: UserProps, id: number) {
+		super(props, id);
+	}
+
+	static create(props: UserProps, id: number): Result<User> {
 		return Result.ok(new User(props, id));
 	}
 
 	static createNew(props: UserNewProps): Result<User> {
-		return User.create({ ...props, createdAt: new Date() });
-	}
-
-	private constructor(props: UserProps, id?: UniqueEntityId) {
-		super(props, id);
+		return User.create({ ...props, createdAt: new Date() }, 0);
 	}
 
 	get nickname(): UserNickname {

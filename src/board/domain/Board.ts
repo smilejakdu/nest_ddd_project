@@ -19,15 +19,15 @@ interface BoardNewProps {
 }
 
 export class Board extends AggregateRoot<BoardProps> {
-	static create(props: BoardProps, id?: UniqueEntityId): Result<Board> {
+	static create(props: BoardProps, id: number): Result<Board> {
 		return Result.ok(new Board(props, id));
 	}
 
 	static createNew(props: BoardNewProps): Result<Board> {
-		return Board.create({ ...props, createdAt: new Date() });
+		return Board.create({ ...props, createdAt: new Date() }, 0);
 	}
 
-	private constructor(props: BoardProps, id?: UniqueEntityId) {
+	private constructor(props: BoardProps, id: number) {
 		super(props, id);
 	}
 

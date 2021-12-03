@@ -1,10 +1,9 @@
 import { Inject } from '@nestjs/common';
-
 import { IUseCase } from '../../../shared/core/IUseCase';
-import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoardUseCase.dto';
+// Domain
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
@@ -19,11 +18,11 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 		private boardRepository: IBoardRepository,
 	) {}
 
-	async execute(request: UpdateBoardRequest, userId: string): Promise<UpdateBoardResponse> {
+	async execute(request: UpdateBoardRequest, userId: number): Promise<UpdateBoardResponse> {
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
-		const foundBoard = await this.boardRepository.findByBoardId(request.id);
+		const foundBoard = await this.boardRepository.findByBoardId(request.board_idx);
 		if (!foundBoard) {
 			return {
 				ok: false,
@@ -43,14 +42,14 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 					userId: jwtAuthrizationOrError.value,
 					createdAt: foundBoard.createdAt,
 				},
-				new UniqueEntityId(request.id),
+				request.board_idx,
 			).value;
 
 			await this.boardRepository.save(board);
 			return {
 				ok: true,
 				board: {
-					id: board.props.userId.value,
+					board_idx: board.props.userId.value,
 					title: board.title.props.value,
 					content: board.content.props.value,
 				},

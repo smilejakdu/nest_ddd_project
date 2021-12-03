@@ -8,7 +8,7 @@ import { CommentEntity } from '../../../infra/entity/CommentEntity';
 export class UpdateCommentResponseDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: string;
+	public comment_idx: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -17,7 +17,7 @@ export class UpdateCommentResponseDto {
 }
 
 export class UpdateCommentUseCaseRequest extends PickType(CommentEntity, [
-	'id',
+	'comment_idx',
 	'content',
 	'boardId',
 ]) {}

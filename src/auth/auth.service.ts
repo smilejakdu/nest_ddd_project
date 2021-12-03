@@ -12,10 +12,10 @@ export class AuthService {
 	) {}
 
 	async validateUser(nickname: string, password: string): Promise<any> {
-		const foundUser = await this.usersRepository.findOne({
-			where: { nickname: nickname },
-			select: ['id', 'nickname', 'password'],
-		});
+		const foundUser = await this.usersRepository
+			.createQueryBuilder('user')
+			.where('user.nickname =:nickname', { nickname })
+			.getOne();
 
 		if (!foundUser) {
 			throw new Error('존재하지 않는 사용자');

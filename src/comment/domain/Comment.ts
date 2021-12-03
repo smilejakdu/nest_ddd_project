@@ -7,34 +7,34 @@ import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 interface CommentProps {
 	commentContent: CommentContent;
 	userId: JwtAuthrization;
-	boardId: string;
+	boardId: number;
 	createdAt: Date;
 }
 
 interface CommentNewProps {
 	commentContent: CommentContent;
 	userId: JwtAuthrization;
-	boardId: string;
+	boardId: number;
 }
 
 export class Comment extends AggregateRoot<CommentProps> {
-	static create(props: CommentProps, id?: UniqueEntityId): Result<Comment> {
+	private constructor(props: CommentProps, id: number) {
+		super(props, id);
+	}
+
+	static create(props: CommentProps, id: number): Result<Comment> {
 		return Result.ok(new Comment(props, id));
 	}
 
 	static createNew(props: CommentNewProps): Result<Comment> {
-		return Comment.create({ ...props, createdAt: new Date() });
-	}
-
-	private constructor(props: CommentProps, id?: UniqueEntityId) {
-		super(props, id);
+		return Comment.create({ ...props, createdAt: new Date() }, 0);
 	}
 
 	get userId(): JwtAuthrization {
 		return this.props.userId;
 	}
 
-	get boardId(): string {
+	get boardId(): number {
 		return this.props.boardId;
 	}
 

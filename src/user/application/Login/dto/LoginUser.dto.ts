@@ -7,7 +7,7 @@ import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 export class LoginUserDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: string;
+	public user_idx: number;
 
 	@IsString()
 	@IsNotEmpty()

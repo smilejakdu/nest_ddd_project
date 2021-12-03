@@ -44,7 +44,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 		return {
 			ok: true,
 			user: {
-				id: user.id.toValue().toString(),
+				user_idx: user.id,
 				nickname: user.nickname.value,
 			},
 		};

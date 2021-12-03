@@ -8,7 +8,7 @@ import { CommentEntity } from '../../../infra/entity/CommentEntity';
 export class CreateCommentResponseDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: string;
+	public comment_idx: number;
 
 	@IsString()
 	@IsNotEmpty()

@@ -15,7 +15,7 @@ export class BoardModelMapper {
 				userId: JwtAuthrization.create(entity.userId).value,
 				createdAt: entity.createdAt,
 			},
-			new UniqueEntityId(entity.id),
+			entity.board_idx,
 		).value;
 	}
 }

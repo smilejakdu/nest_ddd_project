@@ -7,7 +7,7 @@ import { UserEntity } from 'src/user/infra/entity/UserEntity';
 export class FindUserDto {
 	@PrimaryColumn()
 	@IsString()
-	id: string;
+	user_idx: number;
 
 	@IsString()
 	@IsNotEmpty()

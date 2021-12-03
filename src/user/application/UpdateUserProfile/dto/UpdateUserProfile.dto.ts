@@ -8,7 +8,7 @@ import { UserEntity } from '../../../infra/entity/UserEntity';
 export class UpdateUserProfileResponseDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: string;
+	public user_idx: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -17,7 +17,7 @@ export class UpdateUserProfileResponseDto {
 }
 
 export class UpdateUserProfileRequest extends PickType(UserEntity, [
-	'id',
+	'user_idx',
 	'nickname',
 	'password',
 ]) {}

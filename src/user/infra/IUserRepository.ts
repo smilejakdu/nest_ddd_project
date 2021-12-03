@@ -8,7 +8,7 @@ export interface IUserRepository {
 
 	findUserByNickname(nickname: string): Promise<UserEntity>;
 
-	findUserById(id: string): Promise<User>;
+	findUserById(user_idx: number): Promise<User>;
 
 	createPasswordHash(password: string): Promise<string> | undefined;
 

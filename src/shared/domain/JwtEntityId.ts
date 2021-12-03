@@ -3,10 +3,10 @@ import { Result } from '../../shared/core/Result';
 import { ValueObject } from '../dto/ValueObject';
 
 interface JwtContentProps {
-	value: string;
+	value: number;
 }
 export class JwtAuthrization extends ValueObject<JwtContentProps> {
-	static create(jwtAuthrization: string): Result<JwtAuthrization> {
+	static create(jwtAuthrization: number): Result<JwtAuthrization> {
 		if (isEmpty(jwtAuthrization)) {
 			return Result.fail('board Content should not be empty.');
 		}
@@ -18,7 +18,7 @@ export class JwtAuthrization extends ValueObject<JwtContentProps> {
 		super(props);
 	}
 
-	get value(): string {
+	get value(): number {
 		return this.props.value;
 	}
 }

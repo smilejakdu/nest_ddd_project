@@ -22,7 +22,7 @@ export class CreateCommentUseCase
 
 	async execute(
 		request: CreateCommentUseCaseRequest,
-		userId: string,
+		userId: number,
 	): Promise<CreateCommentUseCaseResponse> {
 		try {
 			const requestContent = request.content;
@@ -42,7 +42,7 @@ export class CreateCommentUseCase
 			return {
 				ok: true,
 				comment: {
-					id: comment.id.toValue(),
+					comment_idx: comment.id,
 					content: comment.content.props.value,
 				},
 			};

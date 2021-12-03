@@ -62,7 +62,7 @@ export class BoardsController {
 	@UseGuards(JwtAuthGuard)
 	@Delete('delete')
 	async deleteBoard(@Body() deleteBoardRequest: DeleteBoardRequest) {
-		return this.deleteBoardUseCase.execute(deleteBoardRequest.id);
+		return this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);
 	}
 
 	@ApiOperation({ summary: 'get board' })

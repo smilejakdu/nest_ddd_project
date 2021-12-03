@@ -8,7 +8,7 @@ import { CommentEntity } from '../../../infra/entity/CommentEntity';
 export class DeleteCommentResponseDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: number;
+	public comment_idx: number;
 
 	@IsString()
 	@IsNotEmpty()
@@ -16,7 +16,7 @@ export class DeleteCommentResponseDto {
 	public content: string;
 }
 
-export class DeleteCommentUseCaseRequest extends PickType(CommentEntity, ['id']) {}
+export class DeleteCommentUseCaseRequest extends PickType(CommentEntity, ['comment_idx']) {}
 
 export class DeleteCommentUseCaseResponse extends CoreResponse {
 	@Column()

@@ -22,7 +22,7 @@ export class CreateBoardUseCase
 
 	async execute(
 		request: CreateBoardUseCaseRequest,
-		userId: string,
+		userId: number,
 	): Promise<CreateBoardUseCaseResponse> {
 		try {
 			const requestTitle = request.title;
@@ -43,7 +43,7 @@ export class CreateBoardUseCase
 			return {
 				ok: true,
 				board: {
-					id: board.id.toValue(),
+					board_idx: board.id,
 					title: board.title.props.value,
 					content: board.content.props.value,
 				},

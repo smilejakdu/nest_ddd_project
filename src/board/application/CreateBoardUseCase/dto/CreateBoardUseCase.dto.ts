@@ -7,7 +7,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class CreateBoardResponseDto {
 	@PrimaryColumn()
 	@IsString()
-	public id: string;
+	public board_idx: number;
 
 	@IsString()
 	@IsNotEmpty()

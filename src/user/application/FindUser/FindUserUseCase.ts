@@ -27,7 +27,7 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 		return {
 			ok: true,
 			user: {
-				id: foundUser.id.toString(),
+				user_idx: foundUser.user_idx,
 				nickname: foundUser.nickname.toString(),
 			},
 		};
