@@ -20,14 +20,29 @@ export class CommentEntity {
 	@PrimaryGeneratedColumn()
 	comment_idx: number;
 
+	@ApiProperty({
+		description: 'comment content',
+		example: 'comment content',
+		type: String,
+	})
 	@IsString()
 	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
+	@ApiProperty({
+		description: 'userId',
+		example: 'userId',
+		type: Number,
+	})
 	@Column({ type: 'int' })
 	userId: number;
 
+	@ApiProperty({
+		description: 'boardId',
+		example: 'boardId',
+		type: Number,
+	})
 	@Column({ type: 'int' })
 	boardId: number;
 

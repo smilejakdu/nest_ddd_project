@@ -21,16 +21,31 @@ export class BoardEntity {
 	@PrimaryGeneratedColumn()
 	board_idx: number;
 
+	@ApiProperty({
+		description: 'board title',
+		example: 'board title',
+		type: String,
+	})
 	@IsString()
 	@IsNotEmpty()
 	@Column('varchar', { name: 'title', length: 200 })
 	title: string;
 
+	@ApiProperty({
+		description: 'board content',
+		example: 'board content',
+		type: String,
+	})
 	@IsString()
 	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
+	@ApiProperty({
+		description: 'UserId',
+		example: 'UserId',
+		type: Number,
+	})
 	@Column({ type: 'int' })
 	userId: number;
 
