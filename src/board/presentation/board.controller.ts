@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
 import {
+	ApiBadRequestResponse,
+	ApiCreatedResponse,
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
 	ApiOperation,
@@ -29,6 +31,7 @@ import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoar
 import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
 import { log } from 'console';
 
+@ApiBadRequestResponse({ description: 'bad request parameter' })
 @ApiInternalServerErrorResponse({ description: 'server error' })
 @ApiTags('BOARD')
 @Controller('board')
@@ -41,39 +44,39 @@ export class BoardsController {
 		private deleteBoardUseCase: DeleteBoardUseCase,
 	) {}
 
+	@ApiCreatedResponse({ description: 'create success' })
 	@ApiOperation({ summary: 'create board' })
-	@ApiOkResponse({ description: 'success', type: CreateBoardUseCaseResponse })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
 	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardUseCaseRequest) {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
 	}
 
+	@ApiOkResponse({ description: 'update success' })
 	@ApiOperation({ summary: 'update board' })
-	@ApiOkResponse({ description: 'success', type: UpdateBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
 	async updateBoard(@User() user, @Body() updateBoardRequest: UpdateBoardRequest) {
 		return this.updateBoardUseCase.execute(updateBoardRequest, user.id);
 	}
 
+	@ApiOkResponse({ description: 'delete success' })
 	@ApiOperation({ summary: 'delete board' })
-	@ApiOkResponse({ description: 'success', type: DeleteBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Delete('delete')
 	async deleteBoard(@Body() deleteBoardRequest: DeleteBoardRequest) {
 		return this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);
 	}
 
+	@ApiOkResponse({ description: 'find success' })
 	@ApiOperation({ summary: 'get board' })
-	@ApiOkResponse({ description: 'success', type: FindBoardResponse })
 	@Get('find_board')
 	async findBoard() {
 		return this.findBoardUseCase.execute();
 	}
 
+	@ApiOkResponse({ description: 'my board get success' })
 	@ApiOperation({ summary: 'get my board' })
-	@ApiOkResponse({ description: 'success', type: FindBoardResponse })
 	@UseGuards(JwtAuthGuard)
 	@Get('myboard')
 	async myBoardFind(@User() user) {

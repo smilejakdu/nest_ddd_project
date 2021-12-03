@@ -1,5 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
 import {
+	ApiBadRequestResponse,
+	ApiCreatedResponse,
 	ApiInternalServerErrorResponse,
 	ApiOkResponse,
 	ApiOperation,
@@ -26,6 +28,7 @@ import {
 	DeleteCommentUseCaseResponse,
 } from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
 
+@ApiBadRequestResponse({ description: 'bad request parameter' })
 @ApiInternalServerErrorResponse({ description: 'server error' })
 @ApiTags('COMMENT')
 @Controller('comment')
@@ -37,7 +40,7 @@ export class CommentController {
 	) {}
 
 	@ApiOperation({ summary: 'create comment' })
-	@ApiOkResponse({ description: 'success', type: CreateCommentUseCaseResponse })
+	@ApiCreatedResponse({ description: 'create success' })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
 	async createComment(@User() user, @Body() createCommentRequest: CreateCommentUseCaseRequest) {
@@ -45,7 +48,7 @@ export class CommentController {
 	}
 
 	@ApiOperation({ summary: 'update comment' })
-	@ApiOkResponse({ description: 'success', type: UpdateCommentUseCaseResponse })
+	@ApiOkResponse({ description: 'success' })
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
 	async updateComment(
@@ -56,7 +59,7 @@ export class CommentController {
 	}
 
 	@ApiOperation({ summary: 'delete comment' })
-	@ApiOkResponse({ description: 'success', type: DeleteCommentUseCaseResponse })
+	@ApiOkResponse({ description: 'success' })
 	@UseGuards(JwtAuthGuard)
 	@Delete('delete')
 	async deleteComment(@Body() deleteCommentRequest: DeleteCommentUseCaseRequest) {
