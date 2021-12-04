@@ -10,7 +10,7 @@ import {
 	UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, MinLength } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 // Entity
 import { UserEntity } from '../../../user/infra/entity/UserEntity';
 import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
