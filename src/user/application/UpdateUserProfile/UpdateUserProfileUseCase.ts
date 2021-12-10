@@ -9,9 +9,7 @@ import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { log } from 'console';
 
-export class UpdateUserProfileUseCase
-	implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse>
-{
+export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse> {
 	private FAIL_UPDATE = 'Can`t modify profile.';
 	private HAS_NOT_USER = 'Can`t found User.';
 	private PASSWORD_NO_MACTH = 'check User Password';
@@ -31,10 +29,7 @@ export class UpdateUserProfileUseCase
 			};
 		}
 
-		const comparePassword = await this.userRepository.comparePassword(
-			foundUser.password.props.value,
-			request.password,
-		);
+		const comparePassword = await this.userRepository.comparePassword(foundUser.password.props.value, request.password);
 		if (!comparePassword) {
 			return {
 				ok: false,

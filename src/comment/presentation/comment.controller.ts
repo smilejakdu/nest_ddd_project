@@ -1,32 +1,15 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
-import {
-	ApiBadRequestResponse,
-	ApiCreatedResponse,
-	ApiInternalServerErrorResponse,
-	ApiOkResponse,
-	ApiOperation,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 // Request , Response
-import {
-	CreateCommentUseCaseRequest,
-	CreateCommentUseCaseResponse,
-} from '../application/CreateCommentUseCase/dto/CreateCommentUseCase.dto';
+import { CreateCommentUseCaseRequest } from '../application/CreateCommentUseCase/dto/CreateCommentUseCase.dto';
+import { UpdateCommentUseCaseRequest } from '../application/UpdateCommentUseCase/dto/UpdateCommentUseCase.dto';
+import { DeleteCommentUseCaseRequest } from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
 // UseCase
 import { CreateCommentUseCase } from '../application/CreateCommentUseCase/CreateCommentUseCase';
-import { log } from 'console';
 import { UpdateCommentUseCase } from '../application/UpdateCommentUseCase/UpdateCommentUseCase';
 import { DeleteCommentUseCase } from '../application/DeleteCommentUseCase/DeleteCommentUseCase';
-import {
-	UpdateCommentUseCaseRequest,
-	UpdateCommentUseCaseResponse,
-} from '../application/UpdateCommentUseCase/dto/UpdateCommentUseCase.dto';
-import {
-	DeleteCommentUseCaseRequest,
-	DeleteCommentUseCaseResponse,
-} from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
 
 @ApiBadRequestResponse({ description: 'bad request parameter' })
 @ApiInternalServerErrorResponse({ description: 'server error' })
@@ -51,10 +34,7 @@ export class CommentController {
 	@ApiOkResponse({ description: 'success' })
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
-	async updateComment(
-		@User() user,
-		@Body() updateCommentUseCaseRequest: UpdateCommentUseCaseRequest,
-	) {
+	async updateComment(@User() user, @Body() updateCommentUseCaseRequest: UpdateCommentUseCaseRequest) {
 		return this.updateCommentUseCase.execute(updateCommentUseCaseRequest, user.id);
 	}
 

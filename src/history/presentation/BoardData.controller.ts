@@ -44,7 +44,7 @@ export class BoardHistoryController {
 			await this.findAllMonthBoardHistoryUseCase.execute();
 
 		res.status(HttpStatus.OK).json({
-			board_list: foundThisMonthBoardCount,
+			...foundThisMonthBoardCount,
 		});
 	}
 }

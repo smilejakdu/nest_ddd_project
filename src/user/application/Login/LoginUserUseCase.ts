@@ -5,8 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IUserRepository } from 'src/user/infra/IUserRepository';
 import { LoginRequest, LoginResponse } from './dto/LoginUser.dto';
-import { User } from 'src/user/domain/User';
-import { log } from 'console';
 
 export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	constructor(
