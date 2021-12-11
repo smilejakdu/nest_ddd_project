@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { IUseCase } from '../../../shared/core/IUseCase';
-import { FindUserRequest, FindUserResponse } from './dto/FindUser.dto';
+import { FindUserRequest, FindUserResponse } from './dto/FindUseCase.dto';
 import { IUserRepository } from '../../infra/IUserRepository';
 
 @Injectable()

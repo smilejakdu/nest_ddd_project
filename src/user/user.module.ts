@@ -4,10 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import dotenv from 'dotenv';
 import { AuthModule } from 'src/auth/auth.module';
 // UseCase
-import { CreateUserUseCase } from './application/CreateUser/CreateUserUseCase';
-import { UpdateUserProfileUseCase } from './application/UpdateUserProfile/UpdateUserProfileUseCase';
-import { FindUserUseCase } from './application/FindUser/FindUserUseCase';
-import { LoginUserUseCase } from './application/Login/LoginUserUseCase';
+import { CreateUserUseCase } from './application/CreateUserUseCase/CreateUserUseCase';
+import { UpdateUserProfileUseCase } from './application/UpdateUserProfileUseCase/UpdateUserProfileUseCase';
+import { FindUserUseCase } from './application/FindUserUseCase/FindUserUseCase';
+import { LoginUserUseCase } from './application/LoginUserCase/LoginUserUseCase';
 // Entity
 import { UserEntity } from './infra/entity/UserEntity';
 // Repository

@@ -12,10 +12,7 @@ export class AuthService {
 	) {}
 
 	async validateUser(nickname: string, password: string): Promise<any> {
-		const foundUser = await this.usersRepository
-			.createQueryBuilder('user')
-			.where('user.nickname =:nickname', { nickname })
-			.getOne();
+		const foundUser = await this.usersRepository.createQueryBuilder('user').where('user.nickname =:nickname', { nickname }).getOne();
 
 		if (!foundUser) {
 			throw new Error('존재하지 않는 사용자');
@@ -27,5 +24,15 @@ export class AuthService {
 			return userWithoutPassword;
 		}
 		return null;
+	}
+
+	async logOut() {
+		return {
+			token: '',
+			domain: 'localhost',
+			path: '/',
+			httpOnly: true,
+			maxAge: 0,
+		};
 	}
 }

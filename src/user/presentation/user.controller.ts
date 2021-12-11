@@ -3,21 +3,22 @@ import { Body, Controller, Get, HttpStatus, Post, Put, Req, Res, UseGuards } fro
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 // UseCase
-import { CreateUserUseCase } from '../application/CreateUser/CreateUserUseCase';
-import { UpdateUserProfileUseCase } from '../application/UpdateUserProfile/UpdateUserProfileUseCase';
-import { LoginUserUseCase } from '../application/Login/LoginUserUseCase';
-import { FindUserUseCase } from '../application/FindUser/FindUserUseCase';
+import { CreateUserUseCase } from '../application/CreateUserUseCase/CreateUserUseCase';
+import { UpdateUserProfileUseCase } from '../application/UpdateUserProfileUseCase/UpdateUserProfileUseCase';
+import { LoginUserUseCase } from '../application/LoginUserCase/LoginUserUseCase';
+import { FindUserUseCase } from '../application/FindUserUseCase/FindUserUseCase';
 import { LoginUserUseCaseResponse } from './dto/LoginUseCaseResponse';
 // Dto
-import { CreateUserRequest, CreateUserResponse } from '../application/CreateUser/dto/CreateUser.dto';
-import { UpdateUserProfileRequest, UpdateUserProfileResponse } from '../application/UpdateUserProfile/dto/UpdateUserProfile.dto';
-import { LoginRequest, LoginResponse } from '../application/Login/dto/LoginUser.dto';
+import { CreateUserRequest, CreateUserResponse } from '../application/CreateUserUseCase/dto/CreateUserUseCase.dto';
+import { UpdateUserProfileRequest, UpdateUserProfileResponse } from '../application/UpdateUserProfileUseCase/dto/UpdateUserProfileUseCase.dto';
+import { LoginRequest, LoginResponse } from '../application/LoginUserCase/dto/LoginUseCase.dto';
 
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 import { BadRequestParameterResponse, BAD_REQUEST_PARAMETER } from '../../shared/dto/BadRequestParameterResponse';
 import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { SignupUseCaseResponse } from './dto/SignupUseCaseResponse';
+import { AuthService } from 'src/auth/auth.service';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',
@@ -32,6 +33,7 @@ export class UsersController {
 		private loginUserUseCase: LoginUserUseCase,
 		private findUserUseCase: FindUserUseCase,
 		private updateUserProfileUseCase: UpdateUserProfileUseCase,
+		private authService: AuthService,
 	) {}
 
 	@ApiCreatedResponse({ description: 'create success', type: SignupUseCaseResponse })
@@ -78,13 +80,23 @@ export class UsersController {
 		}
 	}
 
+	@UseGuards(JwtAuthGuard)
 	@ApiOkResponse({ description: 'success' })
 	@ApiOperation({ summary: 'logout' })
 	@Post('logout')
-	async logOut(@Req() req, @Res() res) {
-		req.logout();
-		res.clearCookie('connect.sid', { httpOnly: true });
-		res.send('ok');
+	async logOut(@Res({ passthrough: true }) res: Response) {
+		try {
+			const { token, ...option } = await this.authService.logOut();
+			res.cookie('Authentication', token, option);
+
+			res.status(HttpStatus.OK).json({
+				result: 'ok',
+			});
+		} catch (error) {
+			res.status(HttpStatus.BAD_REQUEST).json({
+				error: BAD_REQUEST_PARAMETER,
+			});
+		}
 	}
 
 	@UseGuards(JwtAuthGuard)

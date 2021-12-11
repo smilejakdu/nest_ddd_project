@@ -1,13 +1,11 @@
 import { isNil } from 'lodash';
 import { IUseCase } from '../../../shared/core/IUseCase';
-import { UpdateUserProfileRequest, UpdateUserProfileResponse } from './dto/UpdateUserProfile.dto';
+import { UpdateUserProfileRequest, UpdateUserProfileResponse } from './dto/UpdateUserProfileUseCase.dto';
 import { Inject } from '@nestjs/common';
 import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
-import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { UserNickname } from 'src/user/domain/UserNickname';
-import { log } from 'console';
 
 export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse> {
 	private FAIL_UPDATE = 'Can`t modify profile.';
@@ -21,7 +19,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 
 	async execute(request: UpdateUserProfileRequest): Promise<UpdateUserProfileResponse> {
 		const foundUser = await this.userRepository.findUserById(request.user_idx);
-		log('UpdateUserProfileUseCase:', foundUser);
+
 		if (isNil(foundUser)) {
 			return {
 				ok: false,

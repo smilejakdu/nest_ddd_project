@@ -6,7 +6,7 @@ import { UserPassword } from 'src/user/domain/UserPassword';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/IUserRepository';
-import { CreateUserRequest, CreateUserResponse } from './dto/CreateUser.dto';
+import { CreateUserRequest, CreateUserResponse } from './dto/CreateUserUseCase.dto';
 
 export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUserResponse> {
 	private DUPLICATE_NICKNAME_ERROR_MESSAGE = 'Request nickname was duplicated.';

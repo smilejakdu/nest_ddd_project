@@ -6,17 +6,16 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from 'http-exception.filter';
 
 async function bootstrap() {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+		cors: true,
+	});
 	const port = process.env.PORT || 3000;
 
 	const config = new DocumentBuilder()
 		.setTitle('Nest DDD')
 		.setDescription('Nest DDD User Board Comment')
 		.setVersion('1.0')
-		.addBearerAuth(
-        { type: 'http', scheme: 'bearer', bearerFormat: 'Token' },
-        'access-token',
-      )
+		.addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token' }, 'access-token')
 		.addTag('Nest DDD')
 		.build();
 
