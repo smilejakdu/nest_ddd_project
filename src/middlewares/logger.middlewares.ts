@@ -3,7 +3,6 @@ import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-	// https://docs.nestjs.com/middleware#functional-middleware
 	private logger = new Logger('HTTP');
 
 	use(request: Request, response: Response, next: NextFunction): void {

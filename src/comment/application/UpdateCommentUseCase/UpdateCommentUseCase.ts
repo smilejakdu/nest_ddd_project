@@ -2,18 +2,13 @@ import { Inject } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
-import {
-	UpdateCommentUseCaseRequest,
-	UpdateCommentUseCaseResponse,
-} from './dto/UpdateCommentUseCase.dto';
+import { UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse } from './dto/UpdateCommentUseCase.dto';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 import { ICommentRepository } from 'src/comment/infra/ICommentRepository';
 import { CommentContent } from 'src/comment/domain/CommentContent';
 import { Comment } from 'src/comment/domain/Comment';
 
-export class UpdateCommentUseCase
-	implements IUseCase<UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse>
-{
+export class UpdateCommentUseCase implements IUseCase<UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse> {
 	private FAIL_UPDATE = 'Can`t modify comment.';
 	private HAS_NOT_COMMENT = 'Can`t found comment.';
 
@@ -22,10 +17,7 @@ export class UpdateCommentUseCase
 		private commentRepository: ICommentRepository,
 	) {}
 
-	async execute(
-		request: UpdateCommentUseCaseRequest,
-		userId: number,
-	): Promise<UpdateCommentUseCaseResponse> {
+	async execute(request: UpdateCommentUseCaseRequest, userId: number): Promise<UpdateCommentUseCaseResponse> {
 		const requestContent = request.content;
 
 		const foundComment = await this.commentRepository.findMyComment(request.comment_idx);

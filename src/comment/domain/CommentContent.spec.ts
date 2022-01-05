@@ -21,11 +21,7 @@ describe('CommentContent', () => {
 
 		expect(commentContentNullOrError.isSuccess).toBe(false);
 		expect(commentContentUndefinedOrError.isSuccess).toBe(false);
-		expect(commentContentNullOrError.errorValue()).toEqual(
-			COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED,
-		);
-		expect(commentContentUndefinedOrError.errorValue()).toEqual(
-			COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED,
-		);
+		expect(commentContentNullOrError.errorValue()).toEqual(COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED);
+		expect(commentContentUndefinedOrError.errorValue()).toEqual(COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED);
 	});
 });

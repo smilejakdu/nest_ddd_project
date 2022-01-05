@@ -3,16 +3,16 @@ import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorRespon
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 // Request , Response
-import { CreateCommentUseCaseRequest } from '../application/CreateCommentUseCase/dto/CreateCommentUseCase.dto';
-import { UpdateCommentUseCaseRequest } from '../application/UpdateCommentUseCase/dto/UpdateCommentUseCase.dto';
-import { DeleteCommentUseCaseRequest } from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
+import { CreateCommentUseCaseRequest, CreateCommentUseCaseResponse } from '../application/CreateCommentUseCase/dto/CreateCommentUseCase.dto';
+import { UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse } from '../application/UpdateCommentUseCase/dto/UpdateCommentUseCase.dto';
+import { DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse } from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
 // UseCase
 import { CreateCommentUseCase } from '../application/CreateCommentUseCase/CreateCommentUseCase';
 import { UpdateCommentUseCase } from '../application/UpdateCommentUseCase/UpdateCommentUseCase';
 import { DeleteCommentUseCase } from '../application/DeleteCommentUseCase/DeleteCommentUseCase';
 
-@ApiBadRequestResponse({ description: 'bad request parameter' })
-@ApiInternalServerErrorResponse({ description: 'server error' })
+@ApiBadRequestResponse({ description: 'bad request parameter', status: 400 })
+@ApiInternalServerErrorResponse({ description: 'server error', status: 500 })
 @ApiTags('COMMENT')
 @Controller('comment')
 export class CommentController {
@@ -26,7 +26,7 @@ export class CommentController {
 	@ApiCreatedResponse({ description: 'create success' })
 	@UseGuards(JwtAuthGuard)
 	@Post('create')
-	async createComment(@User() user, @Body() createCommentRequest: CreateCommentUseCaseRequest) {
+	async createComment(@User() user, @Body() createCommentRequest: CreateCommentUseCaseRequest): Promise<CreateCommentUseCaseResponse> {
 		return this.createCommentUseCase.execute(createCommentRequest, user.id);
 	}
 
@@ -34,7 +34,7 @@ export class CommentController {
 	@ApiOkResponse({ description: 'success' })
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
-	async updateComment(@User() user, @Body() updateCommentUseCaseRequest: UpdateCommentUseCaseRequest) {
+	async updateComment(@User() user, @Body() updateCommentUseCaseRequest: UpdateCommentUseCaseRequest): Promise<UpdateCommentUseCaseResponse> {
 		return this.updateCommentUseCase.execute(updateCommentUseCaseRequest, user.id);
 	}
 
@@ -42,7 +42,7 @@ export class CommentController {
 	@ApiOkResponse({ description: 'success' })
 	@UseGuards(JwtAuthGuard)
 	@Delete('delete')
-	async deleteComment(@Body() deleteCommentRequest: DeleteCommentUseCaseRequest) {
+	async deleteComment(@Body() deleteCommentRequest: DeleteCommentUseCaseRequest): Promise<DeleteCommentUseCaseResponse> {
 		return this.deleteCommentUseCase.execute(deleteCommentRequest);
 	}
 }
