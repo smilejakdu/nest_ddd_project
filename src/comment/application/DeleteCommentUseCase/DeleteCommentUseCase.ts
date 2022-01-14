@@ -3,16 +3,11 @@ import { Inject } from '@nestjs/common';
 
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { ICommentRepository } from 'src/comment/infra/ICommentRepository';
-import {
-	DeleteCommentUseCaseRequest,
-	DeleteCommentUseCaseResponse,
-} from './dto/DeleteCommentUseCase.dto';
+import { DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse } from './dto/DeleteCommentUseCase.dto';
 
 export const DELETE_COMMENT_ERR = 'DOES_NOT_COMMENT';
 
-export class DeleteCommentUseCase
-	implements IUseCase<DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse>
-{
+export class DeleteCommentUseCase implements IUseCase<DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse> {
 	constructor(
 		@Inject('COMMENT_REPOSITORY')
 		private readonly commentRepository: ICommentRepository,
@@ -24,6 +19,7 @@ export class DeleteCommentUseCase
 		if (isNil(foundComment)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: DELETE_COMMENT_ERR,
 			};
 		}
@@ -32,6 +28,7 @@ export class DeleteCommentUseCase
 
 		return {
 			ok: true,
+			status_code: 200,
 		};
 	}
 }

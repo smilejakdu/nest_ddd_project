@@ -23,6 +23,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 		if (isNil(foundUser)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: this.HAS_NOT_USER,
 			};
 		}
@@ -31,6 +32,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 		if (!comparePassword) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: this.PASSWORD_NO_MACTH,
 			};
 		}
@@ -49,6 +51,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 
 		return {
 			ok: true,
+			status_code: 200,
 			user: {
 				user_idx: request.user_idx,
 				nickname: request.nickname,

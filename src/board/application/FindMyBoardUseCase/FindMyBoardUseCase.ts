@@ -19,12 +19,14 @@ export class FindMyBoardUseCase implements IUseCase<FindMyBoardRequest, FindMyBo
 		if (isNil(foundBoards)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: this.FAIL_FIND,
 			};
 		}
 
 		return {
 			ok: true,
+			status_code: 200,
 			boards: foundBoards,
 		};
 	}

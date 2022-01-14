@@ -20,6 +20,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		if (isNil(foundUser)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: `Can not found nickname : ${requestNickname}`,
 			};
 		}
@@ -27,6 +28,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		if (!this.userRepository.checkUserPassword(request.password, foundUser.password)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: 'Password is Wrong',
 			};
 		}
@@ -38,6 +40,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 
 		return {
 			ok: true,
+			status_code: 200,
 			user: payload,
 			token: this.jwtService.sign(payload),
 		};
