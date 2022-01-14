@@ -27,6 +27,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 		if (!isNil(foundUser)) {
 			return {
 				ok: false,
+				status_code: 400,
 				error: this.DUPLICATE_NICKNAME_ERROR_MESSAGE,
 			};
 		}
@@ -43,6 +44,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 
 		return {
 			ok: true,
+			status_code: 201,
 			user: {
 				user_idx: user.id,
 				nickname: user.nickname.value,

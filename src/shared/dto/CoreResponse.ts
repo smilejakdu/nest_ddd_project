@@ -6,7 +6,7 @@ export class CoreResponse {
 	ok: boolean;
 
 	@Column()
-	status_code?: number;
+	status_code: number;
 
 	@IsString()
 	@Column()
