@@ -6,7 +6,7 @@ export class BadRequestParameterResponse {
 		description: 'bad request response',
 		example: false,
 	})
-	success: boolean;
+	ok: boolean;
 
 	@ApiProperty({
 		type: 'number',

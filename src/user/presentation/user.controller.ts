@@ -40,14 +40,13 @@ export class UsersController {
 	@ApiOperation({ summary: 'signup' })
 	@Post('signup')
 	async createUser(@Body() createUserRequest: CreateUserRequest, @Res() res: Response) {
+		if (isNil(createUserRequest.nickname) || isNil(createUserRequest.password)) {
+			res.status(HttpStatus.BAD_REQUEST).json({
+				result: BAD_REQUEST_PARAMETER,
+			});
+		}
+		const createUserUseCaseResponse = await this.createUserUseCase.execute(createUserRequest);
 		try {
-			if (isNil(createUserRequest.nickname) || isNil(createUserRequest.password)) {
-				res.status(HttpStatus.BAD_REQUEST).json({
-					result: BAD_REQUEST_PARAMETER,
-				});
-			}
-			const createUserUseCaseResponse = await this.createUserUseCase.execute(createUserRequest);
-
 			res.status(HttpStatus.OK).json({
 				ok: createUserUseCaseResponse.ok,
 				nickname: createUserUseCaseResponse.user.nickname,
@@ -55,6 +54,7 @@ export class UsersController {
 		} catch (error) {
 			console.error(error);
 			res.status(HttpStatus.BAD_REQUEST).json({
+				ok: createUserUseCaseResponse.ok,
 				result: BAD_REQUEST_PARAMETER,
 			});
 		}
@@ -69,14 +69,19 @@ export class UsersController {
 				error: BAD_REQUEST_PARAMETER,
 			});
 		}
+
 		try {
 			const loginUserUseCaseResponse = await this.loginUserUseCase.execute(loginUserRequest);
-
 			res.status(HttpStatus.OK).json({
-				result: loginUserUseCaseResponse,
+				ok: true,
+				data: loginUserUseCaseResponse.user,
+				token: loginUserUseCaseResponse.token,
 			});
 		} catch (err) {
-			console.log(err);
+			res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+				ok: false,
+				statusCode: 500,
+			});
 		}
 	}
 
@@ -90,7 +95,7 @@ export class UsersController {
 			res.cookie('Authentication', token, option);
 
 			res.status(HttpStatus.OK).json({
-				result: 'ok',
+				ok: true,
 			});
 		} catch (error) {
 			res.status(HttpStatus.BAD_REQUEST).json({
@@ -108,12 +113,14 @@ export class UsersController {
 			const findUserUseCaseResponse = await this.findUserUseCase.execute(user);
 
 			res.status(HttpStatus.OK).json({
-				result: findUserUseCaseResponse,
+				ok: true,
+				data: findUserUseCaseResponse,
 			});
 		} catch (err) {
 			console.log(err);
 			res.status(HttpStatus.BAD_REQUEST).json({
-				result: BAD_REQUEST_PARAMETER,
+				ok: false,
+				data: BAD_REQUEST_PARAMETER,
 			});
 		}
 	}
