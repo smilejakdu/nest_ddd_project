@@ -26,7 +26,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 		if (!foundBoard) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: this.HAS_NOT_BOARD,
 			};
 		}
@@ -49,7 +49,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 			await this.boardRepository.save(board);
 			return {
 				ok: true,
-				status_code: 201,
+				statusCode: 201,
 				board: {
 					board_idx: board.props.userId.value,
 					title: board.title.props.value,
@@ -59,7 +59,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 		} catch (error) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: this.FAIL_UPDATE,
 			};
 		}

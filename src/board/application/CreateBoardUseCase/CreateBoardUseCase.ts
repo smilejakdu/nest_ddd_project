@@ -34,7 +34,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 
 			return {
 				ok: true,
-				status_code: 201,
+				statusCode: 201,
 				board: {
 					board_idx: board.id,
 					title: board.title.props.value,
@@ -44,7 +44,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 		} catch (error) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: this.FAIL_CREATE,
 			};
 		}

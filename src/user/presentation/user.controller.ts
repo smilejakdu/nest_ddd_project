@@ -66,7 +66,9 @@ export class UsersController {
 	async loginUser(@Body() loginUserRequest: LoginRequest, @Res() res: Response) {
 		if (isNil(loginUserRequest.nickname) || isNil(loginUserRequest.password)) {
 			res.status(HttpStatus.BAD_REQUEST).json({
-				error: BAD_REQUEST_PARAMETER,
+				ok: false,
+				statusCode: 400,
+				message: BAD_REQUEST_PARAMETER,
 			});
 		}
 
@@ -81,6 +83,7 @@ export class UsersController {
 			res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
 				ok: false,
 				statusCode: 500,
+				message: BAD_REQUEST_PARAMETER,
 			});
 		}
 	}

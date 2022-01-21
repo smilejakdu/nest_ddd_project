@@ -33,7 +33,7 @@ export class CreateCommentUseCase implements IUseCase<CreateCommentUseCaseReques
 
 			return {
 				ok: true,
-				status_code: 200,
+				statusCode: 200,
 				comment: {
 					comment_idx: comment.id,
 					content: comment.content.props.value,
@@ -42,7 +42,7 @@ export class CreateCommentUseCase implements IUseCase<CreateCommentUseCaseReques
 		} catch (error) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: this.FAIL_CREATE,
 			};
 		}

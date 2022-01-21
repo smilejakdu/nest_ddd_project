@@ -19,7 +19,7 @@ export class DeleteCommentUseCase implements IUseCase<DeleteCommentUseCaseReques
 		if (isNil(foundComment)) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: DELETE_COMMENT_ERR,
 			};
 		}
@@ -28,7 +28,7 @@ export class DeleteCommentUseCase implements IUseCase<DeleteCommentUseCaseReques
 
 		return {
 			ok: true,
-			status_code: 200,
+			statusCode: 200,
 		};
 	}
 }

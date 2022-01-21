@@ -20,14 +20,14 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 		if (!foundUser) {
 			return {
 				ok: false,
-				status_code: 400,
+				statusCode: 400,
 				error: this.HAS_NOT_USER,
 			};
 		}
 
 		return {
 			ok: true,
-			status_code: 200,
+			statusCode: 200,
 			user: {
 				user_idx: foundUser.user_idx,
 				nickname: foundUser.nickname.toString(),
