@@ -12,7 +12,7 @@ export class LoginUserUseCaseResponse {
 	@ApiProperty({
 		type: 'number',
 		description: 'status code',
-		example: true,
+		example: 200,
 	})
 	statusCode: number;
 

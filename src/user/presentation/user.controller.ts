@@ -19,6 +19,7 @@ import { BadRequestParameterResponse, BAD_REQUEST_PARAMETER } from '../../shared
 import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { SignupUseCaseResponse } from './dto/SignupUseCaseResponse';
 import { AuthService } from 'src/auth/auth.service';
+import { log } from 'console';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',
@@ -73,7 +74,7 @@ export class UsersController {
 		}
 		try {
 			const loginUserUseCaseResponse = await this.loginUserUseCase.execute(loginUserRequest);
-			return res.status(HttpStatus.OK).send({
+			return res.status(HttpStatus.OK).json({
 				ok: loginUserUseCaseResponse.ok,
 				statusCode: loginUserUseCaseResponse.statusCode,
 				data: loginUserUseCaseResponse.user,
@@ -96,7 +97,6 @@ export class UsersController {
 		try {
 			const { token, ...option } = await this.authService.logOut();
 			res.cookie('Authentication', token, option);
-
 			res.status(HttpStatus.OK).json({
 				ok: true,
 			});
@@ -109,15 +109,16 @@ export class UsersController {
 
 	@UseGuards(JwtAuthGuard)
 	@ApiOkResponse({ description: 'success' })
-	@ApiOperation({ summary: 'get my user' })
+	@ApiOperation({ summary: 'profile' })
 	@Get('profile')
 	async findUser(@User() user, @Res() res: Response) {
+		console.log(user);
 		try {
 			const findUserUseCaseResponse = await this.findUserUseCase.execute(user);
-
-			res.status(HttpStatus.OK).json({
+			return res.status(HttpStatus.OK).json({
 				ok: true,
-				data: findUserUseCaseResponse,
+				statusCode: findUserUseCaseResponse.statusCode,
+				data: findUserUseCaseResponse.user,
 			});
 		} catch (err) {
 			console.log(err);

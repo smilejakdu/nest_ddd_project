@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IUserRepository } from 'src/user/infra/IUserRepository';
 import { LoginRequest, LoginResponse } from './dto/LoginUseCase.dto';
-import { Console } from 'console';
 
 export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	constructor(
@@ -33,7 +32,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 				error: 'Password is Wrong',
 			};
 		}
-
+		delete foundUser.password;
 		const payload = {
 			user_idx: foundUser.user_idx,
 			nickname: foundUser.nickname,
@@ -42,7 +41,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		return {
 			ok: true,
 			statusCode: 200,
-			user: payload,
+			user: foundUser,
 			token: this.jwtService.sign(payload),
 		};
 	}
