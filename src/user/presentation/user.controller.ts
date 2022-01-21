@@ -1,5 +1,5 @@
 import { isNil } from 'lodash';
-import { Body, Controller, Get, HttpStatus, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 // UseCase
@@ -65,26 +65,26 @@ export class UsersController {
 	@Post('login')
 	async loginUser(@Body() loginUserRequest: LoginRequest, @Res() res: Response) {
 		if (isNil(loginUserRequest.nickname) || isNil(loginUserRequest.password)) {
-			res.status(HttpStatus.BAD_REQUEST).json({
+			return res.status(HttpStatus.BAD_REQUEST).json({
 				ok: false,
 				statusCode: 400,
 				message: BAD_REQUEST_PARAMETER,
 			});
 		}
-
 		try {
 			const loginUserUseCaseResponse = await this.loginUserUseCase.execute(loginUserRequest);
-			res.status(HttpStatus.OK).json({
-				ok: true,
+			return res.status(HttpStatus.OK).send({
+				ok: loginUserUseCaseResponse.ok,
+				statusCode: loginUserUseCaseResponse.statusCode,
 				data: loginUserUseCaseResponse.user,
 				token: loginUserUseCaseResponse.token,
 			});
 		} catch (err) {
-			res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+			return {
 				ok: false,
-				statusCode: 500,
-				message: BAD_REQUEST_PARAMETER,
-			});
+				statusCode: 400,
+				message: 'INTERNATIONAL ERROR',
+			};
 		}
 	}
 

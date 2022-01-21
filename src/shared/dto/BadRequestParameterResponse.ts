@@ -18,7 +18,7 @@ export class BadRequestParameterResponse {
 	@ApiProperty({
 		type: 'string',
 		description: 'bad_request',
-		example: 'bad_request',
+		example: 'BAD_REQUEST',
 	})
 	message: string;
 }

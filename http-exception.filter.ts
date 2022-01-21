@@ -14,14 +14,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		// let msg = '';
 		if (typeof err !== 'string' && err.error === 'Bad Request') {
 			return response.status(status).json({
-				success: false,
+				ok: false,
 				statusCode: status,
 				message: err.message,
 			});
 		}
 
 		response.status(status).json({
-			success: false,
+			ok: false,
 			statusCode: status,
 			message: err,
 		});

@@ -10,11 +10,18 @@ export class LoginUserUseCaseResponse {
 	ok: boolean;
 
 	@ApiProperty({
+		type: 'number',
+		description: 'status code',
+		example: true,
+	})
+	statusCode: number;
+
+	@ApiProperty({
 		type: 'object',
 		description: 'response user info',
 		example: { user_idx: 1, nickname: 'ash' },
 	})
-	user: {
+	data: {
 		user_idx: number;
 		nickname: string;
 	};
