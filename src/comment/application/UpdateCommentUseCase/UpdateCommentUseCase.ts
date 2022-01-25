@@ -25,7 +25,7 @@ export class UpdateCommentUseCase implements IUseCase<UpdateCommentUseCaseReques
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.HAS_NOT_COMMENT,
+				message: this.HAS_NOT_COMMENT,
 			};
 		}
 
@@ -48,6 +48,7 @@ export class UpdateCommentUseCase implements IUseCase<UpdateCommentUseCaseReques
 			return {
 				ok: true,
 				statusCode: 201,
+				message: 'SUCCESS',
 				comment: {
 					comment_idx: comment.id,
 					content: comment.content.props.value,
@@ -57,7 +58,7 @@ export class UpdateCommentUseCase implements IUseCase<UpdateCommentUseCaseReques
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.FAIL_UPDATE,
+				message: this.FAIL_UPDATE,
 			};
 		}
 	}

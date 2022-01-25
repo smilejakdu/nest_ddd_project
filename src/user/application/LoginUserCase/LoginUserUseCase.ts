@@ -22,7 +22,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 			return {
 				ok: false,
 				statusCode: 400,
-				error: `Can not found nickname : ${requestNickname}`,
+				message: `Can not found nickname : ${requestNickname}`,
 			};
 		}
 
@@ -30,7 +30,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 			return {
 				ok: false,
 				statusCode: 400,
-				error: 'Password is Wrong',
+				message: 'Password is Wrong',
 			};
 		}
 		delete foundUser.password;
@@ -41,6 +41,7 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 		return {
 			ok: true,
 			statusCode: 200,
+			message: 'SUCCESS',
 			user: foundUser,
 			token: this.jwtService.sign(payload),
 		};

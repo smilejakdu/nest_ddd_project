@@ -35,6 +35,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 			return {
 				ok: true,
 				statusCode: 201,
+				message: 'SUCCESS',
 				board: {
 					board_idx: board.id,
 					title: board.title.props.value,
@@ -42,10 +43,11 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 				},
 			};
 		} catch (error) {
+			console.error(error);
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.FAIL_CREATE,
+				message: this.FAIL_CREATE,
 			};
 		}
 	}

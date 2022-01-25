@@ -18,7 +18,7 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 			return {
 				ok: false,
 				statusCode: 400,
-				error: 'does_not_board',
+				message: 'does_not_board',
 			};
 		}
 
@@ -26,6 +26,7 @@ export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBo
 
 		return {
 			ok: true,
+			message: 'SUCCESS',
 			statusCode: 200,
 		};
 	}

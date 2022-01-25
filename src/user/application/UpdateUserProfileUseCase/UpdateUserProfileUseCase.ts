@@ -24,7 +24,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.HAS_NOT_USER,
+				message: this.HAS_NOT_USER,
 			};
 		}
 
@@ -33,7 +33,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.PASSWORD_NO_MACTH,
+				message: this.PASSWORD_NO_MACTH,
 			};
 		}
 		const createHashPassword = await this.userRepository.createPasswordHash(request.password);
@@ -52,6 +52,7 @@ export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileReque
 		return {
 			ok: true,
 			statusCode: 200,
+			message: 'SUCCESS',
 			user: {
 				user_idx: request.user_idx,
 				nickname: request.nickname,

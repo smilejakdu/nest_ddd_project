@@ -34,16 +34,18 @@ export class CreateCommentUseCase implements IUseCase<CreateCommentUseCaseReques
 			return {
 				ok: true,
 				statusCode: 200,
+				message: 'SUCCESS',
 				comment: {
 					comment_idx: comment.id,
 					content: comment.content.props.value,
 				},
 			};
 		} catch (error) {
+			console.log(error);
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.FAIL_CREATE,
+				message: this.FAIL_CREATE,
 			};
 		}
 	}

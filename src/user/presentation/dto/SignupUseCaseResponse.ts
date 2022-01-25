@@ -9,9 +9,16 @@ export class SignupUseCaseResponse {
 	ok: boolean;
 
 	@ApiProperty({
+		type: 'number',
+		description: '200',
+		example: 200,
+	})
+	statusCode: number;
+
+	@ApiProperty({
 		type: 'object',
 		description: 'user info response',
 		example: { nickname: 'ash' },
 	})
-	user: object;
+	user?: object;
 }

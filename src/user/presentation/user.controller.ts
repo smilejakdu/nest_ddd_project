@@ -40,47 +40,31 @@ export class UsersController {
 	@ApiCreatedResponse({ description: 'create success', type: SignupUseCaseResponse })
 	@ApiOperation({ summary: 'signup' })
 	@Post('signup')
-	async createUser(@Body() createUserRequest: CreateUserRequest, @Res() res: Response) {
-		if (isNil(createUserRequest.nickname) || isNil(createUserRequest.password)) {
-			return res.status(HttpStatus.BAD_REQUEST).json({
-				result: BAD_REQUEST_PARAMETER,
-			});
-		}
-		const createUserUseCaseResponse = await this.createUserUseCase.execute(createUserRequest);
-		try {
-			res.status(HttpStatus.OK).json({
-				ok: createUserUseCaseResponse.ok,
-				nickname: createUserUseCaseResponse.user.nickname,
-			});
-		} catch (error) {
-			console.error(error);
-			return res.status(HttpStatus.BAD_REQUEST).json({
-				ok: createUserUseCaseResponse.ok,
-				result: BAD_REQUEST_PARAMETER,
-			});
-		}
+	async createUser(@Body() createUserRequest: CreateUserRequest): Promise<SignupUseCaseResponse | BadRequestParameterResponse> {
+		return await this.createUserUseCase.execute(createUserRequest);
 	}
 
 	@ApiOkResponse({ description: 'success', type: LoginUserUseCaseResponse })
 	@ApiOperation({ summary: 'login' })
 	@Post('login')
-	async loginUser(@Body() loginUserRequest: LoginRequest, @Res() res: Response) {
+	async loginUser(@Body() loginUserRequest: LoginRequest): Promise<LoginUserUseCaseResponse | BadRequestParameterResponse> {
 		if (isNil(loginUserRequest.nickname) || isNil(loginUserRequest.password)) {
-			res.status(HttpStatus.BAD_REQUEST).json({
+			return {
 				ok: false,
 				statusCode: 400,
 				message: BAD_REQUEST_PARAMETER,
-			});
+			};
 		}
 		try {
 			const loginUserUseCaseResponse = await this.loginUserUseCase.execute(loginUserRequest);
-			return res.status(HttpStatus.OK).json({
+			return {
 				ok: loginUserUseCaseResponse.ok,
 				statusCode: loginUserUseCaseResponse.statusCode,
 				data: loginUserUseCaseResponse.user,
 				token: loginUserUseCaseResponse.token,
-			});
-		} catch (err) {
+			};
+		} catch (error) {
+			console.error(error);
 			return {
 				ok: false,
 				statusCode: 400,

@@ -27,7 +27,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.HAS_NOT_BOARD,
+				message: this.HAS_NOT_BOARD,
 			};
 		}
 
@@ -50,6 +50,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 			return {
 				ok: true,
 				statusCode: 201,
+				message: 'SUCCESS',
 				board: {
 					board_idx: board.props.userId.value,
 					title: board.title.props.value,
@@ -60,7 +61,7 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.FAIL_UPDATE,
+				message: this.FAIL_UPDATE,
 			};
 		}
 	}

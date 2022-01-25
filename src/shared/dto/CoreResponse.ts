@@ -10,5 +10,5 @@ export class CoreResponse {
 
 	@IsString()
 	@Column()
-	error?: string;
+	message: string;
 }

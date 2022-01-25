@@ -20,13 +20,14 @@ export class FindBoardUseCase implements IUseCase<FindBoardRequest, FindBoardRes
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.FAIL_FIND,
+				message: this.FAIL_FIND,
 			};
 		}
 
 		return {
 			ok: true,
 			statusCode: 200,
+			message: 'SUCCESS',
 			boards: foundBoards,
 		};
 	}

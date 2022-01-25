@@ -21,13 +21,14 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 			return {
 				ok: false,
 				statusCode: 400,
-				error: this.HAS_NOT_USER,
+				message: this.HAS_NOT_USER,
 			};
 		}
 
 		return {
 			ok: true,
 			statusCode: 200,
+			message: 'SUCCESS',
 			user: {
 				user_idx: foundUser.user_idx,
 				nickname: foundUser.nickname.toString(),
