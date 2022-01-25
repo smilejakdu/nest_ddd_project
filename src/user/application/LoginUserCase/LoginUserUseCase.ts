@@ -15,35 +15,44 @@ export class LoginUserUseCase implements IUseCase<LoginRequest, LoginResponse> {
 	) {}
 
 	async execute(request: LoginRequest): Promise<LoginResponse> {
-		const requestNickname = request.nickname;
-		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
+		try {
+			const requestNickname = request.nickname;
+			const foundUser = await this.userRepository.findUserByNickname(requestNickname);
 
-		if (isNil(foundUser)) {
+			if (isNil(foundUser)) {
+				return {
+					ok: false,
+					statusCode: 400,
+					message: `Can not found nickname : ${requestNickname}`,
+				};
+			}
+
+			if (!this.userRepository.checkUserPassword(request.password, foundUser.password)) {
+				return {
+					ok: false,
+					statusCode: 400,
+					message: 'Password is Wrong',
+				};
+			}
+			delete foundUser.password;
+			const payload = {
+				user_idx: foundUser.user_idx,
+				nickname: foundUser.nickname,
+			};
+			return {
+				ok: true,
+				statusCode: 200,
+				message: 'SUCCESS',
+				user: foundUser,
+				token: this.jwtService.sign(payload),
+			};
+		} catch (error) {
+			console.error(error);
 			return {
 				ok: false,
 				statusCode: 400,
-				message: `Can not found nickname : ${requestNickname}`,
+				message: 'BAD REQUEST',
 			};
 		}
-
-		if (!this.userRepository.checkUserPassword(request.password, foundUser.password)) {
-			return {
-				ok: false,
-				statusCode: 400,
-				message: 'Password is Wrong',
-			};
-		}
-		delete foundUser.password;
-		const payload = {
-			user_idx: foundUser.user_idx,
-			nickname: foundUser.nickname,
-		};
-		return {
-			ok: true,
-			statusCode: 200,
-			message: 'SUCCESS',
-			user: foundUser,
-			token: this.jwtService.sign(payload),
-		};
 	}
 }

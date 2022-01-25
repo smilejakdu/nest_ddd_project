@@ -41,6 +41,13 @@ export class UsersController {
 	@ApiOperation({ summary: 'signup' })
 	@Post('signup')
 	async createUser(@Body() createUserRequest: CreateUserRequest): Promise<SignupUseCaseResponse | BadRequestParameterResponse> {
+		if (isNil(createUserRequest.nickname) || isNil(createUserRequest.password)) {
+			return {
+				ok: false,
+				statusCode: 400,
+				message: BAD_REQUEST_PARAMETER,
+			};
+		}
 		return await this.createUserUseCase.execute(createUserRequest);
 	}
 
@@ -55,22 +62,7 @@ export class UsersController {
 				message: BAD_REQUEST_PARAMETER,
 			};
 		}
-		try {
-			const loginUserUseCaseResponse = await this.loginUserUseCase.execute(loginUserRequest);
-			return {
-				ok: loginUserUseCaseResponse.ok,
-				statusCode: loginUserUseCaseResponse.statusCode,
-				data: loginUserUseCaseResponse.user,
-				token: loginUserUseCaseResponse.token,
-			};
-		} catch (error) {
-			console.error(error);
-			return {
-				ok: false,
-				statusCode: 400,
-				message: 'INTERNATIONAL ERROR',
-			};
-		}
+		return await this.loginUserUseCase.execute(loginUserRequest);
 	}
 
 	@UseGuards(JwtAuthGuard)
@@ -96,7 +88,6 @@ export class UsersController {
 	@ApiOperation({ summary: 'profile' })
 	@Get('profile')
 	async findUser(@User() user, @Res() res: Response) {
-		console.log(user);
 		try {
 			const findUserUseCaseResponse = await this.findUserUseCase.execute(user);
 			return res.status(HttpStatus.OK).json({

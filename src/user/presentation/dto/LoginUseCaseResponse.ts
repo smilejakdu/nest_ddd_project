@@ -17,6 +17,13 @@ export class LoginUserUseCaseResponse {
 	statusCode: number;
 
 	@ApiProperty({
+		type: 'string',
+		description: 'SUCCESS',
+		example: 200,
+	})
+	message: string;
+
+	@ApiProperty({
 		type: 'object',
 		description: 'response user info',
 		example: { user_idx: 1, nickname: 'ash' },
