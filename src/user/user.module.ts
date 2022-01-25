@@ -20,7 +20,7 @@ import { UsersController } from './presentation/user.controller';
 		AuthModule,
 		TypeOrmModule.forFeature([UserEntity]),
 		JwtModule.register({
-			secret: process.env.JWT,
+			secret: String(process.env.JWT),
 			signOptions: { expiresIn: '6000s' },
 		}),
 	],

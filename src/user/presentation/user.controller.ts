@@ -42,7 +42,7 @@ export class UsersController {
 	@Post('signup')
 	async createUser(@Body() createUserRequest: CreateUserRequest, @Res() res: Response) {
 		if (isNil(createUserRequest.nickname) || isNil(createUserRequest.password)) {
-			res.status(HttpStatus.BAD_REQUEST).json({
+			return res.status(HttpStatus.BAD_REQUEST).json({
 				result: BAD_REQUEST_PARAMETER,
 			});
 		}
@@ -54,7 +54,7 @@ export class UsersController {
 			});
 		} catch (error) {
 			console.error(error);
-			res.status(HttpStatus.BAD_REQUEST).json({
+			return res.status(HttpStatus.BAD_REQUEST).json({
 				ok: createUserUseCaseResponse.ok,
 				result: BAD_REQUEST_PARAMETER,
 			});
@@ -66,7 +66,7 @@ export class UsersController {
 	@Post('login')
 	async loginUser(@Body() loginUserRequest: LoginRequest, @Res() res: Response) {
 		if (isNil(loginUserRequest.nickname) || isNil(loginUserRequest.password)) {
-			return res.status(HttpStatus.BAD_REQUEST).json({
+			res.status(HttpStatus.BAD_REQUEST).json({
 				ok: false,
 				statusCode: 400,
 				message: BAD_REQUEST_PARAMETER,

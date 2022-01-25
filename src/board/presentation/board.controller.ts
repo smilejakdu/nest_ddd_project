@@ -1,27 +1,11 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
-import {
-	ApiBadRequestResponse,
-	ApiCreatedResponse,
-	ApiInternalServerErrorResponse,
-	ApiOkResponse,
-	ApiOperation,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/shared/decorator/user.decorator';
 // Request , Response
-import {
-	CreateBoardUseCaseRequest,
-	CreateBoardUseCaseResponse,
-} from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
-import {
-	DeleteBoardRequest,
-	DeleteBoardResponse,
-} from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
-import {
-	UpdateBoardRequest,
-	UpdateBoardResponse,
-} from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
+import { CreateBoardUseCaseRequest } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
+import { DeleteBoardRequest } from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
+import { UpdateBoardRequest } from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
 import { FindBoardResponse } from '../application/FindBoardUseCase/dto/FindBoardUseCase.dto';
 // UseCase
 import { UpdateBoardUseCase } from '../application/UpdateBoardUseCase/UpdateBoardUseCase';
