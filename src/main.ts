@@ -15,7 +15,7 @@ async function bootstrap() {
 		.setTitle('Nest DDD')
 		.setDescription('Nest DDD User Board Comment')
 		.setVersion('1.0')
-		.addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token' }, 'access-token')
+		.addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' }, 'access-token')
 		.addTag('Nest DDD')
 		.build();
 
@@ -27,7 +27,7 @@ async function bootstrap() {
 	app.enableCors();
 
 	await app.listen(port);
-	console.log(`listening on port ${port}`);
+	console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 bootstrap().then(() => console.log('Start Server'));

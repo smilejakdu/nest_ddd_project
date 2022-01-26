@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export const BAD_REQUEST_PARAMETER = 'BAD_REQUEST_PARAMETER';
+
 export class BadRequestParameterResponse {
 	@ApiProperty({
 		type: 'boolean',
@@ -22,5 +24,3 @@ export class BadRequestParameterResponse {
 	})
 	message: string;
 }
-
-export const BAD_REQUEST_PARAMETER = 'BAD_REQUEST_PARAMETER';

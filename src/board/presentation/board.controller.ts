@@ -1,6 +1,13 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import {
+	ApiBadRequestResponse,
+	ApiBearerAuth,
+	ApiCreatedResponse,
+	ApiInternalServerErrorResponse,
+	ApiOkResponse,
+	ApiOperation,
+	ApiTags,
+} from '@nestjs/swagger';
 import { User } from 'src/shared/decorator/user.decorator';
 // Request , Response
 import { CreateBoardUseCaseRequest } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
@@ -14,6 +21,7 @@ import { CreateBoardUseCase } from '../application/CreateBoardUseCase/CreateBoar
 import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoardUseCase';
 import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
 import { log } from 'console';
+import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({ description: 'bad request parameter' })
 @ApiInternalServerErrorResponse({ description: 'server error' })
@@ -31,6 +39,7 @@ export class BoardsController {
 	@ApiCreatedResponse({ description: 'create success' })
 	@ApiOperation({ summary: 'create board' })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth('access-token')
 	@Post('create')
 	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardUseCaseRequest) {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
@@ -39,6 +48,7 @@ export class BoardsController {
 	@ApiOkResponse({ description: 'update success' })
 	@ApiOperation({ summary: 'update board' })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth('access-token')
 	@Put('update')
 	async updateBoard(@User() user, @Body() updateBoardRequest: UpdateBoardRequest) {
 		return this.updateBoardUseCase.execute(updateBoardRequest, user.id);
@@ -47,6 +57,7 @@ export class BoardsController {
 	@ApiOkResponse({ description: 'delete success' })
 	@ApiOperation({ summary: 'delete board' })
 	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth('access-token')
 	@Delete('delete')
 	async deleteBoard(@Body() deleteBoardRequest: DeleteBoardRequest) {
 		return this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);

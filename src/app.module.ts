@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 // Module
 import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
-import { AuthModule } from 'src/auth/auth.module';
 import { HistoryModule } from './history/history.module';
 import { CommentModule } from './comment/comment.module';
 
@@ -18,7 +17,6 @@ import ormconfig from 'ormconfig';
 			envFilePath: '.env',
 		}),
 		TypeOrmModule.forRoot(ormconfig),
-		AuthModule,
 		UserModule,
 		BoardModule,
 		CommentModule,
