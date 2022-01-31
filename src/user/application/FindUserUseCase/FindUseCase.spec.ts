@@ -18,8 +18,8 @@ describe('FindUserUseCase', () => {
 		uut = new FindUserUseCase(userRepository);
 	});
 
-	function givenFoundUser(requestId: string) {
-		userRepository.find.calledWith(requestId).mockResolvedValue(
+	function givenFoundUser(requestId) {
+		userRepository.findUserById.calledWith(requestId).mockResolvedValue(
 			User.createNew({
 				userNickname: UserNickname.create(FOUND_NICKNAME).value,
 				userPassword: UserPassword.create('pwdpwdpwd').value,
@@ -46,7 +46,7 @@ describe('FindUserUseCase', () => {
 		const found = await uut.execute({ nickname: FOUND_NICKNAME });
 
 		expect(found.ok).toBe(false);
-		expect(found.error).toBe(HAS_NOT_USER);
+		expect(found.message).toBe(HAS_NOT_USER);
 		expect(found.user).toBeUndefined();
 	});
 });

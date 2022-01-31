@@ -6,7 +6,6 @@ import { UserEntity } from 'src/user/infra/entity/UserEntity';
 
 export class FindUserDto {
 	@PrimaryColumn()
-	@IsString()
 	user_idx: number;
 
 	@IsString()

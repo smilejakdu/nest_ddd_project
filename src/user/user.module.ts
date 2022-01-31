@@ -14,14 +14,16 @@ import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
 import { USER_REPOSITORY } from './infra/IUserRepository';
 // Controller
 import { UsersController } from './presentation/user.controller';
-import { JwtStrategy } from 'src/shared/strategies/jwt.strategy';
+import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
 	imports: [
 		TypeOrmModule.forFeature([UserEntity]),
 		PassportModule,
+		AuthModule,
 		JwtModule.register({
-			secret: String(process.env.JWT),
+			secret: 'ash_jwt',
 			signOptions: { expiresIn: '6000s' },
 		}),
 	],
@@ -37,7 +39,7 @@ import { JwtStrategy } from 'src/shared/strategies/jwt.strategy';
 			useClass: MysqlUserRepository,
 		},
 	],
-	exports: [TypeOrmModule, FindUserUseCase, JwtStrategy],
+	exports: [TypeOrmModule, FindUserUseCase],
 	controllers: [UsersController],
 })
 export class UserModule {}

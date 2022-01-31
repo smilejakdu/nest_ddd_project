@@ -15,7 +15,7 @@ async function bootstrap() {
 		.setTitle('Nest DDD')
 		.setDescription('Nest DDD User Board Comment')
 		.setVersion('1.0')
-		.addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT', in: 'header' }, 'access-token')
+		.addBearerAuth({ type: 'http', scheme: 'Bearer', bearerFormat: 'Token', in: 'header' }, 'access-token')
 		.addTag('Nest DDD')
 		.build();
 

@@ -21,7 +21,7 @@ import { CreateBoardUseCase } from '../application/CreateBoardUseCase/CreateBoar
 import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoardUseCase';
 import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
 import { log } from 'console';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({ description: 'bad request parameter' })
 @ApiInternalServerErrorResponse({ description: 'server error' })

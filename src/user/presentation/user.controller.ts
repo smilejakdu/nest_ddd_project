@@ -25,8 +25,8 @@ import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { SignupUseCaseResponse } from './dto/SignupUseCaseResponse';
 import { log } from 'console';
 import { FindUserCaseResponse } from './dto/FindUserCaseResponse';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',
@@ -90,6 +90,8 @@ export class UsersController {
 	@ApiOperation({ summary: 'profile' })
 	@Get('profile')
 	async findUser(@Request() req, @Res() res: Response) {
+		const { user_idx, nickname } = req.user;
+		console.log(user_idx, nickname);
 		const responseFoundUser = await this.findUserUseCase.execute(req);
 		if (!responseFoundUser.ok) {
 			return res.status(HttpStatus.OK).json({

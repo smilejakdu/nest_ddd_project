@@ -17,7 +17,7 @@ import { DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse } from '../ap
 import { CreateCommentUseCase } from '../application/CreateCommentUseCase/CreateCommentUseCase';
 import { UpdateCommentUseCase } from '../application/UpdateCommentUseCase/UpdateCommentUseCase';
 import { DeleteCommentUseCase } from '../application/DeleteCommentUseCase/DeleteCommentUseCase';
-import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({ description: 'bad request parameter', status: 400 })
 @ApiInternalServerErrorResponse({ description: 'server error', status: 500 })

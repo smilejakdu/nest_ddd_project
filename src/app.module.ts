@@ -8,6 +8,7 @@ import { HistoryModule } from './history/history.module';
 import { CommentModule } from './comment/comment.module';
 
 import { LoggerMiddleware } from './shared/logger.middlewares';
+import { AuthModule } from './auth/auth.module';
 import ormconfig from 'ormconfig';
 
 @Module({
@@ -21,6 +22,7 @@ import ormconfig from 'ormconfig';
 		BoardModule,
 		CommentModule,
 		HistoryModule,
+		AuthModule,
 	],
 })
 export class AppModule implements NestModule {
