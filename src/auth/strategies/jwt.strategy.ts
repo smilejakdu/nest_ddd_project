@@ -22,6 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		console.log('123123123');
 		const { nickname, user_idx } = payload;
 		const user = await this.authService.validateUser(nickname);
+		console.log('user : ', user);
 		if (!user.ok) {
 			return null;
 		}

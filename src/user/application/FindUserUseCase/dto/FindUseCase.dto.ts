@@ -15,7 +15,7 @@ export class FindUserDto {
 	nickname: string;
 }
 
-export class FindUserRequest extends PickType(UserEntity, ['nickname']) {}
+export class FindUserRequest extends PickType(UserEntity, ['nickname'] as const) {}
 
 export class FindUserResponse extends CoreResponse {
 	@Column(() => FindUserDto)

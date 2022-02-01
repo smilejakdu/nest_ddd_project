@@ -16,7 +16,6 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 	async execute(request: FindUserRequest): Promise<FindUserResponse> {
 		const requestNickname = request.nickname;
 		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
-		console.log('foundUser :', foundUser);
 
 		if (!foundUser) {
 			return {
@@ -25,7 +24,6 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 				message: this.HAS_NOT_USER,
 			};
 		}
-
 		return {
 			ok: true,
 			statusCode: 200,

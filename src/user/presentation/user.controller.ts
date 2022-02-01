@@ -90,9 +90,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'profile' })
 	@Get('profile')
 	async findUser(@Request() req, @Res() res: Response) {
-		const { user_idx, nickname } = req.user;
-		console.log(user_idx, nickname);
-		const responseFoundUser = await this.findUserUseCase.execute(req);
+		const responseFoundUser = await this.findUserUseCase.execute(req.user);
 		if (!responseFoundUser.ok) {
 			return res.status(HttpStatus.OK).json({
 				ok: responseFoundUser.ok,
