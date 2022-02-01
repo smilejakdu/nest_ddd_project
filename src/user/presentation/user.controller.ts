@@ -111,7 +111,9 @@ export class UsersController {
 	@ApiOkResponse({ description: 'success' })
 	@ApiOperation({ summary: 'profile modify' })
 	@Put('edit_user')
-	async editUser(@Body() updateUserProfileRequest: UpdateUserProfileRequest, @Res() res: Response) {
+	async editUser(@Request() req, @Body() updateUserProfileRequest: UpdateUserProfileRequest, @Res() res: Response) {
+		const { user_idx, nickname } = req.user;
+		updateUserProfileRequest.user_idx = user_idx;
 		const responseEditedUser = await this.updateUserProfileUseCase.execute(updateUserProfileRequest);
 		if (!responseEditedUser.ok) {
 			return res.status(HttpStatus.BAD_REQUEST).json({
