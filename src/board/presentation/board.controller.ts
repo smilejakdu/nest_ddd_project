@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Request, UseGuards } from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
 	ApiBearerAuth,
@@ -41,8 +41,9 @@ export class BoardsController {
 	@UseGuards(JwtAuthGuard)
 	@ApiBearerAuth('access-token')
 	@Post('create')
-	async createBoard(@User() user, @Body() createBoardRequest: CreateBoardUseCaseRequest) {
-		return this.createBoardUseCase.execute(createBoardRequest, user.id);
+	async createBoard(@Request() req, @Body() createBoardRequest: CreateBoardUseCaseRequest) {
+		const { user_idx, nickname } = req.user;
+		return this.createBoardUseCase.execute(createBoardRequest, user_idx);
 	}
 
 	@ApiOkResponse({ description: 'update success' })

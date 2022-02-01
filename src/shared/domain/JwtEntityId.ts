@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import { Result } from '../../shared/core/Result';
 import { ValueObject } from '../dto/ValueObject';
 
@@ -7,10 +6,9 @@ interface JwtContentProps {
 }
 export class JwtAuthrization extends ValueObject<JwtContentProps> {
 	static create(jwtAuthrization: number): Result<JwtAuthrization> {
-		if (isEmpty(jwtAuthrization)) {
-			return Result.fail('board Content should not be empty.');
+		if (!jwtAuthrization) {
+			return Result.fail('jwtAuthrization number should not be empty.');
 		}
-
 		return Result.ok(new JwtAuthrization({ value: jwtAuthrization }));
 	}
 

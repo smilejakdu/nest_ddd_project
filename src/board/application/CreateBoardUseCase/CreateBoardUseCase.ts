@@ -29,7 +29,6 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 				boardContent: boardContentOrError.value,
 				userId: jwtAuthrizationOrError.value,
 			}).value;
-
 			await this.boardRepository.save(board);
 
 			return {
