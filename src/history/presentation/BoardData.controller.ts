@@ -1,20 +1,21 @@
 import dayjs from 'dayjs';
 import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
 import { Response } from 'express';
-import {
-	ApiInternalServerErrorResponse,
-	ApiOkResponse,
-	ApiOperation,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 // UseCase
 import { FindThisMonthBoardHistoryUseCase } from '../application/FindThisMonthBoardHistoryUseCase/FindThisMonthBoardHistoryUseCase';
 import { MonthBoardCountResponseDto } from './dto/MonthBoardCountResponse.dto';
 import { AllMonthBoardCountResponse } from './dto/AllMonthBoardCountResponse.dto';
 import { FindAllMonthBoardHistoryUseCase } from '../application/FindAllMonthBoardHistoryUseCase/FindAllMonthBoardHistoryUseCase';
 import { BoardHistoryEntity } from '../infra/entity/BoardHistoryEntity';
+import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
+import { BadRequestParameterResponse } from 'src/shared/dto/BadRequestParameterResponse';
 
-@ApiInternalServerErrorResponse({ description: 'server error' })
+@ApiBadRequestResponse({
+	description: 'bad request parameter',
+	type: BadRequestParameterResponse,
+})
+@ApiInternalServerErrorResponse({ description: 'server error', type: ServerErrorResponse })
 @ApiTags('BOARD_HISTORY')
 @Controller('board_history')
 export class BoardHistoryController {
@@ -30,7 +31,7 @@ export class BoardHistoryController {
 		const thisMonth: string = dayjs(new Date()).format('YYYY-MM-DD');
 		const foundThisMonthBoardCount: number = await this.findThisMonthBoardHistoryUseCase.execute();
 
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			this_month: thisMonth,
 			board_count: foundThisMonthBoardCount,
 		});
@@ -40,10 +41,9 @@ export class BoardHistoryController {
 	@ApiOperation({ summary: 'find board count all' })
 	@Get('find_all')
 	async findAll(@Res() res: Response) {
-		const foundThisMonthBoardCount: BoardHistoryEntity[] =
-			await this.findAllMonthBoardHistoryUseCase.execute();
+		const foundThisMonthBoardCount: BoardHistoryEntity[] = await this.findAllMonthBoardHistoryUseCase.execute();
 
-		res.status(HttpStatus.OK).json({
+		return res.status(HttpStatus.OK).json({
 			...foundThisMonthBoardCount,
 		});
 	}
