@@ -26,6 +26,8 @@ import { Response } from 'express';
 import { BadRequestParameterResponse } from 'src/shared/dto/BadRequestParameterResponse';
 import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { FindBoardUseCaseResponse } from './dto/FindBoardUseCaseResponse';
+import { DeleteBoardUseCaseResponse } from './dto/DeleteBoardUseCaseResponse';
+import { UpdateBoardUseCaseResponse } from './dto/UpdateBoardUseCaseResponse';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',
@@ -52,24 +54,49 @@ export class BoardsController {
 		return this.createBoardUseCase.execute(createBoardRequest, user.id);
 	}
 
-	@ApiOkResponse({ description: 'update success' })
+	@ApiOkResponse({ description: 'update success', type: UpdateBoardUseCaseResponse })
 	@ApiOperation({ summary: 'update board' })
 	@UseGuards(JwtAuthGuard)
 	@ApiBearerAuth('access-token')
 	@Put('update')
-	async updateBoard(@User() user, @Body() updateBoardRequest: UpdateBoardRequest) {
-		console.log('user:', user);
-		return this.updateBoardUseCase.execute(updateBoardRequest, user.id);
+	async updateBoard(@User() user, @Body() updateBoardRequest: UpdateBoardRequest, @Res() res: Response) {
+		const responseUpdateBoard = await this.updateBoardUseCase.execute(updateBoardRequest, user.id);
+		if (!responseUpdateBoard.ok) {
+			return res.status(HttpStatus.BAD_REQUEST).json({
+				ok: responseUpdateBoard.ok,
+				statusCode: responseUpdateBoard.statusCode,
+				message: responseUpdateBoard.message,
+			});
+		}
+		return res.status(HttpStatus.OK).json({
+			ok: responseUpdateBoard.ok,
+			statusCode: responseUpdateBoard.statusCode,
+			message: responseUpdateBoard.message,
+			board: responseUpdateBoard.board,
+		});
 	}
 
-	@ApiOkResponse({ description: 'delete success' })
+	@ApiOkResponse({ description: 'delete success', type: DeleteBoardUseCaseResponse })
 	@ApiOperation({ summary: 'delete board' })
 	@UseGuards(JwtAuthGuard)
 	@ApiBearerAuth('access-token')
 	@Delete('delete')
-	async deleteBoard(@User() user, @Body() deleteBoardRequest: DeleteBoardRequest) {
+	async deleteBoard(@User() user, @Body() deleteBoardRequest: DeleteBoardRequest, @Res() res: Response) {
 		console.log(user);
-		return this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);
+		const responseDeleteBoard = await this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);
+		if (!responseDeleteBoard.ok) {
+			return res.status(HttpStatus.BAD_REQUEST).json({
+				ok: responseDeleteBoard.ok,
+				statusCode: responseDeleteBoard.statusCode,
+				message: responseDeleteBoard.message,
+			});
+		}
+		return res.status(HttpStatus.OK).json({
+			ok: responseDeleteBoard.ok,
+			statusCode: responseDeleteBoard.statusCode,
+			boardIdx: responseDeleteBoard.id,
+			message: responseDeleteBoard.message,
+		});
 	}
 
 	@ApiOkResponse({ description: 'find success', type: FindBoardUseCaseResponse })
@@ -92,7 +119,7 @@ export class BoardsController {
 		});
 	}
 
-	@ApiOkResponse({ description: 'my board get success' })
+	@ApiOkResponse({ description: 'my board get success', type: FindBoardUseCaseResponse })
 	@ApiOperation({ summary: 'get my board' })
 	@UseGuards(JwtAuthGuard)
 	@Get('myboard')
