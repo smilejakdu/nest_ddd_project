@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { isNil } from 'lodash';
 import { IUseCase } from '../../../shared/core/IUseCase';
 
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
@@ -22,8 +23,8 @@ export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBo
 		const requestTitle = request.title;
 		const requestContent = request.content;
 
-		const foundBoard = await this.boardRepository.findByBoardId(request.board_idx);
-		if (!foundBoard) {
+		const foundBoard: Board = await this.boardRepository.findByBoardId(request.board_idx);
+		if (isNil(foundBoard)) {
 			return {
 				ok: false,
 				statusCode: 400,

@@ -1,14 +1,4 @@
-import {
-	Column,
-	CreateDateColumn,
-	Entity,
-	Index,
-	JoinColumn,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
 // Entity
@@ -18,6 +8,11 @@ import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 @Index('board_idx', ['board_idx'], { unique: true })
 @Entity({ name: 'boards' })
 export class BoardEntity {
+	@ApiProperty({
+		description: 'board_idx',
+		example: 1,
+		type: Number,
+	})
 	@PrimaryGeneratedColumn()
 	board_idx: number;
 

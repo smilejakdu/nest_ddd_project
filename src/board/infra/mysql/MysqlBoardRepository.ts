@@ -26,11 +26,11 @@ export class MysqlBoardRepository implements IBoardRepository {
 		return board;
 	}
 
-	async findByBoardId(baord_idx: number): Promise<Board> {
+	async findByBoardId(board_idx: number): Promise<Board> {
 		const foundBoard = await this.boardRepository
 			.createQueryBuilder('board')
 			.leftJoinAndSelect('board.Comments', 'comments')
-			.where('board.baord_idx =:baord_idx', { baord_idx })
+			.where('board.board_idx =:board_idx', { board_idx })
 			.getOne();
 
 		if (!foundBoard) {

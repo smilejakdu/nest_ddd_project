@@ -6,9 +6,6 @@ interface JwtContentProps {
 }
 export class JwtAuthrization extends ValueObject<JwtContentProps> {
 	static create(jwtAuthrization: number): Result<JwtAuthrization> {
-		if (!jwtAuthrization) {
-			return Result.fail('jwtAuthrization number should not be empty.');
-		}
 		return Result.ok(new JwtAuthrization({ value: jwtAuthrization }));
 	}
 
