@@ -46,20 +46,11 @@ export class MysqlBoardRepository implements IBoardRepository {
 			.where('board.userId =:userId', { userId })
 			.execute();
 
-		if (isEmpty(foundMyBoard)) {
-			throw new Error('나의 게시물이 없습니다.');
-		}
-
 		return foundMyBoard;
 	}
 
 	async findBoard(): Promise<BoardEntity[]> {
 		const foundBoards = await this.boardRepository.find();
-
-		if (isEmpty(foundBoards)) {
-			throw new Error('게시물이 없습니다.');
-		}
-
 		return foundBoards;
 	}
 

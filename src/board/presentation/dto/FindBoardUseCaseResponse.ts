@@ -1,26 +1,30 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ServerErrorResponse {
+export class FindBoardUseCaseResponse {
 	@ApiProperty({
 		type: 'boolean',
 		description: 'response boolean',
-		example: false,
+		example: true,
 	})
 	ok: boolean;
 
 	@ApiProperty({
 		type: 'number',
-		description: '500',
-		example: '500',
+		description: 'status code',
+		example: 200,
 	})
 	statusCode: number;
 
 	@ApiProperty({
 		type: 'string',
-		description: 'Internal server error',
-		example: 'Internal server error',
+		description: 'SUCCESS',
+		example: 'SUCCESS',
 	})
 	message: string;
-}
 
-export const SERVER_ERROR = 'SERVER_ERROR';
+	@ApiProperty({
+		description: 'response my board info',
+		example: [],
+	})
+	boards: [];
+}

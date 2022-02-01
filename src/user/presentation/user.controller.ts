@@ -92,7 +92,7 @@ export class UsersController {
 	async findUser(@Request() req, @Res() res: Response) {
 		const responseFoundUser = await this.findUserUseCase.execute(req.user);
 		if (!responseFoundUser.ok) {
-			return res.status(HttpStatus.OK).json({
+			return res.status(HttpStatus.BAD_REQUEST).json({
 				ok: responseFoundUser.ok,
 				statusCode: responseFoundUser.statusCode,
 				message: responseFoundUser.message,
