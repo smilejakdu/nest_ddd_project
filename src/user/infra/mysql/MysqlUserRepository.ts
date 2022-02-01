@@ -50,7 +50,6 @@ export class MysqlUserRepository implements IUserRepository {
 			.select(['user.user_idx', 'user.nickname', 'user.password', 'user.createdAt'])
 			.where('user.nickname =:nickname', { nickname })
 			.getOne();
-		console.log('findUserByNickname123:', foundUser);
 		return foundUser;
 	}
 

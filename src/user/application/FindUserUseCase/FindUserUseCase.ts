@@ -31,6 +31,8 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 			user: {
 				user_idx: foundUser.user_idx,
 				nickname: foundUser.nickname.toString(),
+				boards: foundUser.Boards,
+				comments: foundUser.Comments,
 			},
 		};
 	}

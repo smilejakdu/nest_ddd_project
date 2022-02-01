@@ -26,10 +26,12 @@ export class FindUserCaseResponse {
 	@ApiProperty({
 		type: 'object',
 		description: 'response user info',
-		example: { user_idx: 1, nickname: 'ash' },
+		example: { user_idx: 1, nickname: 'ash', boards: [], comments: [] },
 	})
 	user: {
 		user_idx: number;
 		nickname: string;
+		boards: [];
+		comments: [];
 	};
 }
