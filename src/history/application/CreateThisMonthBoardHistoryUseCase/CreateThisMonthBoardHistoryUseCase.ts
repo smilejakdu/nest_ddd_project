@@ -1,9 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 // Repository
-import {
-	BOARD_HISTORY_REPOSITORY,
-	IBoardHistoryRepository,
-} from 'src/history/infra/IBoardHistoryRepository';
+import { BOARD_HISTORY_REPOSITORY, IBoardHistoryRepository } from 'src/history/infra/IBoardHistoryRepository';
 
 export interface BoardHistory {
 	bh_index: number;

@@ -13,14 +13,12 @@ import { User } from 'src/shared/decorator/user.decorator';
 import { CreateBoardUseCaseRequest } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
 import { DeleteBoardRequest } from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
 import { UpdateBoardRequest } from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
-import { FindBoardResponse } from '../application/FindBoardUseCase/dto/FindBoardUseCase.dto';
 // UseCase
 import { UpdateBoardUseCase } from '../application/UpdateBoardUseCase/UpdateBoardUseCase';
 import { FindBoardUseCase } from '../application/FindBoardUseCase/FindBoardUseCase';
 import { CreateBoardUseCase } from '../application/CreateBoardUseCase/CreateBoardUseCase';
 import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoardUseCase';
 import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
-import { log } from 'console';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Response } from 'express';
 import { BadRequestParameterResponse } from 'src/shared/dto/BadRequestParameterResponse';
