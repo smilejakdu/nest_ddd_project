@@ -1,14 +1,18 @@
-import { isEmpty } from 'lodash';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
+import { isEmpty } from 'lodash';
+
 // domain
+import { log } from 'console';
+
 import { Comment } from '../../domain/Comment';
 // Entity
 import { CommentEntity } from '../entity/CommentEntity';
 // repository
 import { ICommentRepository } from '../ICommentRepository';
 import { CommentModelMapper } from '../dto/CommentModelMapper';
-import { log } from 'console';
 
 export class MysqlCommentRepository implements ICommentRepository {
 	constructor(
@@ -31,19 +35,13 @@ export class MysqlCommentRepository implements ICommentRepository {
 	}
 
 	async findMyComments(userId: string): Promise<CommentEntity[]> {
-		const foundMyComment = await this.commentRepository
-			.createQueryBuilder('comment')
-			.where('comment.userId =:userId', { userId })
-			.execute();
+		const foundMyComment = await this.commentRepository.createQueryBuilder('comment').where('comment.userId =:userId', { userId }).execute();
 
 		return foundMyComment;
 	}
 
 	async findMyComment(commentId: number): Promise<Comment> {
-		const foundMyComment = await this.commentRepository
-			.createQueryBuilder('comment')
-			.where('comment.id =:id', { commentId })
-			.getOne();
+		const foundMyComment = await this.commentRepository.createQueryBuilder('comment').where('comment.id =:id', { commentId }).getOne();
 
 		return CommentModelMapper.toDomain(foundMyComment);
 	}

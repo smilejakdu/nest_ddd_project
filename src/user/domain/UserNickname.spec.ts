@@ -1,9 +1,5 @@
 import { Result } from '../../shared/core/Result';
-import {
-	USER_NICKNAME_EMPTY_ERROR_MESSAGE,
-	USER_NICKNAME_NOT_NULL_OR_UNDEFINED,
-	UserNickname,
-} from './UserNickname';
+import { USER_NICKNAME_EMPTY_ERROR_MESSAGE, USER_NICKNAME_NOT_NULL_OR_UNDEFINED, UserNickname } from './UserNickname';
 
 describe('UserNickname', () => {
 	const USER_NICKNAME = 'ash';
@@ -22,8 +18,6 @@ describe('UserNickname', () => {
 
 		expect(userNicknameOrErrorOfUndefined.isSuccess).toBe(false);
 
-		expect(userNicknameOrErrorOfUndefined.errorValue()).toEqual(
-			USER_NICKNAME_NOT_NULL_OR_UNDEFINED,
-		);
+		expect(userNicknameOrErrorOfUndefined.errorValue()).toEqual(USER_NICKNAME_NOT_NULL_OR_UNDEFINED);
 	});
 });

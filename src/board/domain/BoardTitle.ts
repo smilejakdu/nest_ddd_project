@@ -1,6 +1,6 @@
 import { isEmpty, isNil } from 'lodash';
-
 import { Result } from 'src/shared/core/Result';
+
 import { ValueObject } from '../../shared/dto/ValueObject';
 
 interface BoardTitleProps {

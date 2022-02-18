@@ -1,6 +1,7 @@
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
-import { Comment } from './Comment';
 import { CommentContent } from 'src/comment/domain/CommentContent';
+
+import { Comment } from './Comment';
 
 describe('Board', () => {
 	it('it creates', () => {

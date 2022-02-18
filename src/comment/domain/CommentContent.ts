@@ -7,8 +7,7 @@ interface CommentContentProps {
 	value: string;
 }
 
-export const COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED =
-	'CommentContent should not be null or undefined.';
+export const COMMENT_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED = 'CommentContent should not be null or undefined.';
 
 export class CommentContent extends ValueObject<CommentContentProps> {
 	static create(commentContentString: string): Result<CommentContent> {

@@ -1,15 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 // Module
+import ormconfig from 'ormconfig';
+
 import { UserModule } from './user/user.module';
 import { BoardModule } from './board/board.module';
 import { HistoryModule } from './history/history.module';
 import { CommentModule } from './comment/comment.module';
-
 import { LoggerMiddleware } from './shared/logger.middlewares';
 import { AuthModule } from './auth/auth.module';
-import ormconfig from 'ormconfig';
 
 @Module({
 	imports: [

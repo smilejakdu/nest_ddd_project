@@ -1,5 +1,7 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
+
 import { PrimaryColumn, Column } from 'typeorm';
+
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';

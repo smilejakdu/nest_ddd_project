@@ -1,6 +1,6 @@
 import { isEmpty, isNil } from 'lodash';
-
 import { ValueObject } from 'src/shared/domain/ValueObject';
+
 import { Result } from '../../shared/core/Result';
 
 interface BoardContentProps {

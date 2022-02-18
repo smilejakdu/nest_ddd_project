@@ -1,7 +1,8 @@
 import { Result } from 'src/shared/core/Result';
 import { AggregateRoot } from 'src/shared/domain/AggregateRoot';
-import { CommentContent } from './CommentContent';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
+
+import { CommentContent } from './CommentContent';
 
 interface CommentProps {
 	commentContent: CommentContent;

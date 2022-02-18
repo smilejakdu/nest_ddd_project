@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+
 import { Response } from 'express';
-import { log } from 'console';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -9,7 +9,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		const response = ctx.getResponse<Response>();
 		const status = exception.getStatus();
 		const err = exception.getResponse() as string | { error: string; statusCode: 400; message: string[] }; // class-validator
-		log(status, err);
 
 		// let msg = '';
 		if (typeof err !== 'string' && err.error === 'Bad Request') {

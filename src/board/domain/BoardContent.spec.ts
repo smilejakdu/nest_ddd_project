@@ -1,10 +1,5 @@
 import { Result } from 'src/shared/core/Result';
-
-import {
-	BoardContent,
-	BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED,
-	BOARD_CONTENT_SHOULD_NOT_BE_EMPTY,
-} from 'src/board/domain/BoardContent';
+import { BoardContent, BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED, BOARD_CONTENT_SHOULD_NOT_BE_EMPTY } from 'src/board/domain/BoardContent';
 
 describe('BoardContent', () => {
 	const BOARD_CONTENT = 'content_test';
@@ -33,8 +28,6 @@ describe('BoardContent', () => {
 		expect(boardTitleNullOrError.isSuccess).toBe(false);
 		expect(boardTitleUndefinedOrError.isSuccess).toBe(false);
 		expect(boardTitleNullOrError.errorValue()).toEqual(BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED);
-		expect(boardTitleUndefinedOrError.errorValue()).toEqual(
-			BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED,
-		);
+		expect(boardTitleUndefinedOrError.errorValue()).toEqual(BOARD_CONTENT_SHOULD_NOT_BE_NULL_UNDEFINED);
 	});
 });

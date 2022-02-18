@@ -1,8 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
+import dayjs from 'dayjs';
+
 import { IUserHistoryRepository } from '../IUserHistoryRepository';
 import { UserEntity } from '../../../user/infra/entity/UserEntity';
-import { Repository } from 'typeorm';
-import dayjs from 'dayjs';
 
 export class MysqlUserHistoryRepository implements IUserHistoryRepository {
 	constructor(

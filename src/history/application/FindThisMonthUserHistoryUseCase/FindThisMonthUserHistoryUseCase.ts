@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 // Repository
 import { IUserHistoryRepository, USER_HISTORY_REPOSITORY } from 'src/history/infra/IUserHistoryRepository';
 

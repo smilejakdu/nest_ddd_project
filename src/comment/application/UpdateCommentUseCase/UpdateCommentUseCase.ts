@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { IUseCase } from '../../../shared/core/IUseCase';
-import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
-import { UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse } from './dto/UpdateCommentUseCase.dto';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 import { ICommentRepository } from 'src/comment/infra/ICommentRepository';
 import { CommentContent } from 'src/comment/domain/CommentContent';
 import { Comment } from 'src/comment/domain/Comment';
+
+import { UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse } from './dto/UpdateCommentUseCase.dto';
+import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
+import { IUseCase } from '../../../shared/core/IUseCase';
 
 export class UpdateCommentUseCase implements IUseCase<UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse> {
 	private FAIL_UPDATE = 'Can`t modify comment.';

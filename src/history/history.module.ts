@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 // UseCase
+import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
+
 import { CreateThisMonthBoardHistoryUseCase } from './application/CreateThisMonthBoardHistoryUseCase/CreateThisMonthBoardHistoryUseCase';
 import { FindAllMonthBoardHistoryUseCase } from './application/FindAllMonthBoardHistoryUseCase/FindAllMonthBoardHistoryUseCase';
 import { FindThisMonthBoardHistoryUseCase } from './application/FindThisMonthBoardHistoryUseCase/FindThisMonthBoardHistoryUseCase';
 // Entity
 import { BoardHistoryEntity } from '../history/infra/entity/BoardHistoryEntity';
-import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 // Repository
 import { MysqlBoardHistoryRepository } from './infra/mysql/MysqlBoardHistoryRepository';
 import { BOARD_HISTORY_REPOSITORY } from '../history/infra/IBoardHistoryRepository';

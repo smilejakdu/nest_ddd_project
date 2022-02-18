@@ -1,8 +1,11 @@
-import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 import { ApiProperty, PickType } from '@nestjs/swagger';
+
 import { Column, PrimaryColumn } from 'typeorm';
+
 import { IsNotEmpty, IsString } from 'class-validator';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
+
+import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 import { BoardEntity } from '../../../../board/infra/entity/BoardEntity';
 import { CommentEntity } from '../../../../comment/infra/entity/CommentEntity';
 

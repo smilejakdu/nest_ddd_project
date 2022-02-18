@@ -1,5 +1,6 @@
-import { IsString } from 'class-validator';
 import { Column } from 'typeorm';
+
+import { IsString } from 'class-validator';
 
 export class CoreResponse {
 	@Column()

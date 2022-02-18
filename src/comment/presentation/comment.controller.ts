@@ -8,8 +8,12 @@ import {
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
+
 import { User } from 'src/shared/decorator/user.decorator';
+
 // Request , Response
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
 import { CreateCommentUseCaseRequest, CreateCommentUseCaseResponse } from '../application/CreateCommentUseCase/dto/CreateCommentUseCase.dto';
 import { UpdateCommentUseCaseRequest, UpdateCommentUseCaseResponse } from '../application/UpdateCommentUseCase/dto/UpdateCommentUseCase.dto';
 import { DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse } from '../application/DeleteCommentUseCase/dto/DeleteCommentUseCase.dto';
@@ -17,7 +21,6 @@ import { DeleteCommentUseCaseRequest, DeleteCommentUseCaseResponse } from '../ap
 import { CreateCommentUseCase } from '../application/CreateCommentUseCase/CreateCommentUseCase';
 import { UpdateCommentUseCase } from '../application/UpdateCommentUseCase/UpdateCommentUseCase';
 import { DeleteCommentUseCase } from '../application/DeleteCommentUseCase/DeleteCommentUseCase';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({ description: 'bad request parameter', status: 400 })
 @ApiInternalServerErrorResponse({ description: 'server error', status: 500 })

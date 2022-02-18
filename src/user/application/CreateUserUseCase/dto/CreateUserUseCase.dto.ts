@@ -1,6 +1,8 @@
-import { Column, PrimaryColumn } from 'typeorm';
-import { IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty, PickType } from '@nestjs/swagger';
+
+import { Column, PrimaryColumn } from 'typeorm';
+
+import { IsString, IsNotEmpty } from 'class-validator';
 import { CoreResponse } from 'src/shared/dto/CoreResponse';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
 

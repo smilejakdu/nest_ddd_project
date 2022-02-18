@@ -1,11 +1,13 @@
+import { Inject } from '@nestjs/common';
+
 import { isNil } from 'lodash';
+import { UserNickname } from 'src/user/domain/UserNickname';
+
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { UpdateUserProfileRequest, UpdateUserProfileResponse } from './dto/UpdateUserProfileUseCase.dto';
-import { Inject } from '@nestjs/common';
 import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
-import { UserNickname } from 'src/user/domain/UserNickname';
 
 export class UpdateUserProfileUseCase implements IUseCase<UpdateUserProfileRequest, UpdateUserProfileResponse> {
 	private FAIL_UPDATE = 'Can`t modify profile.';

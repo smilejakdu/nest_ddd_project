@@ -1,13 +1,15 @@
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
 import { isNil } from 'lodash';
 import * as bcrypt from 'bcrypt';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
+import { log } from 'console';
 
 import { User } from '../../domain/User';
 import { IUserRepository } from '../IUserRepository';
 import { UserModelMapper } from '../dto/UserModelMapper';
 import { UserEntity } from '../entity/UserEntity';
-import { log } from 'console';
 
 export class MysqlUserRepository implements IUserRepository {
 	constructor(

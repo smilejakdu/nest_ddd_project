@@ -1,8 +1,9 @@
-import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
 
+import { isNil } from 'lodash';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { IUseCase } from 'src/shared/core/IUseCase';
+
 import { FindBoardRequest, FindBoardResponse } from './dto/FindBoardUseCase.dto';
 
 export class FindBoardUseCase implements IUseCase<FindBoardRequest, FindBoardResponse> {

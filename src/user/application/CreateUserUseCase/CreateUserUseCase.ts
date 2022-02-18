@@ -1,5 +1,6 @@
-import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
+
+import { isNil } from 'lodash';
 import { UserNickname } from 'src/user/domain/UserNickname';
 import { UserPassword } from 'src/user/domain/UserPassword';
 

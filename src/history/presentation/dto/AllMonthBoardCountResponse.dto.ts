@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+
 import { BoardHistoryEntity } from 'src/history/infra/entity/BoardHistoryEntity';
 
 export class AllMonthBoardCountResponse {

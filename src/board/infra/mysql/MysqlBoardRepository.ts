@@ -1,7 +1,10 @@
-import { isEmpty } from 'lodash';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Board } from 'src/board/domain/Board';
+
 import { Repository } from 'typeorm';
+
+import { isEmpty } from 'lodash';
+import { Board } from 'src/board/domain/Board';
+
 import { BoardEntity } from '../entity/BoardEntity';
 import { IBoardRepository } from '../IBoardRepository';
 import { BoardModelMapper } from '../dto/BoardModelMapper';

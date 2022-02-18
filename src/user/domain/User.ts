@@ -1,8 +1,6 @@
 import { Result } from '../../shared/core/Result';
-
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { UniqueEntityId } from '../../shared/domain/UniqueEntityId';
-
 import { UserNickname } from './UserNickname';
 import { UserPassword } from './UserPassword';
 

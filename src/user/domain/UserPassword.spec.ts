@@ -1,9 +1,5 @@
 import { Result } from '../../shared/core/Result';
-import {
-	UserPassword,
-	USER_PASSWORD_NULL_OR_UNDEFINED,
-	USER_PASSWORD_MIN_LENGTH,
-} from './UserPassword';
+import { UserPassword, USER_PASSWORD_NULL_OR_UNDEFINED, USER_PASSWORD_MIN_LENGTH } from './UserPassword';
 
 describe('UserPassword', () => {
 	const PASSWORD = '123456';

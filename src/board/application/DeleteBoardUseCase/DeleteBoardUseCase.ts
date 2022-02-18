@@ -1,8 +1,9 @@
-import { isNil } from 'lodash';
 import { Inject } from '@nestjs/common';
 
+import { isNil } from 'lodash';
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
+
 import { DeleteBoardRequest, DeleteBoardResponse } from './dto/DeleteBoardUseCase.dto';
 
 export class DeleteBoardUseCase implements IUseCase<DeleteBoardRequest, DeleteBoardResponse> {

@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 // UseCase
+import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
+
 import { CreateBoardUseCase } from './application/CreateBoardUseCase/CreateBoardUseCase';
 import { DeleteBoardUseCase } from './application/DeleteBoardUseCase/DeleteBoardUseCase';
 import { UpdateBoardUseCase } from './application/UpdateBoardUseCase/UpdateBoardUseCase';
@@ -14,7 +17,6 @@ import { BOARD_REPOSITORY } from './infra/IBoardRepository';
 // Controller
 import { BoardsController } from './presentation/board.controller';
 import { UserEntity } from '../user/infra/entity/UserEntity';
-import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([BoardEntity, UserEntity, CommentEntity])],

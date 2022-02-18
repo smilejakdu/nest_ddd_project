@@ -1,6 +1,8 @@
-import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
+import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 // Entity
 import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';

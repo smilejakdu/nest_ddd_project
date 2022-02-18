@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
 
-import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { CreateCommentUseCaseRequest, CreateCommentUseCaseResponse } from './dto/CreateCommentUseCase.dto';
 import { CommentContent } from 'src/comment/domain/CommentContent';
 import { Comment } from 'src/comment/domain/Comment';
 import { ICommentRepository } from 'src/comment/infra/ICommentRepository';
+
+import { CreateCommentUseCaseRequest, CreateCommentUseCaseResponse } from './dto/CreateCommentUseCase.dto';
+import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 
 export class CreateCommentUseCase implements IUseCase<CreateCommentUseCaseRequest, CreateCommentUseCaseResponse> {
 	private FAIL_CREATE = 'Can`t create comment.';

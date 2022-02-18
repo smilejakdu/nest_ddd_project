@@ -1,7 +1,11 @@
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IBoardHistoryRepository } from '../IBoardHistoryRepository';
+
+import { Repository } from 'typeorm';
+
 import dayjs from 'dayjs';
+
+import { IBoardHistoryRepository } from '../IBoardHistoryRepository';
+
 // Entity
 import { BoardHistoryEntity } from '../entity/BoardHistoryEntity';
 import { BoardEntity } from '../../../board/infra/entity/BoardEntity';
@@ -42,9 +46,7 @@ export class MysqlBoardHistoryRepository implements IBoardHistoryRepository {
 	}
 
 	async findAll(): Promise<BoardHistoryEntity[]> {
-		const foundBoardHistoryAll = await this.boardHistoryRepository
-			.createQueryBuilder('boardHistory')
-			.getMany();
+		const foundBoardHistoryAll = await this.boardHistoryRepository.createQueryBuilder('boardHistory').getMany();
 
 		return foundBoardHistoryAll;
 	}

@@ -1,14 +1,16 @@
 import { Inject } from '@nestjs/common';
-import { isNil } from 'lodash';
-import { IUseCase } from '../../../shared/core/IUseCase';
 
+import { isNil } from 'lodash';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
-import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoardUseCase.dto';
+
 // Domain
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
+
+import { UpdateBoardRequest, UpdateBoardResponse } from './dto/UpdateBoardUseCase.dto';
+import { IUseCase } from '../../../shared/core/IUseCase';
 
 export class UpdateBoardUseCase implements IUseCase<UpdateBoardRequest, UpdateBoardResponse> {
 	private FAIL_UPDATE = 'Can`t modify board.';

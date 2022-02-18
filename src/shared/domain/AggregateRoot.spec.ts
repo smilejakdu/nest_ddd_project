@@ -21,10 +21,7 @@ describe('AggregateRoot AND IDomainEvent', () => {
 	let mockAggregateRoot: MockAggregateRoot;
 
 	beforeEach(() => {
-		mockAggregateRoot = new MockAggregateRoot(
-			aggregateProps,
-			testUniqueEntityId,
-		);
+		mockAggregateRoot = new MockAggregateRoot(aggregateProps, testUniqueEntityId);
 	});
 
 	describe('AggregateRoot', () => {

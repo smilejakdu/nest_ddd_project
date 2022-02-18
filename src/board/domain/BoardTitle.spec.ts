@@ -1,10 +1,6 @@
 import { Result } from 'src/shared/core/Result';
 
-import {
-	BOARD_TITLE_SHOULD_NOT_EMPTY,
-	BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED,
-	BoardTitle,
-} from './BoardTitle';
+import { BOARD_TITLE_SHOULD_NOT_EMPTY, BOARD_TITLE_SHOULD_NOT_NULL_UNDEFINED, BoardTitle } from './BoardTitle';
 
 describe('BoardTitle', () => {
 	const BOARD_TITLE = 'title_test';

@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
+
 // UseCase
+import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
+import { AuthModule } from 'src/auth/auth.module';
+
 import { CreateUserUseCase } from './application/CreateUserUseCase/CreateUserUseCase';
 import { UpdateUserProfileUseCase } from './application/UpdateUserProfileUseCase/UpdateUserProfileUseCase';
 import { FindUserUseCase } from './application/FindUserUseCase/FindUserUseCase';
@@ -14,8 +18,6 @@ import { MysqlUserRepository } from './infra/mysql/MysqlUserRepository';
 import { USER_REPOSITORY } from './infra/IUserRepository';
 // Controller
 import { UsersController } from './presentation/user.controller';
-import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
-import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
 	imports: [

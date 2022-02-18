@@ -1,10 +1,10 @@
 import { mock, MockProxy } from 'jest-mock-extended';
+import { UserNickname } from 'src/user/domain/UserNickname';
 
 import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
 import { UpdateUserProfileUseCase } from './UpdateUserProfileUseCase';
-import { UserNickname } from 'src/user/domain/UserNickname';
 
 describe('UpdateUserProfileUseCase', () => {
 	const USER_ID = 'ID1';

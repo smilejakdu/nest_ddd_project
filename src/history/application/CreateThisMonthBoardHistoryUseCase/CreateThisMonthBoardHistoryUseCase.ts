@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 // Repository
 import { BOARD_HISTORY_REPOSITORY, IBoardHistoryRepository } from 'src/history/infra/IBoardHistoryRepository';
 

@@ -1,9 +1,13 @@
-import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
 import { IsString, IsNotEmpty } from 'class-validator';
+
 // Entity
-import { UserEntity } from '../../../user/infra/entity/UserEntity';
 import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
+
+import { UserEntity } from '../../../user/infra/entity/UserEntity';
 
 @Index('board_idx', ['board_idx'], { unique: true })
 @Entity({ name: 'boards' })

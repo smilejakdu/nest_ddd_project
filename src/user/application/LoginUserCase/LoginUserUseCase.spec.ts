@@ -1,11 +1,12 @@
+import { JwtService } from '@nestjs/jwt';
+
 import { mock, MockProxy } from 'jest-mock-extended';
+import { UserNickname } from 'src/user/domain/UserNickname';
 
 import { IUserRepository } from '../../infra/IUserRepository';
 import { User } from '../../domain/User';
 import { UserPassword } from '../../domain/UserPassword';
-import { UserNickname } from 'src/user/domain/UserNickname';
 import { LoginUserUseCase } from './LoginUserUseCase';
-import { JwtService } from '@nestjs/jwt';
 
 describe('LoginUseCase', () => {
 	let uut: LoginUserUseCase;

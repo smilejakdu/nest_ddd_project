@@ -1,11 +1,13 @@
-import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 import { Inject } from '@nestjs/common';
+
 import { IUseCase } from 'src/shared/core/IUseCase';
-import { CreateBoardUseCaseRequest, CreateBoardUseCaseResponse } from './dto/CreateBoardUseCase.dto';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
+
+import { CreateBoardUseCaseRequest, CreateBoardUseCaseResponse } from './dto/CreateBoardUseCase.dto';
+import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
 
 export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, CreateBoardUseCaseResponse> {
 	private FAIL_CREATE = 'Can`t create board.';

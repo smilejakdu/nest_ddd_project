@@ -1,4 +1,3 @@
-import { isNil } from 'lodash';
 import { Body, Controller, Get, HttpStatus, Post, Put, Request, Res, UseGuards } from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
@@ -9,7 +8,15 @@ import {
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
+
+import { isNil } from 'lodash';
+
 // UseCase
+import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
+import { log } from 'console';
+import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
 import { CreateUserUseCase } from '../application/CreateUserUseCase/CreateUserUseCase';
 import { UpdateUserProfileUseCase } from '../application/UpdateUserProfileUseCase/UpdateUserProfileUseCase';
 import { LoginUserUseCase } from '../application/LoginUserCase/LoginUserUseCase';
@@ -19,14 +26,9 @@ import { LoginUserUseCaseResponse } from './dto/LoginUseCaseResponse';
 import { CreateUserRequest } from '../application/CreateUserUseCase/dto/CreateUserUseCase.dto';
 import { UpdateUserProfileRequest } from '../application/UpdateUserProfileUseCase/dto/UpdateUserProfileUseCase.dto';
 import { LoginRequest } from '../application/LoginUserCase/dto/LoginUseCase.dto';
-
 import { BadRequestParameterResponse, BAD_REQUEST_PARAMETER } from '../../shared/dto/BadRequestParameterResponse';
-import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { SignupUseCaseResponse } from './dto/SignupUseCaseResponse';
-import { log } from 'console';
 import { FindUserCaseResponse } from './dto/FindUserCaseResponse';
-import { Response } from 'express';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',

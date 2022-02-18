@@ -1,7 +1,10 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
+
+import { Column, PrimaryColumn } from 'typeorm';
+
 import { IsNotEmpty, IsString } from 'class-validator';
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
-import { Column, PrimaryColumn } from 'typeorm';
+
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 
 export class LoginUserDto {

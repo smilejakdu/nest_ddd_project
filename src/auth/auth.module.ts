@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
 import { USER_REPOSITORY } from 'src/user/infra/IUserRepository';
 import { MysqlUserRepository } from 'src/user/infra/mysql/MysqlUserRepository';
+
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 

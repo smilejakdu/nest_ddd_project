@@ -1,10 +1,11 @@
 import { log } from 'console';
-import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 import { BoardTitle } from 'src/board/domain/BoardTitle';
 import { BoardContent } from 'src/board/domain/BoardContent';
 import { Board } from 'src/board/domain/Board';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
+
+import { UniqueEntityId } from '../../../shared/domain/UniqueEntityId';
 
 export class BoardModelMapper {
 	static toDomain(entity: BoardEntity): Board {

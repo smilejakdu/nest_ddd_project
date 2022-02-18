@@ -8,8 +8,15 @@ import {
 	ApiOperation,
 	ApiTags,
 } from '@nestjs/swagger';
+
 import { User } from 'src/shared/decorator/user.decorator';
+
 // Request , Response
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Response } from 'express';
+import { BadRequestParameterResponse } from 'src/shared/dto/BadRequestParameterResponse';
+import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
+
 import { CreateBoardUseCaseRequest } from '../application/CreateBoardUseCase/dto/CreateBoardUseCase.dto';
 import { DeleteBoardRequest } from '../application/DeleteBoardUseCase/dto/DeleteBoardUseCase.dto';
 import { UpdateBoardRequest } from '../application/UpdateBoardUseCase/dto/UpdateBoardUseCase.dto';
@@ -19,10 +26,6 @@ import { FindBoardUseCase } from '../application/FindBoardUseCase/FindBoardUseCa
 import { CreateBoardUseCase } from '../application/CreateBoardUseCase/CreateBoardUseCase';
 import { FindMyBoardUseCase } from '../application/FindMyBoardUseCase/FindMyBoardUseCase';
 import { DeleteBoardUseCase } from '../application/DeleteBoardUseCase/DeleteBoardUseCase';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { Response } from 'express';
-import { BadRequestParameterResponse } from 'src/shared/dto/BadRequestParameterResponse';
-import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { FindBoardUseCaseResponse } from './dto/FindBoardUseCaseResponse';
 import { DeleteBoardUseCaseResponse } from './dto/DeleteBoardUseCaseResponse';
 import { UpdateBoardUseCaseResponse } from './dto/UpdateBoardUseCaseResponse';

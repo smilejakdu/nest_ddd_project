@@ -1,8 +1,11 @@
-import { CoreResponse } from '../../../../shared/dto/CoreResponse';
-import { BoardEntity } from '../../../infra/entity/BoardEntity';
 import { ApiProperty, PickType } from '@nestjs/swagger';
+
 import { PrimaryColumn, Column } from 'typeorm';
+
 import { IsNotEmpty, IsString } from 'class-validator';
+
+import { BoardEntity } from '../../../infra/entity/BoardEntity';
+import { CoreResponse } from '../../../../shared/dto/CoreResponse';
 
 export class CreateBoardResponseDto {
 	@PrimaryColumn()
