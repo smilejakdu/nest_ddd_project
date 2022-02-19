@@ -11,6 +11,7 @@ import { HistoryModule } from './history/history.module';
 import { CommentModule } from './comment/comment.module';
 import { LoggerMiddleware } from './shared/logger.middlewares';
 import { AuthModule } from './auth/auth.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
 	imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
 		CommentModule,
 		HistoryModule,
 		AuthModule,
+		CategoryModule,
 	],
 })
 export class AppModule implements NestModule {

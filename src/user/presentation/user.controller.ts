@@ -13,7 +13,6 @@ import { isNil } from 'lodash';
 
 // UseCase
 import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
-import { log } from 'console';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
@@ -114,7 +113,7 @@ export class UsersController {
 	@ApiOperation({ summary: 'profile modify' })
 	@Put('edit_user')
 	async editUser(@Request() req, @Body() updateUserProfileRequest: UpdateUserProfileRequest, @Res() res: Response) {
-		const { user_idx, nickname } = req.user;
+		const { user_idx } = req.user;
 		updateUserProfileRequest.user_idx = user_idx;
 		const responseEditedUser = await this.updateUserProfileUseCase.execute(updateUserProfileRequest);
 		if (!responseEditedUser.ok) {

@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 import { isEnum, IsNotEmpty, IsString } from 'class-validator';
+
+import { ProductsEntity } from '../../../products/infra/entity/ProductsEntity';
 
 export enum CategoryStatus {
 	ACTIVE = 'active',
@@ -31,12 +33,15 @@ export class CategoryEntity {
 	})
 	status: CategoryStatus;
 
+	@OneToMany(() => ProductsEntity, product => product.category)
+	Products: ProductsEntity;
+
 	@CreateDateColumn()
 	createdAt: Date;
 
 	@UpdateDateColumn()
 	updatedAt: Date;
 
-	@UpdateDateColumn()
+	@DeleteDateColumn()
 	deletedAt: Date;
 }

@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { BadRequestParameterResponse } from '../shared/dto/BadRequestParameterResponse';
-import { ServerErrorResponse } from '../shared/dto/ServerErrorResponse';
+import { BadRequestParameterResponse } from '../../shared/dto/BadRequestParameterResponse';
+import { ServerErrorResponse } from '../../shared/dto/ServerErrorResponse';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',

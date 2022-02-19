@@ -8,6 +8,7 @@ import { IUseCase } from '../../../shared/core/IUseCase';
 import { User } from '../../domain/User';
 import { IUserRepository } from '../../infra/IUserRepository';
 import { CreateUserRequest, CreateUserResponse } from './dto/CreateUserUseCase.dto';
+import { StatusCode } from '../../../shared/types/status_code';
 
 export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUserResponse> {
 	private DUPLICATE_NICKNAME_ERROR_MESSAGE = 'Request nickname was duplicated.';
@@ -29,7 +30,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 			if (!isNil(foundUser)) {
 				return {
 					ok: false,
-					statusCode: 400,
+					statusCode: StatusCode.BAD_REQIEST,
 					message: this.DUPLICATE_NICKNAME_ERROR_MESSAGE,
 				};
 			}
@@ -44,7 +45,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 			await this.userRepository.save(user);
 			return {
 				ok: true,
-				statusCode: 201,
+				statusCode: StatusCode.created,
 				message: 'SUCCESS',
 				user: {
 					user_idx: user.id,
@@ -55,7 +56,7 @@ export class CreateUserUseCase implements IUseCase<CreateUserRequest, CreateUser
 			console.error(error);
 			return {
 				ok: false,
-				statusCode: 400,
+				statusCode: StatusCode.BAD_REQIEST,
 				message: 'BAD REQUEST',
 			};
 		}
