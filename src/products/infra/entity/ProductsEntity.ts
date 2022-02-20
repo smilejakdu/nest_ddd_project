@@ -15,11 +15,6 @@ export enum ProductStatusEnum {
 }
 
 export class ProductsEntity {
-	@ApiProperty({
-		description: 'product_idx',
-		example: 1,
-		type: Number,
-	})
 	@PrimaryGeneratedColumn()
 	product_idx: number;
 
@@ -36,6 +31,9 @@ export class ProductsEntity {
 
 	@Column()
 	deal_end_at: Date;
+
+	@Column({ type: 'int' })
+	categoryId: number;
 
 	@ManyToOne(() => CategoryEntity, category => category.Products)
 	@JoinColumn({ name: 'category_id' })

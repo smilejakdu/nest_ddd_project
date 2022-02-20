@@ -10,10 +10,8 @@ import {
 } from '@nestjs/swagger';
 
 import { isNil } from 'lodash';
-
-// UseCase
-import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { Response } from 'express';
+import { ServerErrorResponse } from 'src/shared/dto/ServerErrorResponse';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 import { CreateUserUseCase } from '../application/CreateUserUseCase/CreateUserUseCase';

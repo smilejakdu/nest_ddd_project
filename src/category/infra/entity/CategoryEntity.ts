@@ -12,11 +12,6 @@ export enum CategoryStatus {
 }
 
 export class CategoryEntity {
-	@ApiProperty({
-		description: 'category_idx',
-		example: 1,
-		type: Number,
-	})
 	@PrimaryGeneratedColumn()
 	category_idx: number;
 
@@ -25,13 +20,12 @@ export class CategoryEntity {
 	@Column('varchar', { name: 'category_name', length: 200 })
 	category_name: string;
 
-	@ApiProperty({
-		description: 'category_idx',
-		example: 'active',
-		type: isEnum,
+	@Column({
+		type: 'enum',
+		enum: CategoryStatus,
 		default: CategoryStatus.ACTIVE,
 	})
-	status: CategoryStatus;
+	category_status: string;
 
 	@OneToMany(() => ProductsEntity, product => product.category)
 	Products: ProductsEntity;

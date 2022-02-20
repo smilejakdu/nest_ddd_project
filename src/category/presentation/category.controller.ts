@@ -1,8 +1,27 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiInternalServerErrorResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpStatus, Param, Post, Put, Request, Res, UseGuards } from '@nestjs/common';
+import {
+	ApiBadRequestResponse,
+	ApiBearerAuth,
+	ApiCreatedResponse,
+	ApiInternalServerErrorResponse,
+	ApiOkResponse,
+	ApiOperation,
+	ApiTags,
+} from '@nestjs/swagger';
+
+import { Response } from 'express';
+import { isNil } from 'lodash';
 
 import { BadRequestParameterResponse } from '../../shared/dto/BadRequestParameterResponse';
 import { ServerErrorResponse } from '../../shared/dto/ServerErrorResponse';
+import { FindUserUseCase } from '../../user/application/FindUserUseCase/FindUserUseCase';
+import { CreateCategoryUseCase } from '../application/CreateCategoryUseCase/CreateCategoryUseCase';
+import { CreateCategoryUseCaseRequest, CreateCategoryUseCaseResponse } from '../application/CreateCategoryUseCase/dto/CreateCategoryUseCase.dto';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { UpdateCategoryUseCase } from '../application/UpdateCategoryUseCase/UpdateCategoryUseCase';
+import { UpdateCategoryUseCaseRequest, UpdateCategoryUseCaseResponse } from '../application/UpdateCategoryUseCase/dto/UpdateCategoryUseCase.dto';
+import { FindCategoryUseCase } from '../application/FindCategoryUseCase/FindCategoryUseCase';
+import { FindCategoryUseCaseRequest, FindCategoryUseCaseResponse } from '../application/FindCategoryUseCase/dto/FindCategoryUseCase.dto';
 
 @ApiBadRequestResponse({
 	description: 'bad request parameter',
@@ -12,16 +31,71 @@ import { ServerErrorResponse } from '../../shared/dto/ServerErrorResponse';
 @ApiTags('CATEGORY')
 @Controller('category')
 export class CategoryController {
-	constructor() {}
+	constructor(
+		private createCategoryUseCase: CreateCategoryUseCase,
+		private updateCategoryUseCase: UpdateCategoryUseCase,
+		private findCategoryUseCase: FindCategoryUseCase,
+		private findUserUseCase: FindUserUseCase,
+	) {}
 
-	@ApiCreatedResponse({ description: 'create category' })
+	@ApiCreatedResponse({ description: 'create category', type: CreateCategoryUseCaseResponse })
 	@ApiOperation({ summary: 'create category' })
-	@Post('')
-	async createCategory(@Body() categoryName: string): Promise<void> {
-		try {
-		} catch (error) {
-			console.log(error);
+	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth('access-token')
+	@Post('create')
+	async createCategory(@Request() req, @Body() createCategoryUseCaseRequeset: CreateCategoryUseCaseRequest, @Res() res: Response) {
+		const responseFoundUser = await this.findUserUseCase.execute(req.user);
+		if (!responseFoundUser.ok || responseFoundUser.user['user_name'] !== process.env.ADMIN) {
+			return res.status(HttpStatus.BAD_REQUEST).json({
+				ok: responseFoundUser.ok,
+				statusCode: responseFoundUser.statusCode,
+				message: responseFoundUser.message,
+			});
 		}
-		return;
+
+		const responseCreateCategory = await this.createCategoryUseCase.execute(createCategoryUseCaseRequeset);
+		return res.status(HttpStatus.CREATED).json({
+			ok: responseCreateCategory.ok,
+			statusCode: responseCreateCategory.statusCode,
+			message: responseCreateCategory.message,
+			category: responseCreateCategory.category,
+		});
+	}
+
+	@ApiOperation({ summary: 'create category' })
+	@ApiOkResponse({ description: 'update category', type: UpdateCategoryUseCaseResponse })
+	@UseGuards(JwtAuthGuard)
+	@ApiBearerAuth('access-token')
+	@Put('update')
+	async updateCategory(@Request() req, @Body() updateCategoryUseCaseRequest: UpdateCategoryUseCaseRequest, @Res() res: Response) {
+		const responseFoundUser = await this.findUserUseCase.execute(req.user);
+		if (!responseFoundUser.ok || responseFoundUser.user['user_name'] !== process.env.ADMIN) {
+			return res.status(HttpStatus.BAD_REQUEST).json({
+				ok: responseFoundUser.ok,
+				statusCode: responseFoundUser.statusCode,
+				message: responseFoundUser.message,
+			});
+		}
+
+		const responseUpdateCategory = await this.updateCategoryUseCase.execute(updateCategoryUseCaseRequest);
+		return res.status(HttpStatus.OK).json({
+			ok: responseUpdateCategory.ok,
+			statusCode: responseUpdateCategory.statusCode,
+			message: responseUpdateCategory.message,
+			category: responseUpdateCategory.category,
+		});
+	}
+
+	@ApiOperation({ summary: 'get category' })
+	@ApiOkResponse({ description: 'get category', type: FindCategoryUseCaseResponse })
+	@Get(':id')
+	async findCategory(@Param() params: FindCategoryUseCaseRequest, @Res() res: Response) {
+		const responseFoundCategory = await this.findCategoryUseCase.execute(params);
+		return res.status(HttpStatus.OK).json({
+			ok: responseFoundCategory.ok,
+			statusCode: responseFoundCategory.statusCode,
+			message: responseFoundCategory.message,
+			category: responseFoundCategory.category,
+		});
 	}
 }

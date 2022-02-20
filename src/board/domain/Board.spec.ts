@@ -8,7 +8,7 @@ describe('Board', () => {
 		const board = Board.createNew({
 			boardTitle: BoardTitle.create('board title').value,
 			boardContent: BoardContent.create('board content').value,
-			userId: JwtAuthrization.create('string').value,
+			userId: JwtAuthrization.create(1).value,
 		});
 		expect(board.isSuccess).toBeTruthy();
 	});
