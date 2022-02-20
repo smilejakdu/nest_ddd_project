@@ -7,7 +7,7 @@ import { UserPassword } from '../../domain/UserPassword';
 import { UpdateUserProfileUseCase } from './UpdateUserProfileUseCase';
 
 describe('UpdateUserProfileUseCase', () => {
-	const USER_ID = 'ID1';
+	const USER_ID = 1;
 	const MODIFY_NICKNAME = 'MODIFIED';
 	const MODIFY_PWD = 'MODIFY_PWD';
 	const FAIL_UPDATE = 'Can`t modify profile.';
@@ -37,7 +37,7 @@ describe('UpdateUserProfileUseCase', () => {
 		givenFoundUserThatJoinedNaverMail();
 
 		const updateUserProfileResponse = await uut.execute({
-			id: USER_ID,
+			user_idx: USER_ID,
 			nickname: MODIFY_NICKNAME,
 			password: MODIFY_PWD,
 		});
@@ -49,20 +49,20 @@ describe('UpdateUserProfileUseCase', () => {
 		givenFoundUserThatJoinedNaverMail();
 
 		const updateUserProfileResponseOfPasswordTest = await uut.execute({
-			id: USER_ID,
+			user_idx: USER_ID,
 			nickname: MODIFY_NICKNAME,
 			password: '1',
 		});
 
 		const updateUserProfileResponseOfName = await uut.execute({
-			id: USER_ID,
+			user_idx: USER_ID,
 			nickname: '',
 			password: MODIFY_PWD,
 		});
 
 		expect(updateUserProfileResponseOfPasswordTest.ok).toBe(false);
 		expect(updateUserProfileResponseOfName.ok).toBe(false);
-		expect(updateUserProfileResponseOfPasswordTest.error).toBe(FAIL_UPDATE);
-		expect(updateUserProfileResponseOfName.error).toBe(FAIL_UPDATE);
+		expect(updateUserProfileResponseOfPasswordTest.message).toBe(FAIL_UPDATE);
+		expect(updateUserProfileResponseOfName.message).toBe(FAIL_UPDATE);
 	});
 });

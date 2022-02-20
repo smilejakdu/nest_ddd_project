@@ -56,7 +56,7 @@ describe('LoginUseCase', () => {
 		});
 
 		expect(login.ok).toBe(false);
-		expect(login.error).toBe(`Can not found nickname : ${WRONG_NICKNAME}`);
+		expect(login.message).toBe(`Can not found nickname : ${WRONG_NICKNAME}`);
 	});
 
 	it('password 가 잘못 된 경우 로그인 되지 않는지', async () => {
@@ -67,6 +67,6 @@ describe('LoginUseCase', () => {
 		});
 
 		expect(login.ok).toBe(false);
-		expect(login.error).toBe('Password is Wrong');
+		expect(login.message).toBe('Password is Wrong');
 	});
 });
