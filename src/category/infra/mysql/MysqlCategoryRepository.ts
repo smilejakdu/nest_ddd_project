@@ -27,8 +27,8 @@ export class MysqlCategoryRepository implements ICategoryRepository {
 	async findByCategoryId(categoryId: number): Promise<Category> {
 		const foundCategoryById = await this.categoryRepository
 			.createQueryBuilder('category')
-			.innerJoin('category.Products', 'products')
-			.where('products.categoryId =:categoryId', { categoryId })
+			.innerJoin('category.Movies', 'movies')
+			.where('movies.categoryId =:categoryId', { categoryId })
 			.getOne();
 		if (isNil(foundCategoryById)) {
 			return;

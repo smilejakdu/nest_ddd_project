@@ -10,7 +10,7 @@ export class FindCategoryUseCaseResponse extends CoreResponse {
 		{
 			category_idx: number;
 			category_name: string;
-			products?: [];
+			movies?: [];
 		},
 	];
 }

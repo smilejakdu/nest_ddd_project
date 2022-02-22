@@ -1,16 +1,23 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {
+	Column,
+	CreateDateColumn,
+	DeleteDateColumn,
+	Entity,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	UpdateDateColumn
+} from "typeorm";
 
-import { Column, CreateDateColumn, DeleteDateColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-import { isEnum, IsNotEmpty, IsString } from 'class-validator';
-
-import { ProductsEntity } from '../../../products/infra/entity/ProductsEntity';
+import { MoviesEntity } from '../../../movies/infra/entity/MoviesEntity';
 
 export enum CategoryStatus {
 	ACTIVE = 'active',
 	STOP = 'stop',
 }
 
+@Entity({ schema: 'ddd_nest', name: 'category' })
 export class CategoryEntity {
 	@PrimaryGeneratedColumn()
 	category_idx: number;
@@ -27,8 +34,8 @@ export class CategoryEntity {
 	})
 	category_status: string;
 
-	@OneToMany(() => ProductsEntity, product => product.category)
-	Products: ProductsEntity;
+	@OneToMany(() => MoviesEntity, movie => movie.category)
+	Movies: MoviesEntity;
 
 	@CreateDateColumn()
 	createdAt: Date;
