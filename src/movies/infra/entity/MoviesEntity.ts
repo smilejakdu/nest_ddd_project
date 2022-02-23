@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 
 import { IsNotEmpty, IsString } from 'class-validator';
 
-import { CategoryEntity, CategoryStatus } from "../../../category/infra/entity/CategoryEntity";
+import { CategoryEntity, CategoryStatusEnum } from '../../../category/infra/entity/CategoryEntity';
 
 export enum MovieStatusEnum {
 	ACTIVE = 'active',

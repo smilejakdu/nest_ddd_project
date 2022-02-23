@@ -41,7 +41,6 @@ export class MysqlCategoryRepository implements ICategoryRepository {
 			this.categoryRepository.create({
 				category_idx: category.id,
 				category_name: category.categoryName.value,
-				category_status: category.categoryStatus.value,
 				createdAt: category.createdAt,
 			}),
 		);

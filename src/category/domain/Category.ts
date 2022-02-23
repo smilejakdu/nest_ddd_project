@@ -1,17 +1,17 @@
 import { AggregateRoot } from '../../shared/domain/AggregateRoot';
 import { CategoryName } from './CategoryName';
 import { Result } from '../../shared/core/Result';
-import { CategoryStatus } from './CategoryStatus';
+import { CategoryStatusEnum } from '../infra/entity/CategoryEntity';
 
 interface CategoryProps {
 	categoryName: CategoryName;
-	categoryStatus: CategoryStatus;
+	categoryStatus: CategoryStatusEnum;
 	createdAt: Date;
 }
 
 interface CategoryNewProps {
 	categoryName: CategoryName;
-	categoryStatus: CategoryStatus;
+	categoryStatus: CategoryStatusEnum;
 }
 
 export class Category extends AggregateRoot<CategoryProps> {
@@ -31,7 +31,7 @@ export class Category extends AggregateRoot<CategoryProps> {
 		return this.props.categoryName;
 	}
 
-	get categoryStatus(): CategoryStatus {
+	get categoryStatus(): CategoryStatusEnum {
 		return this.props.categoryStatus;
 	}
 

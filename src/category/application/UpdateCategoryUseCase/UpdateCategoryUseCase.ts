@@ -34,12 +34,11 @@ export class UpdateCategoryUseCase implements IUseCase<UpdateCategoryUseCaseRequ
 			}
 
 			const categoryNameOrError = CategoryName.create(requestCategoryName);
-			const categoryStatusOrError = CategoryStatus.create(requestCategoryStatus);
 
 			const responseCreatedCategory = Category.create(
 				{
 					categoryName: categoryNameOrError.value,
-					categoryStatus: categoryStatusOrError.value,
+					categoryStatus: requestCategoryStatus,
 					createdAt: foundCategory.createdAt,
 				},
 				foundCategory.id,

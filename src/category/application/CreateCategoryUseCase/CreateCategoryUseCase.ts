@@ -5,7 +5,7 @@ import { CreateCategoryUseCaseRequest, CreateCategoryUseCaseResponse } from './d
 import { ICategoryRepository } from '../../infra/ICategoryRepository';
 import { CategoryName } from '../../domain/CategoryName';
 import { Category } from '../../domain/Category';
-import { CategoryStatus } from '../../domain/CategoryStatus';
+import { CategoryStatusEnum } from '../../infra/entity/CategoryEntity';
 
 export class CreateCategoryUseCase implements IUseCase<CreateCategoryUseCaseRequest, CreateCategoryUseCaseResponse> {
 	private FAIL_CREATE = 'Can`t create category.';
@@ -18,14 +18,11 @@ export class CreateCategoryUseCase implements IUseCase<CreateCategoryUseCaseRequ
 	async execute(request: CreateCategoryUseCaseRequest): Promise<CreateCategoryUseCaseResponse> {
 		try {
 			const requestCategoryName = request.category_name;
-			const requestCategoryStatus = request.category_status;
-
 			const categoryNameOrError = CategoryName.create(requestCategoryName);
-			const categoryStatusOrError = CategoryStatus.create(requestCategoryStatus);
 
 			const category = Category.createNew({
 				categoryName: categoryNameOrError.value,
-				categoryStatus: categoryStatusOrError.value,
+				categoryStatus: CategoryStatusEnum.ACTIVE,
 			}).value;
 			await this.categoryRepository.save(category);
 
@@ -34,9 +31,7 @@ export class CreateCategoryUseCase implements IUseCase<CreateCategoryUseCaseRequ
 				statusCode: 201,
 				message: 'SUCCESS',
 				category: {
-					category_idx: category.id,
 					category_name: category.categoryName.props.value,
-					category_status: category.categoryStatus.value,
 				},
 			};
 		} catch (error) {

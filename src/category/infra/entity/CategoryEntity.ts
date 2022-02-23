@@ -8,11 +8,12 @@ import {
 	UpdateDateColumn
 } from "typeorm";
 
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from "class-validator";
 
 import { MoviesEntity } from '../../../movies/infra/entity/MoviesEntity';
+import { ApiProperty } from "@nestjs/swagger";
 
-export enum CategoryStatus {
+export enum CategoryStatusEnum {
 	ACTIVE = 'active',
 	STOP = 'stop',
 }
@@ -22,6 +23,11 @@ export class CategoryEntity {
 	@PrimaryGeneratedColumn()
 	category_idx: number;
 
+	@ApiProperty({
+		description: 'category name',
+		example: 'category name',
+		type: String,
+	})
 	@IsString()
 	@IsNotEmpty()
 	@Column('varchar', { name: 'category_name', length: 200 })
@@ -29,10 +35,10 @@ export class CategoryEntity {
 
 	@Column({
 		type: 'enum',
-		enum: CategoryStatus,
-		default: CategoryStatus.ACTIVE,
+		enum: CategoryStatusEnum,
 	})
-	category_status: string;
+	@IsEnum(CategoryStatusEnum, { each: true })
+	category_status: CategoryStatusEnum;
 
 	@OneToMany(() => MoviesEntity, movie => movie.category)
 	Movies: MoviesEntity;
