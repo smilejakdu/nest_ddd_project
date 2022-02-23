@@ -6,11 +6,5 @@ import { CategoryEntity } from '../../../infra/entity/CategoryEntity';
 export class FindCategoryUseCaseRequest extends PickType(CategoryEntity, ['category_idx']) {}
 
 export class FindCategoryUseCaseResponse extends CoreResponse {
-	category?: [
-		{
-			category_idx: number;
-			category_name: string;
-			movies?: [];
-		},
-	];
+	category?: any;
 }

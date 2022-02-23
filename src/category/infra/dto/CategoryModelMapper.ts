@@ -1,7 +1,6 @@
 import { Category } from '../../domain/Category';
 import { CategoryName } from '../../domain/CategoryName';
 import { CategoryEntity, CategoryStatusEnum } from '../entity/CategoryEntity';
-import { CategoryStatus } from '../../domain/CategoryStatus';
 
 export class CategoryModelMapper {
 	static toDomain(entity: CategoryEntity): Category {

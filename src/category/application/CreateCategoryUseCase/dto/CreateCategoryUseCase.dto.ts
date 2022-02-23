@@ -2,7 +2,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { Column, PrimaryColumn } from 'typeorm';
 
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from 'class-validator';
 
 import { CategoryEntity } from '../../../infra/entity/CategoryEntity';
 import { CoreResponse } from '../../../../shared/dto/CoreResponse';
@@ -22,7 +22,7 @@ export class CreateCategoryResponseDto {
 	public category_name: string;
 }
 
-export class CreateCategoryUseCaseRequest extends PickType(CategoryEntity, ['category_idx', 'category_name' ]) {}
+export class CreateCategoryUseCaseRequest extends PickType(CategoryEntity, ['category_idx', 'category_name']) {}
 
 export class CreateCategoryUseCaseResponse extends CoreResponse {
 	@Column()

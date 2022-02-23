@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Put, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Request, Res, UseGuards } from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
 	ApiBearerAuth,
@@ -62,12 +62,17 @@ export class CategoryController {
 		});
 	}
 
-	@ApiOperation({ summary: 'create category' })
+	@ApiOperation({ summary: 'update category' })
 	@ApiOkResponse({ description: 'update category', type: UpdateCategoryUseCaseResponse })
 	@UseGuards(JwtAuthGuard)
 	@ApiBearerAuth('access-token')
-	@Put('update')
-	async updateCategory(@Request() req, @Body() updateCategoryUseCaseRequest: UpdateCategoryUseCaseRequest, @Res() res: Response) {
+	@Put(':id/update')
+	async updateCategory(
+		@Request() req,
+		@Param('id', ParseIntPipe) id: number,
+		@Body() updateCategoryUseCaseRequest: UpdateCategoryUseCaseRequest,
+		@Res() res: Response,
+	) {
 		const responseFoundUser = await this.findUserUseCase.execute(req.user);
 		if (!responseFoundUser.ok || responseFoundUser.user['user_name'] !== process.env.ADMIN) {
 			return res.status(HttpStatus.BAD_REQUEST).json({
@@ -89,8 +94,10 @@ export class CategoryController {
 	@ApiOperation({ summary: 'get category' })
 	@ApiOkResponse({ description: 'get category', type: FindCategoryUseCaseResponse })
 	@Get(':id')
-	async findCategory(@Param() params: FindCategoryUseCaseRequest, @Res() res: Response) {
-		const responseFoundCategory = await this.findCategoryUseCase.execute(params);
+	async findCategory(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
+		let request;
+		request.category_idx = id;
+		const responseFoundCategory = await this.findCategoryUseCase.execute(request);
 		return res.status(HttpStatus.OK).json({
 			ok: responseFoundCategory.ok,
 			statusCode: responseFoundCategory.statusCode,

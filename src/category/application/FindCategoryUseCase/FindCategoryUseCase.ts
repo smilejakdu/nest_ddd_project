@@ -16,10 +16,26 @@ export class FindCategoryUseCase implements IUseCase<FindCategoryUseCaseRequest,
 
 	async execute(request?: FindCategoryUseCaseRequest): Promise<FindCategoryUseCaseResponse> {
 		try {
-			const requestCategoryIdx = request.category_idx || undefined;
-			if (isNil(requestCategoryIdx)) {
-				const foundCategoryById = await this.categoryRepository.findAllCategory();
+			if (!request.category_idx) {
+				const foundCategory = await this.categoryRepository.findAllCategory();
+				return {
+					ok: true,
+					statusCode: 200,
+					message: 'SUCCESS',
+					category: foundCategory,
+				};
 			}
+			const foundCategoryById = await this.categoryRepository.findByCategoryId(request.category_idx);
+			return {
+				ok: true,
+				statusCode: 200,
+				message: 'SUCCESS',
+				category: {
+					category_idx: foundCategoryById.id,
+					category_name: foundCategoryById.categoryName,
+					category_status: foundCategoryById.categoryStatus,
+				},
+			};
 		} catch (error) {
 			console.log(error);
 		}
