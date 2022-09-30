@@ -83,7 +83,6 @@ export class BoardsController {
 	@ApiBearerAuth('access-token')
 	@Delete('delete')
 	async deleteBoard(@User() user, @Body() deleteBoardRequest: DeleteBoardRequest, @Res() res: Response) {
-		console.log(user);
 		const responseDeleteBoard = await this.deleteBoardUseCase.execute(deleteBoardRequest.board_idx);
 		if (!responseDeleteBoard.ok) {
 			return res.status(HttpStatus.BAD_REQUEST).json({
