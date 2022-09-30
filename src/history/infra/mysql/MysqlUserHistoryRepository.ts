@@ -15,14 +15,12 @@ export class MysqlUserHistoryRepository implements IUserHistoryRepository {
 
 	async findThisMonthRegisterUser(): Promise<any> {
 		const thisMonth = dayjs(new Date()).format('YYYY-MM-DD');
-		console.log('thisMonth:', thisMonth);
 		const foundThisMonthRegisterUser = await this.userHistoryRepository
 			.createQueryBuilder('user')
 			.addSelect('COUNT(*) as userCount')
 			.where('user.createAt =: thisMonth', { thisMonth })
 			.groupBy('user.createAt')
 			.getRawMany();
-		console.log('foundThisMonthRegisterUser:', foundThisMonthRegisterUser);
 
 		return foundThisMonthRegisterUser;
 	}
