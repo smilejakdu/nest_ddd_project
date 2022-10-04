@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import {HttpStatus, Inject} from '@nestjs/common';
 
 import { IUseCase } from 'src/shared/core/IUseCase';
 import { IBoardRepository } from 'src/board/infra/IBoardRepository';
@@ -8,6 +8,7 @@ import { Board } from 'src/board/domain/Board';
 
 import { CreateBoardUseCaseRequest, CreateBoardUseCaseResponse } from './dto/CreateBoardUseCase.dto';
 import { JwtAuthrization } from '../../../shared/domain/JwtEntityId';
+import * as Http from "http";
 
 export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, CreateBoardUseCaseResponse> {
 	private FAIL_CREATE = 'Can`t create board.';
@@ -35,7 +36,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 
 			return {
 				ok: true,
-				statusCode: 201,
+				statusCode: HttpStatus.CREATED,
 				message: 'SUCCESS',
 				board: {
 					board_idx: board.id,
@@ -47,7 +48,7 @@ export class CreateBoardUseCase implements IUseCase<CreateBoardUseCaseRequest, C
 			console.error(error);
 			return {
 				ok: false,
-				statusCode: 400,
+				statusCode: HttpStatus.BAD_REQUEST,
 				message: this.FAIL_CREATE,
 			};
 		}
