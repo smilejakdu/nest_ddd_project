@@ -6,36 +6,20 @@ import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 // Entity
 import { UserEntity } from 'src/user/infra/entity/UserEntity';
 import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 
 @Index('comment_idx', ['comment_idx'], { unique: true })
 @Entity({ name: 'comments' })
-export class CommentEntity {
+export class CommentEntity extends CoreEntity {
 	@PrimaryGeneratedColumn()
 	comment_idx: number;
 
-	@ApiProperty({
-		description: 'comment content',
-		example: 'comment content',
-		type: String,
-	})
-	@IsString()
-	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
-	@ApiProperty({
-		description: 'userId',
-		example: 'userId',
-		type: Number,
-	})
 	@Column({ type: 'int' })
 	userId: number;
 
-	@ApiProperty({
-		description: 'boardId',
-		example: 'boardId',
-		type: Number,
-	})
 	@Column({ type: 'int' })
 	boardId: number;
 
@@ -50,10 +34,4 @@ export class CommentEntity {
 	})
 	@JoinColumn([{ name: 'boardId', referencedColumnName: 'board_idx' }])
 	Board: BoardEntity;
-
-	@CreateDateColumn()
-	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
 }

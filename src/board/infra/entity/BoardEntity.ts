@@ -8,20 +8,17 @@ import { IsString, IsNotEmpty } from 'class-validator';
 import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
 
 import { UserEntity } from '../../../user/infra/entity/UserEntity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 
 @Index('board_idx', ['board_idx'], { unique: true })
 @Entity({ name: 'boards' })
-export class BoardEntity {
+export class BoardEntity extends CoreEntity {
 	@PrimaryGeneratedColumn()
 	board_idx: number;
 
-	@IsString()
-	@IsNotEmpty()
 	@Column('varchar', { name: 'title', length: 200 })
 	title: string;
 
-	@IsString()
-	@IsNotEmpty()
 	@Column('varchar', { name: 'content', length: 500 })
 	content: string;
 
@@ -36,10 +33,4 @@ export class BoardEntity {
 	})
 	@JoinColumn([{ name: 'userId', referencedColumnName: 'user_idx' }])
 	User: UserEntity;
-
-	@CreateDateColumn()
-	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
 }

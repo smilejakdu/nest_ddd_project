@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import { CategoryEntity, CategoryStatusEnum } from '../../../category/infra/entity/CategoryEntity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 
 export enum MovieStatusEnum {
 	ACTIVE = 'active',
@@ -13,12 +14,10 @@ export enum MovieStatusEnum {
 }
 
 @Entity({ schema: 'ddd_nest', name: 'movies' })
-export class MoviesEntity {
+export class MoviesEntity extends CoreEntity {
 	@PrimaryGeneratedColumn()
 	movie_idx: number;
 
-	@IsString()
-	@IsNotEmpty()
 	@Column('varchar', { name: 'movie_name', length: 200 })
 	movie_name: string;
 
