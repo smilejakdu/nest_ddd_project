@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import {HttpStatus, Inject } from '@nestjs/common';
 
 import { isNil } from 'lodash';
 import { IUseCase } from 'src/shared/core/IUseCase';
@@ -20,7 +20,7 @@ export class DeleteCommentUseCase implements IUseCase<DeleteCommentUseCaseReques
 		if (isNil(foundComment)) {
 			return {
 				ok: false,
-				statusCode: 400,
+				statusCode: HttpStatus.NOT_FOUND,
 				message: DELETE_COMMENT_ERR,
 			};
 		}
@@ -30,7 +30,7 @@ export class DeleteCommentUseCase implements IUseCase<DeleteCommentUseCaseReques
 		return {
 			ok: true,
 			message: 'SUCCESS',
-			statusCode: 200,
+			statusCode: HttpStatus.OK,
 		};
 	}
 }

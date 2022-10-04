@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import {HttpStatus, Inject} from '@nestjs/common';
 
 import { isNil } from 'lodash';
 
@@ -28,7 +28,7 @@ export class UpdateCategoryUseCase implements IUseCase<UpdateCategoryUseCaseRequ
 			if (isNil(foundCategory)) {
 				return {
 					ok: false,
-					statusCode: 400,
+					statusCode: HttpStatus.BAD_REQUEST,
 					message: this.HAS_NOT_CATEGORY,
 				};
 			}
@@ -45,7 +45,7 @@ export class UpdateCategoryUseCase implements IUseCase<UpdateCategoryUseCaseRequ
 			).value;
 			return {
 				ok: true,
-				statusCode: 200,
+				statusCode: HttpStatus.OK,
 				message: 'SUCCESS',
 				category: {
 					category_idx: responseCreatedCategory.id,
