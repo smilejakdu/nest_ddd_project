@@ -5,6 +5,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryG
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 import { MoviesEntity } from '../../../movies/infra/entity/MoviesEntity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 
 export enum CategoryStatusEnum {
 	ACTIVE = 'active',
@@ -12,25 +13,13 @@ export enum CategoryStatusEnum {
 }
 
 @Entity({ schema: 'ddd_nest', name: 'category' })
-export class CategoryEntity {
+export class CategoryEntity extends CoreEntity {
 	@PrimaryGeneratedColumn()
 	category_idx: number;
 
-	@ApiProperty({
-		description: 'category name',
-		example: 'category name',
-		type: String,
-	})
-	@IsString()
-	@IsNotEmpty()
 	@Column('varchar', { name: 'category_name', length: 200 })
 	category_name: string;
 
-	@ApiProperty({
-		description: 'category name',
-		example: 'category status active stop',
-		type: String,
-	})
 	@IsEnum(CategoryStatusEnum)
 	@Column({
 		type: 'enum',
@@ -40,13 +29,4 @@ export class CategoryEntity {
 
 	@OneToMany(() => MoviesEntity, movie => movie.category)
 	Movies: MoviesEntity;
-
-	@CreateDateColumn()
-	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
-
-	@DeleteDateColumn()
-	deletedAt: Date;
 }

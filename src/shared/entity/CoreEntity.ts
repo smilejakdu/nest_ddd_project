@@ -1,16 +1,14 @@
-import { UpdateDateColumn, CreateDateColumn, Index, PrimaryColumn } from 'typeorm';
+import {UpdateDateColumn, CreateDateColumn, Index, PrimaryColumn, PrimaryGeneratedColumn, DeleteDateColumn, BaseEntity} from 'typeorm';
 
 import { IsString } from 'class-validator';
 
-@Index('id', ['id'], { unique: true })
-export class CoreEntity {
-	@IsString()
-	@PrimaryColumn()
-	id: string;
-
+export class CoreEntity extends BaseEntity {
 	@CreateDateColumn()
 	createdAt: Date;
 
 	@UpdateDateColumn()
 	updatedAt: Date;
+
+	@DeleteDateColumn()
+	deletedAt: Date;
 }

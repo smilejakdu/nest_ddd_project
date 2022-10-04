@@ -6,10 +6,11 @@ import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 // Entity
 import { BoardEntity } from 'src/board/infra/entity/BoardEntity';
 import { CommentEntity } from 'src/comment/infra/entity/CommentEntity';
+import { CoreEntity } from 'src/shared/entity/CoreEntity';
 
 @Index('user_idx', ['user_idx'], { unique: true })
 @Entity({ name: 'users' })
-export class UserEntity {
+export class UserEntity extends CoreEntity {
 	@PrimaryGeneratedColumn()
 	user_idx: number;
 
@@ -24,10 +25,4 @@ export class UserEntity {
 
 	@OneToMany(() => CommentEntity, comments => comments.User)
 	Comments: CommentEntity[];
-
-	@CreateDateColumn()
-	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
 }
