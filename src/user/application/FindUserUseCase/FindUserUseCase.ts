@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IUseCase } from '../../../shared/core/IUseCase';
 import { FindUserRequest, FindUserResponse } from './dto/FindUseCase.dto';
 import { IUserRepository } from '../../infra/IUserRepository';
+import {BadRequestResponse, SuccessFulResponse} from "../../../shared/core/core.response.dto";
 
 @Injectable()
 export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserResponse> {
@@ -14,26 +15,24 @@ export class FindUserUseCase implements IUseCase<FindUserRequest, FindUserRespon
 	) {}
 
 	async execute(request: FindUserRequest): Promise<FindUserResponse> {
-		const requestNickname = request.nickname;
-		const foundUser = await this.userRepository.findUserByNickname(requestNickname);
+		try {
+			const requestNickname = request.nickname;
+			const foundUser = await this.userRepository.findUserByNickname(requestNickname);
 
-		if (!foundUser) {
-			return {
-				ok: false,
-				statusCode: 400,
-				message: this.HAS_NOT_USER,
-			};
+			if (!foundUser) {
+				return BadRequestResponse(this.HAS_NOT_USER);
+			}
+
+			return SuccessFulResponse(
+				 {
+					user_idx: foundUser.user_idx,
+					nickname: foundUser.nickname.toString(),
+					boards: foundUser.Boards,
+					comments: foundUser.Comments,
+				}
+			);
+		} catch (error) {
+			return BadRequestResponse(error.message);
 		}
-		return {
-			ok: true,
-			statusCode: 200,
-			message: 'SUCCESS',
-			user: {
-				user_idx: foundUser.user_idx,
-				nickname: foundUser.nickname.toString(),
-				boards: foundUser.Boards,
-				comments: foundUser.Comments,
-			},
-		};
 	}
 }
