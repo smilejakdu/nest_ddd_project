@@ -40,3 +40,5 @@ env
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+compose/dev
+compose/prod
