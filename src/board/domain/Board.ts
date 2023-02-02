@@ -1,6 +1,5 @@
 import { Result } from 'src/shared/core/Result';
 import { AggregateRoot } from 'src/shared/domain/AggregateRoot';
-import { UniqueEntityId } from 'src/shared/domain/UniqueEntityId';
 import { JwtAuthrization } from 'src/shared/domain/JwtEntityId';
 
 import { BoardTitle } from './BoardTitle';

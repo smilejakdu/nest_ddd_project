@@ -3,6 +3,8 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
 import { HttpExceptionFilter } from 'http-exception.filter';
+import express from 'express';
+import { join } from 'path';
 
 import { AppModule } from './app.module';
 
@@ -28,6 +30,13 @@ async function bootstrap() {
 	app.enableCors();
 
 	await app.listen(port);
+	app.enableCors({
+		origin: true,
+		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+		credentials: true,
+	});
+	app.use('/public', express.static(join(__dirname, '../public')));
+
 	console.log(`Application is running on: ${await app.getUrl()}`);
 }
 

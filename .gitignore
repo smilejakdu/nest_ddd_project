@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+/compose
 
 # Logs
 logs
@@ -14,6 +15,8 @@ lerna-debug.log*
 # OS
 .DS_Store
 .env
+local.env
+prod.env
 ormconfig.ts
 env
 # Tests
